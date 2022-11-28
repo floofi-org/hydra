@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Equestria.dev - System Status</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/bootstrap.min.js"></script>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+
+    <style>
+        .tooltip {
+            --bs-tooltip-max-width: 20vw;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <br><br>
+
+        <div style="text-align: center;">
+            <img src="/banner.svg" style="width: 320px; max-width: 100%;" alt="Equestria.dev">
+            <h1>System Status</h1>
+        </div>
+
+        <div style="font-size: 14px;">
+            <div style="text-align: right;">
+                <img alt="Available" src="/online.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Available</span>
+                <img alt="Maintenance" src="/maintenance.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Maintenance</span>
+                <img alt="Issue" src="/misbehaving.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Issue</span>
+                <img alt="Outage" src="/offline.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Outage</span>
+            </div>
+
+            <table style="border-collapse: collapse; width: 100%; table-layout: fixed; border-left: 1px solid white; border-right: 1px solid white; margin-top: 10px;">
+                <tr style="width:100%;">
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0rem;'><b>SSH server - Available</b><br>Latency: 3ms</p><div style='text-align:left !important;'></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-left: none;">
+                        <span>
+                            
+                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">SSH server</span>
+                        </span>
+                    </td>
+                    
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0rem;'><b>website with cute mares - Available</b><br>Latency: 284ms</p><div style='text-align:left !important;'></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; ">
+                        <span>
+                            
+                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">website with cute mares</span>
+                        </span>
+                    </td>
+                    
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0.5rem;'><b>Timing out sample - Issue</b><br>Latency: 5002ms</p><div style='text-align:left !important;'>The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time.</div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-right: none;">
+                        <span>
+                            
+                            
+                            
+                                <img alt="Issue" src="/misbehaving.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">Timing out sample</span>
+                        </span>
+                    </td>
+                    </tr><tr>
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0.5rem;'><b>Search engine - Maintenance</b><br>Latency: 1418ms</p><div style='text-align:left !important;'>da google is down!</div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-left: none;">
+                        <span>
+                            
+                            
+                                <img alt="Maintenance" src="/maintenance.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">Search engine</span>
+                        </span>
+                    </td>
+                    
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0.5rem;'><b>Non-existant website - Outage</b><br>Latency: 116ms</p><div style='text-align:left !important;'>The service is unreachable from an off-site network, or returns a server error upon connection.</div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; ">
+                        <span>
+                            
+                            
+                            
+                            
+                                <img alt="Outage" src="/offline.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">Non-existant website</span>
+                        </span>
+                    </td>
+                    
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0rem;'><b>Good big company - Available</b><br>Latency: 91ms</p><div style='text-align:left !important;'></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-right: none;">
+                        <span>
+                            
+                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">Good big company</span>
+                        </span>
+                    </td>
+                    </tr><tr>
+                    
+                    
+                    
+                    <td data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:0rem;'><b>Bad big company - Available</b><br>Latency: 232ms</p><div style='text-align:left !important;'></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-left: none;">
+                        <span>
+                            
+                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                            
+                            
+                            
+                            
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;">Bad big company</span>
+                        </span>
+                    </td>
+                    
+                    
+                    <td style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; "></td>
+                    <td style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; border-right: none;"></td>
+                    
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }))
+    </script>
+</body>
+</html>

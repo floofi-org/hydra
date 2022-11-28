@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="bridlewood.equestria.dev" id="cd5dc535-319d-4c75-ad8f-1101d05d0e21" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="fedora" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Equestria.dev - Infrastructure status</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/bootstrap.min.js"></script>
+    <script src="/chart.js"></script>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml">
+
+    <style>
+        .tooltip {
+            --bs-tooltip-max-width: 20vw;
+        }
+
+        .status-service:hover {
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        tr:nth-last-child(1) .status-service {
+            border-bottom: none !important;
+        }
+
+        @media (min-width: 100px) {
+            tr:nth-child(1) .status-service {
+                border-top: none !important;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .status-service {
+                display: block;
+                width: 100% !important;
+                border-top: none !important;
+                border-left: none !important;
+                border-right: none !important;
+            }
+
+            .status-filler {
+                display: none !important;
+            }
+
+            .tooltip {
+                --bs-tooltip-max-width: 80vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <br><br>
+
+        <div style="text-align: center;">
+            <img src="/banner.svg" style="width: 320px; max-width: 100%;" alt="Equestria.dev">
+            <h1>Infrastructure status</h1>
+        </div>
+
+        <div style="font-size: 14px;">
+            <div style="display: grid; grid-template-columns: 1fr max-content;">
+                <div style="display:flex; align-items: center;">
+                    <div>
+                        <span style="vertical-align: middle; background: <% if (ping < 256) { %>#05b705<% } else if (ping < 512) { %>#f4c424<% } else { %>#f43224<% } %>; border-radius: 999px; width: 12px; height: 12px; display: inline-block;"></span>
+                        <span style="vertical-align: middle;"><%= ping.toFixed(2) %>ms</span>
+                    </div>
+                </div>
+                <div>
+                    <img alt="Available" src="/online.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Available</span>
+                    <img alt="Maintenance" src="/maintenance.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Maintenance</span>
+                    <img alt="Issue" src="/misbehaving.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Issue</span>
+                    <img alt="Outage" src="/offline.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Outage</span>
+                </div>
+            </div>
+            <hr>
+
+            <h3>Average ping history</h3>
+            <canvas id="history" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Services status</h3>
+
+            <table style="border-collapse: collapse; width: 100%; table-layout: fixed; border-left: 1px solid white; border-right: 1px solid white; margin-top: 10px;">
+                <tr style="width:100%;">
+                    <% for (let index in Object.keys(output["services"])) { index = parseInt(index); let service = output["services"][Object.keys(output["services"])[index]]; %>
+                    <td class="status-service" data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:<% if (service['details'] && service['details'].trim() !== "") { %>0.5<% } else { %>0<% } %>rem;'><b><%= service['name'] %> - <% if (service['status'] === "online") { %>Available<% } %><% if (service['status'] === "maintenance") { %>Maintenance<% } %><% if (service['status'] === "notWorking") { %>Issue<% } %><% if (service['status'] === "offline") { %>Outage<% } %></b><br><% if (service['ping'] > 0) { %>Latency: <%= service['ping'] %>ms<% } %></p><div style='text-align:left !important;'><% if (service['details'] && service['details'].trim() !== "") { %><%= service['details'] %><% } else { %><% } %></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; <% if ((index + 1) % 3 === 1) { %>border-left: none;<% } %><% if ((index + 1) % 3 === 0) { %>border-right: none;<% } %>">
+                        <span>
+                            <% if (service['status'] === "online") { %>
+                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                            <% } %>
+                            <% if (service['status'] === "maintenance") { %>
+                                <img alt="Maintenance" src="/maintenance.svg" style="width: 24px; vertical-align: middle;">
+                            <% } %>
+                            <% if (service['status'] === "notWorking") { %>
+                                <img alt="Issue" src="/misbehaving.svg" style="width: 24px; vertical-align: middle;">
+                            <% } %>
+                            <% if (service['status'] === "offline") { %>
+                                <img alt="Outage" src="/offline.svg" style="width: 24px; vertical-align: middle;">
+                            <% } %>
+                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;"><%= service['name'] %></span>
+                        </span>
+                    </td>
+                    <% if ((index + 1) % 3 === 0) { %></tr><tr><% } %>
+                    <% } %>
+                </tr>
+            </table>
+
+            <hr>
+            <h3>Servers memory usage (global)</h3>
+            <canvas id="ram" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Servers memory usage (per server)</h3>
+            <canvas id="ram2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Servers storage usage (global)</h3>
+            <canvas id="disk" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Servers storage usage (per server)</h3>
+            <canvas id="disk2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Servers CPU usage (global)</h3>
+            <canvas id="cpu" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <h3>Servers CPU usage (per server)</h3>
+            <canvas id="cpu2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+
+            <hr>
+            <p class="text-muted" style="margin-top: 10px;">Last updated <span id="update-date" data-update-date="<%= date.toISOString() %>"></span><span id="update-date-full"><%= date.toString() %></span></p>
+        </div>
+    </div>
+
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }));
+
+        function timeAgo(time) {
+            if (!isNaN(parseInt(time))) {
+                time = new Date(time).getTime();
+            }
+
+            let periods = ["sec.", "mn.", "hr.", "d.", "wk.", "mo.", "y.", "ages"];
+
+            let lengths = ["60", "60", "24", "7", "4.35", "12", "100"];
+
+            let now = new Date().getTime();
+
+            let difference = Math.round((now - time) / 1000);
+            let tense;
+            let period;
+
+            if (difference <= 10 && difference >= 0) {
+                return "now";
+            } else if (difference > 0) {
+                tense = "ago";
+            } else {
+                tense = "later";
+            }
+
+            let j;
+
+            for (j = 0; difference >= lengths[j] && j < lengths.length - 1; j++) {
+                difference /= lengths[j];
+            }
+
+            difference = Math.round(difference);
+
+            period = periods[j];
+
+            return `${difference} ${period} ${tense}`;
+        }
+
+        window.onload = () => {
+            let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
+            document.getElementById("update-date").innerText = timeAgo(date.getTime()) + ", ";
+            document.getElementById("update-date-full").innerText = date.toString();
+
+            setInterval(() => {
+                let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
+                document.getElementById("update-date").innerText = timeAgo(date.getTime()) + ", ";
+            }, 500);
+
+            const ctx = document.getElementById('history').getContext('2d');
+            const graph = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [{
+                        label: 'Ping',
+                        data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
+                        borderColor: '<% if (ping < 256) { %>#05b705<% } else if (ping < 512) { %>#f4c424<% } else { %>#f43224<% } %>'
+                    }]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return label + "ms";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.raw.toFixed(2) + 'ms';
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            function bytesToSize(bytes) {
+                if (bytes > 1024) {
+                    if (bytes > 1024**2) {
+                        if (bytes > 1024**3) {
+                            if (bytes > 1024**4) {
+                                return (bytes / 1024**4).toFixed(3) + " TiB";
+                            } else {
+                                return (bytes / 1024**3).toFixed(2) + " GiB";
+                            }
+                        } else {
+                            return (bytes / 1024**2).toFixed(1) + " MiB";
+                        }
+                    } else {
+                        return (bytes / 1024).toFixed(0) + " KiB";
+                    }
+                } else {
+                    return bytes.toFixed(0) + " bytes";
+                }
+            }
+
+            window.serverData = JSON.parse(atob(`<%= Buffer.from(JSON.stringify(servers)).toString("base64") %>`));
+
+            const ctx2 = document.getElementById('ram').getContext('2d');
+            const graph2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [
+                        {
+                            label: 'Memory usage',
+                            data: Object.values(window.serverData._total).map(i => i.ram.used),
+                            borderColor: '#a033f4'
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return bytesToSize(label);
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return bytesToSize(tooltipItem.raw);
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            const ctx2a = document.getElementById('ram2').getContext('2d');
+            const graph2a = new Chart(ctx2a, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
+                        return {
+                            label: i,
+                            data: Object.values(window.serverData[i]).map(i => (i.ram.used / i.ram.total) * 100),
+                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
+                        }
+                    })
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return label.toFixed(2) + "%";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            const ctx3 = document.getElementById('disk').getContext('2d');
+            const graph3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [
+                        {
+                            label: 'Storage usage',
+                            data: Object.values(window.serverData._total).map(i => i.disk.used * 1024),
+                            borderColor: '#25bda2'
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return bytesToSize(label);
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return bytesToSize(tooltipItem.raw);
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            const ctx3a = document.getElementById('disk2').getContext('2d');
+            const graph3a = new Chart(ctx3a, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
+                        return {
+                            label: i,
+                            data: Object.values(window.serverData[i]).map(i => (i.disk.used / i.disk.total) * 100),
+                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
+                        }
+                    })
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return label.toFixed(2) + "%";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            const ctx4 = document.getElementById('cpu').getContext('2d');
+            const graph4 = new Chart(ctx4, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [
+                        {
+                            label: 'CPU usage',
+                            data: Object.values(window.serverData._total).map(i => i.cpu.usage),
+                            borderColor: '#4346ee'
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return label.toFixed(2) + "%";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.raw.toFixed(2) + "%";
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+
+            const ctx4a = document.getElementById('cpu2').getContext('2d');
+            const graph4a = new Chart(ctx4a, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
+                        return {
+                            label: i,
+                            data: Object.values(window.serverData[i]).map(i => i.cpu.usage),
+                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
+                        }
+                    })
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return label.toFixed(2) + "%";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
