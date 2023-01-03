@@ -4,598 +4,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Equestria.dev - Infrastructure status</title>
+    <title>Equestria.dev Status</title>
     <link rel="stylesheet" href="/bootstrap.min.css">
     <script src="/bootstrap.min.js"></script>
     <script src="/chart.js"></script>
     <link rel="icon" href="/logo.svg" type="image/svg+xml">
-
-    <style>
-        .tooltip {
-            --bs-tooltip-max-width: 20vw;
-        }
-
-        .status-service:hover {
-            background-color: rgba(0, 0, 0, .1);
-        }
-
-        tr:nth-last-child(1) .status-service {
-            border-bottom: none !important;
-        }
-
-        @media (min-width: 100px) {
-            tr:nth-child(1) .status-service {
-                border-top: none !important;
-            }
-        }
-
-        @media (max-width: 1000px) {
-            .status-service {
-                display: block;
-                width: 100% !important;
-                border-top: none !important;
-                border-left: none !important;
-                border-right: none !important;
-            }
-
-            .status-filler {
-                display: none !important;
-            }
-
-            .tooltip {
-                --bs-tooltip-max-width: 80vw;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="container">
-        <br><br>
+<div class="pt-5 pb-5 bg-dark text-white" style="text-align: center;">
+    <img src="/banner.svg" style="width: 320px; max-width: 100%;" alt="Equestria.dev">
+</div>
 
-        <div style="text-align: center;">
-            <img src="/banner.svg" style="width: 320px; max-width: 100%;" alt="Equestria.dev">
-            <h1>Infrastructure status</h1>
+<div class="container">
+    <br><br>
+
+    <% if (outage && outage['enabled']) { %>
+        <div class="custom-outage alert alert-<%= outage['code'] %>">
+            <p><b style="font-size: 1.5rem;"><%= outage['title'] %></b></p>
+            <% for (let step of outage['steps']) { let date = new Date(step['date']).toUTCString().split(" ") %>
+                <p><b><%= step['type'] %></b> - <%= step['message'] %><br><small style="opacity:.5;"><%= date[2] + " " + date[1] + ", " + date[4].substring(0, date[4].length - 3) + " UTC" %></small></p>
+            <% } %>
         </div>
+    <% } else { %>
+        <div class="alert <%= output["total"] === 2 ? "alert-danger" : (output["total"] === 1 ? "alert-warning" : "alert-success") %>">
+            <b style="font-size: 1.5rem;"><%= output["total"] === 0 ? "All Systems Operational" : (output["total"] === 1 ? "Running with Degraded Performance" : "Systems Outage") %></b>
+        </div>
+    <% } %>
 
-        <div style="font-size: 14px;">
-            <div style="display: grid; grid-template-columns: 1fr max-content;">
-                <div style="display:flex; align-items: center;">
-                    <div>
-                        <span style="vertical-align: middle; background: <% if (ping < 256) { %>#05b705<% } else if (ping < 512) { %>#f4c424<% } else { %>#f43224<% } %>; border-radius: 999px; width: 12px; height: 12px; display: inline-block;"></span>
-                        <span style="vertical-align: middle;"><%= ping.toFixed(2) %>ms</span>
-                    </div>
-                </div>
-                <div>
-                    <img alt="Available" src="/online.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Available</span>
-                    <img alt="Maintenance" src="/maintenance.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Maintenance</span>
-                    <img alt="Issue" src="/misbehaving.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Issue</span>
-                    <img alt="Outage" src="/offline.svg" style="width: 28px; vertical-align: middle;"><span style="opacity: .65; margin-left: 2px; display:inline-block; vertical-align: middle;">Outage</span>
-                </div>
-            </div>
-            <hr>
+    <div>
+        <div class="list-group">
+            <% for (let group of output["groups"]) { %>
+                <details class="list-group-item service list-group-item-action">
+                    <summary style="list-style: none;">
+                        <b><img src="/open.svg" class="icon-open" style="width: 16px;height: 16px;margin-top: -3px;"><img src="/close.svg" class="icon-close" style="display: none;width: 16px;height: 16px;margin-top: -3px;"> <%= group %></b>
+                        <span style="float: right;"></span>
 
-            <h3>Average ping history</h3>
-            <canvas id="history" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
+                        <div class="history-90">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(90, 1fr);">
+                                <% let uptimes = []; for (let i = 89; i > -1; i--) {
 
-            <hr>
-            <h3>Services status</h3>
+                                let date = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toISOString().split("T")[0];
+                                let parts = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toString().split(" ");
+                                let pretty = parts[0] + " " + parts[1] + " " + parts[2];
+                                let services = Object.values(output["services"]).filter(i => i.group === group).map(i => i.id);
+                                let list = [];
 
-            <table style="border-collapse: collapse; width: 100%; table-layout: fixed; border-left: 1px solid white; border-right: 1px solid white; margin-top: 10px;">
-                <tr style="width:100%;">
-                    <% for (let index in Object.keys(output["services"])) { index = parseInt(index); let service = output["services"][Object.keys(output["services"])[index]]; %>
-                    <td class="status-service" data-bs-toggle="tooltip" title="<p style='text-align:left !important;margin-bottom:<% if (service['details'] && service['details'].trim() !== "") { %>0.5<% } else { %>0<% } %>rem;'><b><%= service['name'] %> - <% if (service['status'] === "online") { %>Available<% } %><% if (service['status'] === "maintenance") { %>Maintenance<% } %><% if (service['status'] === "notWorking") { %>Issue<% } %><% if (service['status'] === "offline") { %>Outage<% } %></b><br><% if (service['ping'] > 0) { %>Latency: <%= service['ping'] %>ms<% } %></p><div style='text-align:left !important;'><% if (service['details'] && service['details'].trim() !== "") { %><%= service['details'] %><% } else { %><% } %></div></span>" style="width: calc(100% / 3); border: 1px solid rgba(0, 0, 0, .25); padding: 5px 10px; <% if ((index + 1) % 3 === 1) { %>border-left: none;<% } %><% if ((index + 1) % 3 === 0) { %>border-right: none;<% } %>">
-                        <span>
+                                for (let service of services) {
+                                    if (history[service]) {
+                                        if (history[service][date]) {
+                                            list.push(history[service][date].reduce((a, b) => a + b) / history[service][date].length);
+                                        }
+                                    }
+                                }
+
+                                let avg = -1;
+
+                                if (list.length > 0) {
+                                    avg = list.reduce((a, b) => a + b) / list.length;
+                                    uptimes.push((Math.abs(3 - avg) / 3) * 100);
+                                }
+
+                                let lower = Math.floor(avg);
+                                let higher = Math.ceil(avg);
+                                let diff = Math.abs(1 - (higher - avg));
+
+                                %>
+                                <div title="<%= pretty %>" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    <% if (list.length === 0) { %>
+                                        <div class="bg-secondary" style="height: 34px; width: 5px;"></div>
+                                    <% } else { %>
+                                        <div class="bg-<%= lower === 0 ? "success" : (lower === 1 ? "warning" : (lower === 2 ? "danger" : "info")) %>" style="height: 34px; width: 5px;">
+                                            <div class="bg-<%= higher === 0 ? "success" : (higher === 1 ? "warning" : (higher === 2 ? "danger" : "info")) %>" style="height: 34px; width: 5px; opacity: <%= diff * 100 %>%;"></div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">90 days ago</small>
+                                <small style="opacity: .75; text-align: center;"><% if (uptimes.length > 0) { %><%= (uptimes.reduce((a, b) => a + b) / uptimes.length).toFixed(1) %> % uptime<% } %></small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+
+                        <div class="history-60">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(60, 1fr);">
+                                <% uptimes = []; for (let i = 59; i > -1; i--) {
+
+                                    let date = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toISOString().split("T")[0];
+                                    let parts = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toString().split(" ");
+                                    let pretty = parts[0] + " " + parts[1] + " " + parts[2];
+                                    let services = Object.values(output["services"]).filter(i => i.group === group).map(i => i.id);
+                                    let list = [];
+
+                                    for (let service of services) {
+                                        if (history[service]) {
+                                            if (history[service][date]) {
+                                                list.push(history[service][date].reduce((a, b) => a + b) / history[service][date].length);
+                                            }
+                                        }
+                                    }
+
+                                    let avg = -1;
+
+                                    if (list.length > 0) {
+                                        avg = list.reduce((a, b) => a + b) / list.length;
+                                        uptimes.push((Math.abs(3 - avg) / 3) * 100);
+                                    }
+
+                                    let lower = Math.floor(avg);
+                                    let higher = Math.ceil(avg);
+                                    let diff = Math.abs(1 - (higher - avg));
+
+                                %>
+                                <div title="<%= pretty %>" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    <% if (list.length === 0) { %>
+                                        <div class="bg-secondary" style="height: 34px; width: 8px;"></div>
+                                    <% } else { %>
+                                        <div class="bg-<%= lower === 0 ? "success" : (lower === 1 ? "warning" : (lower === 2 ? "danger" : "info")) %>" style="height: 34px; width: 8px;">
+                                            <div class="bg-<%= higher === 0 ? "success" : (higher === 1 ? "warning" : (higher === 2 ? "danger" : "info")) %>" style="height: 34px; width: 8px; opacity: <%= diff * 100 %>%;"></div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">60 days ago</small>
+                                <small style="opacity: .75; text-align: center;"><% if (uptimes.length > 0) { %><%= (uptimes.reduce((a, b) => a + b) / uptimes.length).toFixed(1) %> % uptime<% } %></small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+
+                        <div class="history-30">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(30, 1fr);">
+                                <% uptimes = []; for (let i = 29; i > -1; i--) {
+
+                                    let date = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toISOString().split("T")[0];
+                                    let parts = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toString().split(" ");
+                                    let pretty = parts[0] + " " + parts[1] + " " + parts[2];
+                                    let services = Object.values(output["services"]).filter(i => i.group === group).map(i => i.id);
+                                    let list = [];
+
+                                    for (let service of services) {
+                                        if (history[service]) {
+                                            if (history[service][date]) {
+                                                list.push(history[service][date].reduce((a, b) => a + b) / history[service][date].length);
+                                            }
+                                        }
+                                    }
+
+                                    let avg = -1;
+
+                                    if (list.length > 0) {
+                                        avg = list.reduce((a, b) => a + b) / list.length;
+                                        uptimes.push((Math.abs(3 - avg) / 3) * 100);
+                                    }
+
+                                    let lower = Math.floor(avg);
+                                    let higher = Math.ceil(avg);
+                                    let diff = Math.abs(1 - (higher - avg));
+
+                                %>
+                                <div title="<%= pretty %>" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    <% if (list.length === 0) { %>
+                                        <div class="bg-secondary" style="height: 34px; width: 10px;"></div>
+                                    <% } else { %>
+                                        <div class="bg-<%= lower === 0 ? "success" : (lower === 1 ? "warning" : (lower === 2 ? "danger" : "info")) %>" style="height: 34px; width: 10px;">
+                                            <div class="bg-<%= higher === 0 ? "success" : (higher === 1 ? "warning" : (higher === 2 ? "danger" : "info")) %>" style="height: 34px; width: 10px; opacity: <%= diff * 100 %>%;"></div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">30 days ago</small>
+                                <small style="opacity: .75; text-align: center;"><% if (uptimes.length > 0) { %><%= (uptimes.reduce((a, b) => a + b) / uptimes.length).toFixed(1) %> % uptime<% } %></small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+                    </summary>
+                    <% for (let index in Object.keys(output["services"])) { index = parseInt(index); let service = output["services"][Object.keys(output["services"])[index]]; if (service.group === group) { %>
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span><%= service['name'] %></span>
                             <% if (service['status'] === "online") { %>
-                                <img alt="Available" src="/online.svg" style="width: 24px; vertical-align: middle;">
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
                             <% } %>
                             <% if (service['status'] === "maintenance") { %>
-                                <img alt="Maintenance" src="/maintenance.svg" style="width: 24px; vertical-align: middle;">
+                                <span class="text-info" style="float: right;" data-status-code="3">Under Maintenance</span>
                             <% } %>
                             <% if (service['status'] === "notWorking") { %>
-                                <img alt="Issue" src="/misbehaving.svg" style="width: 24px; vertical-align: middle;">
+                                <span class="text-warning" style="float: right;" data-status-code="1">Degraded Performance</span>
                             <% } %>
                             <% if (service['status'] === "offline") { %>
-                                <img alt="Outage" src="/offline.svg" style="width: 24px; vertical-align: middle;">
+                                <span class="text-danger" style="float: right;" data-status-code="2">Outage</span>
                             <% } %>
-                            <span style="margin-left: 2px; display:inline-block; vertical-align: middle;"><%= service['name'] %></span>
-                        </span>
-                    </td>
-                    <% if ((index + 1) % 3 === 0) { %></tr><tr><% } %>
-                    <% } %>
-                </tr>
-            </table>
-
-            <hr>
-            <h3>Servers memory usage (global)</h3>
-            <canvas id="ram" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <h3>Servers memory usage (per server)</h3>
-            <canvas id="ram2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <h3>Servers storage usage (global)</h3>
-            <canvas id="disk" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <h3>Servers storage usage (per server)</h3>
-            <canvas id="disk2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <h3>Servers CPU usage (global)</h3>
-            <canvas id="cpu" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <h3>Servers CPU usage (per server)</h3>
-            <canvas id="cpu2" style="width: 100%; height: 300px; max-height: 100%;"></canvas>
-
-            <hr>
-            <p class="text-muted" style="margin-top: 10px;">Last updated <span id="update-date" data-update-date="<%= date.toISOString() %>"></span><span id="update-date-full"><%= date.toString() %></span></p>
+                        </div>
+                    <% }} %>
+                </details>
+            <% } %>
         </div>
-    </div>
 
-    <script>
+        <script>
+
+            Array.from(document.getElementsByClassName("service")).forEach((i) => {
+                let code = 0;
+                let children = Array.from(i.children).filter(i => i.tagName === "DIV").map(i => Array.from(i.children).filter(i => i.className.startsWith("text-"))[0].getAttribute("data-status-code")).map(i => parseInt(i));
+
+                if (children.includes(1)) code = 1;
+                if (children.includes(2)) code = 2;
+                if (children.includes(3)) code = 3;
+
+                console.log(code);
+
+                switch (code) {
+                    case 0:
+                        i.children[0].children[1].innerText = "Operational";
+                        i.children[0].children[1].className = "text-success";
+                        break;
+
+                    case 1:
+                        i.children[0].children[1].innerText = "Degraded Performance";
+                        i.children[0].children[1].className = "text-warning";
+                        break;
+
+                    case 2:
+                        i.children[0].children[1].innerText = "Outage";
+                        i.children[0].children[1].className = "text-danger";
+                        break;
+
+                    case 3:
+                        i.children[0].children[1].innerText = "Under Maintenance";
+                        i.children[0].children[1].className = "text-info";
+                        break;
+                }
+            });
+
+        </script>
+
+        <% if (maintenances.length > 0) { %>
+            <h3 style="margin-top: 50px;">Scheduled Maintenance<%= maintenances.length > 1 ? "s" : "" %></h3>
+            <div class="maintenances">
+                <% for (let maintenance of maintenances) { if (new Date(maintenance["end"]).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()) %>
+                    <h5><%= maintenance["title"] %></h5>
+                    <p><%= maintenance["description"] %><br><small class="text-muted">Scheduled from <%= new Date(maintenance["start"]).toDateString().split(" ").slice(-3).join(" ") %> to <%= new Date(maintenance["end"]).toDateString().split(" ").slice(-3).join(" ") %> (estimated)</small></p>
+                <% } %>
+            </div>
+        <% } %>
+
+        <h3 style="margin-top: 50px;">Systems Response Time (<%= Math.round(ping) %> ms)</h3>
+        <canvas id="history" style="width: 100%; height: 200px; max-height: 100%;"></canvas>
+
+        <hr>
+        <p class="text-muted" style="margin-top: 10px;">Last updated <span data-bs-toggle="tooltip" title="<%= date.toString() %>" id="update-date" data-update-date="<%= date.toISOString() %>"><%= date.toISOString() %></span><span id="link-refresh" style="display:none;">, <a href="/">refresh</a></span></p>
+    </div>
+</div>
+
+<script>
+    function timeAgo(time) {
+        if (!isNaN(parseInt(time))) {
+            time = new Date(time).getTime();
+        }
+
+        let periods = ["second", "minute", "hour", "day", "week", "month", "year", "age"];
+
+        let lengths = ["60", "60", "24", "7", "4.35", "12", "100"];
+
+        let now = new Date().getTime();
+
+        let difference = Math.round((now - time) / 1000);
+        let tense;
+        let period;
+
+        if (difference <= 10 && difference >= 0) {
+            return "now";
+        } else if (difference > 0) {
+            tense = "ago";
+        } else {
+            tense = "later";
+        }
+
+        let j;
+
+        for (j = 0; difference >= lengths[j] && j < lengths.length - 1; j++) {
+            difference /= lengths[j];
+        }
+
+        difference = Math.round(difference);
+
+        period = periods[j];
+
+        return `${difference} ${period}${difference > 1 ? "s" : ""} ${tense}`;
+    }
+
+    window.onload = () => {
+        let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
+        document.getElementById("update-date").innerText = timeAgo(date.getTime());
+        document.getElementById("update-date").title = date.toString();
+
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }));
 
-        function timeAgo(time) {
-            if (!isNaN(parseInt(time))) {
-                time = new Date(time).getTime();
-            }
-
-            let periods = ["sec.", "mn.", "hr.", "d.", "wk.", "mo.", "y.", "ages"];
-
-            let lengths = ["60", "60", "24", "7", "4.35", "12", "100"];
-
-            let now = new Date().getTime();
-
-            let difference = Math.round((now - time) / 1000);
-            let tense;
-            let period;
-
-            if (difference <= 10 && difference >= 0) {
-                return "now";
-            } else if (difference > 0) {
-                tense = "ago";
-            } else {
-                tense = "later";
-            }
-
-            let j;
-
-            for (j = 0; difference >= lengths[j] && j < lengths.length - 1; j++) {
-                difference /= lengths[j];
-            }
-
-            difference = Math.round(difference);
-
-            period = periods[j];
-
-            return `${difference} ${period} ${tense}`;
-        }
-
-        window.onload = () => {
+        setInterval(() => {
             let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
-            document.getElementById("update-date").innerText = timeAgo(date.getTime()) + ", ";
-            document.getElementById("update-date-full").innerText = date.toString();
+            document.getElementById("update-date").innerText = timeAgo(date.getTime());
 
-            setInterval(() => {
-                let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
-                document.getElementById("update-date").innerText = timeAgo(date.getTime()) + ", ";
-            }, 500);
+            if (new Date() - date.getTime() >= 360000) {
+                document.getElementById("link-refresh").style.display = "inline";
+            }
+        }, 500);
 
-            const ctx = document.getElementById('history').getContext('2d');
-            const graph = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: [{
-                        label: 'Ping',
-                        data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
-                        borderColor: '<% if (ping < 256) { %>#05b705<% } else if (ping < 512) { %>#f4c424<% } else { %>#f43224<% } %>'
-                    }]
+        const ctx = document.getElementById('history').getContext('2d');
+        const graph = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                datasets: [{
+                    label: 'Ping',
+                    data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
+                    borderColor: '#05b7b1',
+                    backgroundColor: '#05b7b177'
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 0
                 },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return label + "ms";
-                                }
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(label) {
+                                return Math.round(label) + " ms";
                             }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
                         }
                     },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
+                    x: {
+                        gridLines: {
                             display: false
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.raw.toFixed(2) + 'ms';
-                                }
-                            },
-                            intersect: false
-                        }
+                        grid: {
+                            display: false
+                        },
+                        gridLineWidth: 0
                     }
-                }
-            });
-
-            function bytesToSize(bytes) {
-                if (bytes > 1024) {
-                    if (bytes > 1024**2) {
-                        if (bytes > 1024**3) {
-                            if (bytes > 1024**4) {
-                                return (bytes / 1024**4).toFixed(3) + " TiB";
-                            } else {
-                                return (bytes / 1024**3).toFixed(2) + " GiB";
+                },
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw.toFixed(2) + ' ms';
                             }
-                        } else {
-                            return (bytes / 1024**2).toFixed(1) + " MiB";
-                        }
-                    } else {
-                        return (bytes / 1024).toFixed(0) + " KiB";
+                        },
+                        intersect: false
                     }
-                } else {
-                    return bytes.toFixed(0) + " bytes";
                 }
             }
+        });
 
-            window.serverData = JSON.parse(atob(`<%= Buffer.from(JSON.stringify(servers)).toString("base64") %>`));
-
-            const ctx2 = document.getElementById('ram').getContext('2d');
-            const graph2 = new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: [
-                        {
-                            label: 'Memory usage',
-                            data: Object.values(window.serverData._total).map(i => i.ram.used),
-                            borderColor: '#a033f4'
+        function bytesToSize(bytes) {
+            if (bytes > 1024) {
+                if (bytes > 1024**2) {
+                    if (bytes > 1024**3) {
+                        if (bytes > 1024**4) {
+                            return (bytes / 1024**4).toFixed(3) + " TiB";
+                        } else {
+                            return (bytes / 1024**3).toFixed(2) + " GiB";
                         }
-                    ]
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return bytesToSize(label);
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return bytesToSize(tooltipItem.raw);
-                                }
-                            },
-                            intersect: false
-                        }
+                    } else {
+                        return (bytes / 1024**2).toFixed(1) + " MiB";
                     }
+                } else {
+                    return (bytes / 1024).toFixed(0) + " KiB";
                 }
-            });
-
-            const ctx2a = document.getElementById('ram2').getContext('2d');
-            const graph2a = new Chart(ctx2a, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
-                        return {
-                            label: i,
-                            data: Object.values(window.serverData[i]).map(i => (i.ram.used / i.ram.total) * 100),
-                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
-                        }
-                    })
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return label.toFixed(2) + "%";
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
-                                }
-                            },
-                            intersect: false
-                        }
-                    }
-                }
-            });
-
-            const ctx3 = document.getElementById('disk').getContext('2d');
-            const graph3 = new Chart(ctx3, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: [
-                        {
-                            label: 'Storage usage',
-                            data: Object.values(window.serverData._total).map(i => i.disk.used * 1024),
-                            borderColor: '#25bda2'
-                        }
-                    ]
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return bytesToSize(label);
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return bytesToSize(tooltipItem.raw);
-                                }
-                            },
-                            intersect: false
-                        }
-                    }
-                }
-            });
-
-            const ctx3a = document.getElementById('disk2').getContext('2d');
-            const graph3a = new Chart(ctx3a, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
-                        return {
-                            label: i,
-                            data: Object.values(window.serverData[i]).map(i => (i.disk.used / i.disk.total) * 100),
-                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
-                        }
-                    })
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return label.toFixed(2) + "%";
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
-                                }
-                            },
-                            intersect: false
-                        }
-                    }
-                }
-            });
-
-            const ctx4 = document.getElementById('cpu').getContext('2d');
-            const graph4 = new Chart(ctx4, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: [
-                        {
-                            label: 'CPU usage',
-                            data: Object.values(window.serverData._total).map(i => i.cpu.usage),
-                            borderColor: '#4346ee'
-                        }
-                    ]
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return label.toFixed(2) + "%";
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.raw.toFixed(2) + "%";
-                                }
-                            },
-                            intersect: false
-                        }
-                    }
-                }
-            });
-
-            const ctx4a = document.getElementById('cpu2').getContext('2d');
-            const graph4a = new Chart(ctx4a, {
-                type: 'line',
-                data: {
-                    labels: Object.keys(window.serverData._total).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: Object.keys(window.serverData).filter(i => i !== "_total").map(i => {
-                        return {
-                            label: i,
-                            data: Object.values(window.serverData[i]).map(i => i.cpu.usage),
-                            borderColor: Object.values(window.serverData[i])[Object.values(window.serverData[i]).length - 1].color
-                        }
-                    })
-                },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return label.toFixed(2) + "%";
-                                }
-                            }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
-                        }
-                    },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.dataset.label + ": " + tooltipItem.raw.toFixed(2) + "%";
-                                }
-                            },
-                            intersect: false
-                        }
-                    }
-                }
-            });
+            } else {
+                return bytes.toFixed(0) + " bytes";
+            }
         }
-    </script>
+    }
+</script>
 </body>
 </html>

@@ -37,10 +37,16 @@ try {
     totalMem = require('os').totalmem();
     freeMem = require('os').freemem();
 } catch (e) {
-    disk = require('child_process').execSync(`df -c`, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim().replace(/( )+/gm, " ").split("\n").map((i) => i.trim());
-    memParts = require('child_process').execSync("top -d1 | grep Mem:").toString().trim().split(" ").filter(i => i.endsWith("M")).map(i => ponyReadableToBytes(i));
-    totalMem = memParts[0] + memParts[1] + memParts[2] + memParts[3] + memParts[5];
-    freeMem = memParts[1] + memParts[2] + memParts[5]
+    try {
+        disk = require('child_process').execSync(`gdf -x tmpfs -x squashfs -x devtmpfs --total --output=source,fstype,size,used,avail,pcent,ipcent,iused,itotal,target ${parts}`, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim().replace(/( )+/gm, " ").split("\n").map((i) => i.trim());
+        totalMem = require('os').totalmem();
+        freeMem = require('os').freemem();
+    } catch (e) {
+        disk = require('child_process').execSync(`df -c`, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim().replace(/( )+/gm, " ").split("\n").map((i) => i.trim());
+        memParts = require('child_process').execSync("top -d1 | grep Mem:").toString().trim().split(" ").filter(i => i.endsWith("M")).map(i => ponyReadableToBytes(i));
+        totalMem = memParts[0] + memParts[1] + memParts[2] + memParts[3] + memParts[5];
+        freeMem = memParts[1] + memParts[2] + memParts[5]
+    }
 }
 
 let top;

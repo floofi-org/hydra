@@ -5,6 +5,7 @@ const axios = require('axios').default;
 const fs = require('fs');
 const net = require('net');
 const ejs = require('ejs');
+const history = require("./history.json");
 
 if (!fs.existsSync("./pings.json")) fs.writeFileSync("./pings.json", "{}");
 
@@ -41,11 +42,14 @@ async function check() {
     global.pingHistory = JSON.parse(fs.readFileSync("./pings.json").toString());
     global.config = YAML.parse(fs.readFileSync("./config.yaml").toString());
     global.output = {};
+    global.groups = [];
 
     for (let item of config['services']) {
         console.log(`[${item.id}] ${item.name}`);
 
         let result, start, ping;
+
+        global.groups = [...new Set([...global.groups, item.group])];
 
         switch (item.type) {
             case "http":
@@ -74,6 +78,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
                             details: "The service is reachable from an off-site network, but it is running with degraded performance."
@@ -83,6 +88,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "online",
                             details: "The service is entirely operational and responds within a reasonable amount of time."
@@ -93,6 +99,7 @@ async function check() {
                     output[item.id] = {
                         id: item.id,
                         name: item.name,
+                        group: item.group ?? "Default",
                         ping,
                         status: "notWorking",
                         details: "The service is reachable from an off-site network, but does not behave like it should (warning code: " + result.status + ")."
@@ -102,6 +109,7 @@ async function check() {
                     output[item.id] = {
                         id: item.id,
                         name: item.name,
+                        group: item.group ?? "Default",
                         ping,
                         status: "offline",
                         details: "The service returns a server error upon connection (error code: " + result.status + ")."
@@ -111,6 +119,7 @@ async function check() {
                     output[item.id] = {
                         id: item.id,
                         name: item.name,
+                        group: item.group ?? "Default",
                         ping,
                         status: "offline",
                         details: "The service is currently unreachable from an off-site network (error message: " + result.message + ")."
@@ -133,6 +142,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
                             details: "The service is reachable from an off-site network, but it is running with degraded performance."
@@ -142,6 +152,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "online",
                             details: "The service is entirely operational and responds within a reasonable amount of time."
@@ -156,6 +167,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
                             details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time."
@@ -166,6 +178,7 @@ async function check() {
                         output[item.id] = {
                             id: item.id,
                             name: item.name,
+                            group: item.group ?? "Default",
                             ping,
                             status: "offline",
                             details: "The service is currently unreachable from an off-site network (error code: " + e.code + ")."
@@ -180,6 +193,7 @@ async function check() {
                 output[item.id] = {
                     id: item.id,
                     name: item.name,
+                    group: item.group ?? "Default",
                     ping: -1,
                     status: null,
                     details: "An error occurred while processing status for this service."
@@ -207,8 +221,50 @@ async function check() {
             return a['name'].localeCompare(b['name']);
         }),
         ping: pings.reduce((a, b) => a + b) / pings.length,
-        date: new Date()
+        date: new Date(),
+        total: 0,
+        groups: groups
     }
+
+    let history = require('./history.json');
+
+    for (let service of output.services) {
+        if (!history[service.id]) history[service.id] = {};
+        if (!history[service.id][new Date().toISOString().split("T")[0]]) history[service.id][new Date().toISOString().split("T")[0]] = [];
+
+        let code = 0;
+
+        if (service.status === "offline") code = 2;
+        if (service.status === "notWorking") code = 1;
+        if (service.status === "maintenance") code = 3;
+
+        history[service.id][new Date().toISOString().split("T")[0]].push(code);
+
+        let newHistory = {};
+        let days = Object.keys(history[service.id]);
+        let keepDays = [];
+
+        for (let day of days) {
+            if (new Date(new Date().toISOString().split("T")[0]).getTime() - new Date(day).getTime() >= 7776000000) {} else {
+                keepDays.push(day);
+            }
+        }
+
+        for (let day of keepDays) {
+            newHistory[day] = history[service.id][day];
+        }
+
+        history[service.id] = newHistory;
+    }
+
+    fs.writeFileSync("./history.json", JSON.stringify(history));
+
+    if (global.output.services.map(i => i.status).includes("offline")) {
+        global.output.total = 2;
+    } else if (global.output.services.map(i => i.status).includes("notWorking")) {
+        global.output.total = 1;
+    }
+
     fs.writeFileSync("output.json", JSON.stringify(output, null, 4));
 
     pingHistory[new Date().toISOString()] = pings.reduce((a, b) => a + b) / pings.length;
@@ -225,7 +281,7 @@ async function web() {
     console.log("Generating webpage...");
     let pings = JSON.parse(fs.readFileSync("./pings.json").toString());
 
-    let rendered = ejs.render(fs.readFileSync("./web/page.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
+    let rendered = ejs.render(fs.readFileSync("./web/page.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
     fs.writeFileSync("./web/public/index.html", rendered);
 
     for (let asset of fs.readdirSync("./web/static")) {
@@ -245,7 +301,7 @@ async function servers() {
         let stats = null;
 
         try {
-            stats = JSON.parse(require('child_process').execSync(server['command'], { stdio: ["ignore", "pipe", "ignore"] }).toString().trim());
+            stats = JSON.parse(require('child_process').execSync(server['command'], { timeout: 30000, stdio: ["ignore", "pipe", "ignore"] }).toString().trim());
             stats["color"] = "hsl(" + Math.round(rgb2hue(...require('crypto').createHash("sha1").update(server.id).digest("hex").substring(0, 6).split(" ").map(i => [parseInt(i.substring(0, 2), 16), parseInt(i.substring(2, 4), 16), parseInt(i.substring(4, 6), 16)])[0])) + "deg 75% 60%)";
         } catch (e) {
             stats = null;
@@ -268,15 +324,15 @@ async function servers() {
 
     total[new Date().toISOString()] = {
         ram: {
-            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).map((i) => i.ram.used).reduce((a, b) => a + b),
-            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).map((i) => i.ram.total).reduce((a, b) => a + b)
+            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.ram.used).reduce((a, b) => a + b),
+            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.ram.total).reduce((a, b) => a + b)
         },
         cpu: {
-            usage: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).map((i) => i.cpu.usage).reduce((a, b) => a + b) / Object.values(list).length,
+            usage: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.cpu.usage).reduce((a, b) => a + b) / Object.values(list).length,
         },
         disk: {
-            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).map((i) => i.disk.used).reduce((a, b) => a + b),
-            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).map((i) => i.disk.total).reduce((a, b) => a + b)
+            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.disk.used).reduce((a, b) => a + b),
+            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.disk.total).reduce((a, b) => a + b)
         }
     };
 
