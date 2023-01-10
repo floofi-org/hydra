@@ -6,6 +6,7 @@ const fs = require('fs');
 const net = require('net');
 const ejs = require('ejs');
 const history = require("./history.json");
+const dgram = require("dgram");
 
 if (!fs.existsSync("./pings.json")) fs.writeFileSync("./pings.json", "{}");
 
@@ -18,23 +19,42 @@ function rgb2hue(r,g,b) {
     return 60*(h<0?h+6:h);
 }
 
-function testPort(port, host) {
+function testPort(port, host, udp) {
     return new Promise((res, rej) => {
-        let timeout;
+        if (udp) {
+            let timeout;
 
-        let socket = net.createConnection(port, host).on("connect", function(e) {
-            clearTimeout(timeout);
-            socket.destroy();
-            res(e);
-        }).on("error", function(e) {
-            clearTimeout(timeout);
-            rej(e);
-        });
+            let client = dgram.createSocket('udp4');
+            let message = Buffer.from("Equestria.dev-Status-Test_1.0");
 
-        timeout = setTimeout(() => {
-            socket.destroy();
-            rej(new Error("Connection timed out"));
-        }, config['timeout']);
+            client.send(message, 0, message.length, port, host, function(err) {
+                if (err) rej(err);
+                clearTimeout(timeout);
+                client.close();
+                res();
+            });
+
+            timeout = setTimeout(() => {
+                client.close();
+                rej(new Error("Connection timed out"));
+            }, config['timeout']);
+        } else {
+            let timeout;
+
+            let socket = net.createConnection(port, host).on("connect", function(e) {
+                clearTimeout(timeout);
+                socket.destroy();
+                res(e);
+            }).on("error", function(e) {
+                clearTimeout(timeout);
+                rej(e);
+            });
+
+            timeout = setTimeout(() => {
+                socket.destroy();
+                rej(new Error("Connection timed out"));
+            }, config['timeout']);
+        }
     })
 }
 
@@ -134,6 +154,66 @@ async function check() {
                 try {
                     start = new Date().getTime();
                     result = await testPort(item.port, item.host);
+                    ping = new Date().getTime() - start;
+
+                    console.log("    Result: -");
+                    if (ping > config['slow']) {
+                        console.log("    Is expected, but service is slow, marking as misbehaving");
+                        output[item.id] = {
+                            id: item.id,
+                            name: item.name,
+                            group: item.group ?? "Default",
+                            ping,
+                            status: "notWorking",
+                            details: "The service is reachable from an off-site network, but it is running with degraded performance."
+                        }
+                    } else {
+                        console.log("    Is expected, marking as online");
+                        output[item.id] = {
+                            id: item.id,
+                            name: item.name,
+                            group: item.group ?? "Default",
+                            ping,
+                            status: "online",
+                            details: "The service is entirely operational and responds within a reasonable amount of time."
+                        }
+                    }
+                } catch (e) {
+                    ping = new Date().getTime() - start;
+
+                    if (e.message === "Connection timed out") {
+                        console.log("    Result: (timed out)");
+                        console.log("    Is unexpected, marking as misbehaving");
+                        output[item.id] = {
+                            id: item.id,
+                            name: item.name,
+                            group: item.group ?? "Default",
+                            ping,
+                            status: "notWorking",
+                            details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time."
+                        }
+                    } else {
+                        console.log("    Result:", e.code);
+                        console.log("    Is unexpected, marking as offline");
+                        output[item.id] = {
+                            id: item.id,
+                            name: item.name,
+                            group: item.group ?? "Default",
+                            ping,
+                            status: "offline",
+                            details: "The service is currently unreachable from an off-site network (error code: " + e.code + ")."
+                        }
+                    }
+                }
+
+                break;
+
+            case "udp":
+                console.error("    Fetching:", "udp://" + item.host + ":" + item.port);
+
+                try {
+                    start = new Date().getTime();
+                    result = await testPort(item.port, item.host, true);
                     ping = new Date().getTime() - start;
 
                     console.log("    Result: -");
