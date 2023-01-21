@@ -80,7 +80,7 @@ async function check() {
                 console.error("    Fetching:", url);
 
                 try {
-                    result = await axios.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 EquestriaStatus/0.0 (compatible; Status-Poller; +https://status.equestria.dev)' } });
+                    result = await axios.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 EquestriaStatus/0.0 (compatible; Status-Poller; +https://status.equestria.dev)' }, timeout: config.timeout });
                 } catch (e) {
                     result = e;
                 }
