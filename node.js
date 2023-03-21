@@ -346,6 +346,11 @@ async function check() {
     }
 
     fs.writeFileSync("output.json", JSON.stringify(output, null, 4));
+    fs.writeFileSync("web/public/status.json", JSON.stringify({
+        code: output['total'],
+        image: output['total'] === 2 ? "status-error" : (output['total'] === 1 ? "status-warning" : "status-ok"),
+        text: output['total'] === 2 ? "Servers outage" : (output['total'] === 1 ? "Degraded performance" : "All systems nominal")
+    }, null, 4));
 
     pingHistory[new Date().toISOString()] = pings.reduce((a, b) => a + b) / pings.length;
     let newPingHistory = {};

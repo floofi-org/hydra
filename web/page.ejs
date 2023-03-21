@@ -10,24 +10,43 @@
     <script src="/chart.js"></script>
     <link rel="icon" href="/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/style.css">
+    <style id="desktop-style" media="not all">
+        #banner, #general-status, #banner-separator, #ping {
+            display: none;
+        }
+
+        body {
+            background-color: #222;
+        }
+
+        hr {
+            filter: invert(1);
+        }
+
+        .list-group-item {
+            filter: invert(1) hue-rotate(180deg) contrast(70%);
+        }
+    </style>
 </head>
 <body>
-<div class="pt-5 pb-5 bg-dark text-white" style="text-align: center;">
+<div id="banner" class="pt-5 pb-5 bg-dark text-white" style="text-align: center;">
     <img src="/banner.svg" style="width: 320px; max-width: 100%;" alt="Equestria.dev">
 </div>
 
 <div class="container">
-    <br><br>
+    <div id="banner-separator">
+        <br><br>
+    </div>
 
     <% if (outage && outage['enabled']) { %>
-        <div class="custom-outage alert alert-<%= outage['code'] %>">
+        <div id="general-notice" class="custom-outage alert alert-<%= outage['code'] %>">
             <p><b style="font-size: 1.5rem;"><%= outage['title'] %></b></p>
             <% for (let step of outage['steps']) { let date = new Date(step['date']).toUTCString().split(" ") %>
                 <p><b><%= step['type'] %></b> - <%= step['message'] %><br><small style="opacity:.5;"><%= date[2] + " " + date[1] + ", " + date[4].substring(0, date[4].length - 3) + " UTC" %></small></p>
             <% } %>
         </div>
     <% } else { %>
-        <div class="alert <%= output["total"] === 2 ? "alert-danger" : (output["total"] === 1 ? "alert-warning" : "alert-success") %>">
+        <div id="general-status" class="alert <%= output["total"] === 2 ? "alert-danger" : (output["total"] === 1 ? "alert-warning" : "alert-success") %>">
             <b style="font-size: 1.5rem;"><%= output["total"] === 0 ? "All Systems Operational" : (output["total"] === 1 ? "Running with Degraded Performance" : "Systems Outage") %></b>
         </div>
     <% } %>
@@ -242,7 +261,7 @@
 
         </script>
 
-        <% if (maintenances.length > 0) { %>
+        <% if (maintenances && maintenances.length > 0) { %>
             <h3 style="margin-top: 50px;">Scheduled Maintenance<%= maintenances.length > 1 ? "s" : "" %></h3>
             <div class="maintenances">
                 <% for (let maintenance of maintenances) { if (new Date(maintenance["end"]).getTime() >= new Date(new Date().toISOString().split("T")[0]).getTime()) %>
@@ -252,8 +271,10 @@
             </div>
         <% } %>
 
-        <h3 style="margin-top: 50px;">Systems Response Time (<%= Math.round(ping) %> ms)</h3>
-        <canvas id="history" style="width: 100%; height: 200px; max-height: 100%;"></canvas>
+        <div id="ping">
+            <h3 style="margin-top: 50px;">Systems Response Time (<%= Math.round(ping) %> ms)</h3>
+            <canvas id="history" style="width: 100%; height: 200px; max-height: 100%;"></canvas>
+        </div>
 
         <hr>
         <p class="text-muted" style="margin-top: 10px;">Last updated <span data-bs-toggle="tooltip" title="<%= date.toString() %>" id="update-date" data-update-date="<%= date.toISOString() %>"><%= date.toISOString() %></span><span id="link-refresh" style="display:none;">, <a href="/">refresh</a></span></p>
@@ -298,6 +319,15 @@
     }
 
     window.onload = () => {
+        if (location.search.includes("embed")) {
+            document.getElementById("desktop-style").removeAttribute("media");
+            Array.from(document.getElementsByTagName("details")).map(i => i.open = true);
+
+            if (window.parent) {
+                location.hash = "#/" + document.body.clientHeight;
+            }
+        }
+
         let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
         document.getElementById("update-date").innerText = timeAgo(date.getTime());
         document.getElementById("update-date").title = date.toString();
