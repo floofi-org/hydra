@@ -429,6 +429,7 @@ async function servers() {
     list["_total"] = realTotal;
 
     fs.writeFileSync("./servers.json", JSON.stringify(list, null, 4));
+    require('./notifications')();
     console.log("Done!");
 }
 
