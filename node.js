@@ -433,4 +433,4 @@ async function servers() {
     console.log("Done!");
 }
 
-(async () => { await check(); await servers(); await web(); console.log("Update completed"); setInterval(async () => { await check();  await servers(); await web(); }, config['interval']); })()
+(async () => { await check(); await check(); await servers(); await web(); console.log("Update completed"); setInterval(async () => { await check(); await check(); await servers(); await web(); }, config['interval']); })()
