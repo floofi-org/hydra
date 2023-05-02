@@ -349,7 +349,8 @@ async function check() {
     fs.writeFileSync("web/public/status.json", JSON.stringify({
         code: output['total'],
         image: output['total'] === 2 ? "status-error" : (output['total'] === 1 ? "status-warning" : "status-ok"),
-        text: output['total'] === 2 ? "Servers outage" : (output['total'] === 1 ? "Degraded performance" : "All systems nominal")
+        text: output['total'] === 2 ? "Servers outage" : (output['total'] === 1 ? "Degraded performance" : "All systems nominal"),
+        outages: Object.values(output.services).filter(i => i["status"] === "offline" || i["status"] === "notWorking").map(i => [i.group, i.name])
     }, null, 4));
 
     pingHistory[new Date().toISOString()] = pings.reduce((a, b) => a + b) / pings.length;
