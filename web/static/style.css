@@ -97,3 +97,37 @@ tr:nth-last-child(1) .status-service {
 .maintenances *:nth-last-child(1) {
     margin-bottom: 0 !important;
 }
+
+@media (prefers-color-scheme: dark) {
+    #banner {
+        background-color: #252525 !important;
+    }
+
+    body {
+        background-color: #353535 !important;
+        color: white !important;
+    }
+
+    .list-group-item {
+        background: #444 !important;
+        color: white !important;
+    }
+
+    .list-group-item:hover {
+        background: #555 !important;
+        color: white !important;
+    }
+
+    .list-group-item:active {
+        background: #666 !important;
+        color: white !important;
+    }
+
+    .icon-open, .icon-close {
+        filter: invert(1) !important;
+    }
+
+    .alert {
+        filter: invert(1) hue-rotate(180deg) !important;
+    }
+}

@@ -369,10 +369,12 @@ async function web() {
 
     let rendered = ejs.render(fs.readFileSync("./web/page.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
     let rendered2 = ejs.render(fs.readFileSync("./web/page2.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
+    let rendered3 = ejs.render(fs.readFileSync("./web/content.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
 
     if (new Date().getTime() > 1682240400000) {
         fs.writeFileSync("./web/public/index.html", rendered2);
         fs.writeFileSync("./web/public/index2.html", rendered);
+        fs.writeFileSync("./web/public/content.html", rendered3);
     } else {
         fs.writeFileSync("./web/public/index.html", rendered);
         fs.writeFileSync("./web/public/index2.html", rendered2);
