@@ -37,10 +37,9 @@
     <div>
         <div class="list-group">
             <% for (let group of output["groups"]) { %>
-                <details class="list-group-item service list-group-item-action">
-                    <summary style="list-style: none;">
-                        <b><img src="/open.svg" class="icon-open" style="width: 16px;height: 16px;margin-top: -3px;"><img src="/close.svg" class="icon-close" style="display: none;width: 16px;height: 16px;margin-top: -3px;"> <%= group %></b>
-                        <span style="float: right;"></span>
+                <div class="list-group-item service list-group-item-action">
+                    <div style="list-style: none;">
+                        <b><%= group %></b>
 
                         <div class="history-90">
                             <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(90, 1fr);">
@@ -185,7 +184,7 @@
                                 <small style="opacity: .5;">Today </small>
                             </div>
                         </div>
-                    </summary>
+                    </div>
                     <% for (let index in Object.keys(output["services"])) { index = parseInt(index); let service = output["services"][Object.keys(output["services"])[index]]; if (service.group === group) { %>
                         <div style="margin: 10px 0 10px 20px;">
                             <span><%= service['name'] %></span>
@@ -203,7 +202,7 @@
                             <% } %>
                         </div>
                     <% }} %>
-                </details>
+                </div>
             <% } %>
         </div>
 
