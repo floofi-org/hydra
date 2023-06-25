@@ -263,144 +263,80 @@
     </div>
 
     <script id="page-script">
-        function timeAgo(time) {
-            if (!isNaN(parseInt(time))) {
-                time = new Date(time).getTime();
+        if (location.search.includes("embed")) {
+            document.getElementById("desktop-style").removeAttribute("media");
+            Array.from(document.getElementsByTagName("details")).map(i => i.open = true);
+
+            if (window.parent) {
+                location.hash = "#/" + document.body.clientHeight;
             }
-
-            let periods = ["second", "minute", "hour", "day", "week", "month", "year", "age"];
-
-            let lengths = ["60", "60", "24", "7", "4.35", "12", "100"];
-
-            let now = new Date().getTime();
-
-            let difference = Math.round((now - time) / 1000);
-            let tense;
-            let period;
-
-            if (difference <= 10 && difference >= 0) {
-                return "now";
-            } else if (difference > 0) {
-                tense = "ago";
-            } else {
-                tense = "later";
-            }
-
-            let j;
-
-            for (j = 0; difference >= lengths[j] && j < lengths.length - 1; j++) {
-                difference /= lengths[j];
-            }
-
-            difference = Math.round(difference);
-
-            period = periods[j];
-
-            return `${difference} ${period}${difference > 1 ? "s" : ""} ${tense}`;
         }
 
-        window.loadPage = () => {
-            if (location.search.includes("embed")) {
-                document.getElementById("desktop-style").removeAttribute("media");
-                Array.from(document.getElementsByTagName("details")).map(i => i.open = true);
+        document.getElementById("update-date").innerText = timeAgo((new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime());
+        document.getElementById("update-date").title = (new Date(document.getElementById("update-date").getAttribute("data-update-date"))).toString();
 
-                if (window.parent) {
-                    location.hash = "#/" + document.body.clientHeight;
-                }
+        [...(document.querySelectorAll('[data-bs-toggle="tooltip"]'))].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }));
+
+        setInterval(() => {
+            document.getElementById("update-date").innerText = timeAgo((new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime());
+
+            if (new Date() - (new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime() >= 360000) {
+                document.getElementById("link-refresh").style.display = "inline";
             }
+        }, 500);
 
-            let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
-            document.getElementById("update-date").innerText = timeAgo(date.getTime());
-            document.getElementById("update-date").title = date.toString();
-
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }));
-
-            setInterval(() => {
-                let date = new Date(document.getElementById("update-date").getAttribute("data-update-date"));
-                document.getElementById("update-date").innerText = timeAgo(date.getTime());
-
-                if (new Date() - date.getTime() >= 360000) {
-                    document.getElementById("link-refresh").style.display = "inline";
-                }
-            }, 500);
-
-            const ctx = document.getElementById('history').getContext('2d');
-            const graph = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                    datasets: [{
-                        label: 'Ping',
-                        data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
-                        borderColor: '#05b7b1',
-                        backgroundColor: '#05b7b177'
-                    }]
+        new Chart(document.getElementById('history').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                datasets: [{
+                    label: 'Ping',
+                    data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
+                    borderColor: '#05b7b1',
+                    backgroundColor: '#05b7b177'
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 0
                 },
-                options: {
-                    animation: {
-                        duration: 0
-                    },
-                    scales: {
-                        y: {
-                            ticks: {
-                                callback: function(label) {
-                                    return Math.round(label) + " ms";
-                                }
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(label) {
+                                return Math.round(label) + " ms";
                             }
-                        },
-                        x: {
-                            gridLines: {
-                                display: false
-                            },
-                            grid: {
-                                display: false
-                            },
-                            gridLineWidth: 0
                         }
                     },
-                    elements: {
-                        point:{
-                            radius: 0
-                        }
-                    },
-                    plugins: {
-                        legend: {
+                    x: {
+                        gridLines: {
                             display: false
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.raw.toFixed(2) + ' ms';
-                                }
-                            },
-                            intersect: false
-                        }
+                        grid: {
+                            display: false
+                        },
+                        gridLineWidth: 0
                     }
-                }
-            });
-
-            function bytesToSize(bytes) {
-                if (bytes > 1024) {
-                    if (bytes > 1024**2) {
-                        if (bytes > 1024**3) {
-                            if (bytes > 1024**4) {
-                                return (bytes / 1024**4).toFixed(3) + " TiB";
-                            } else {
-                                return (bytes / 1024**3).toFixed(2) + " GiB";
+                },
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw.toFixed(2) + ' ms';
                             }
-                        } else {
-                            return (bytes / 1024**2).toFixed(1) + " MiB";
-                        }
-                    } else {
-                        return (bytes / 1024).toFixed(0) + " KiB";
+                        },
+                        intersect: false
                     }
-                } else {
-                    return bytes.toFixed(0) + " bytes";
                 }
             }
-        }
-
-        loadPage();
+        });
     </script>
 </div>
