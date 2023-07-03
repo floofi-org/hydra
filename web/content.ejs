@@ -253,16 +253,12 @@
             </div>
         <% } %>
 
-        <div id="ping">
-            <h3 style="margin-top: 50px;">Systems Response Time (<%= Math.round(ping) %> ms)</h3>
-            <canvas id="history" style="width: 100%; height: 200px; max-height: 100%;"></canvas>
-        </div>
-
-        <hr>
-        <p class="text-muted" style="margin-top: 10px;">Last updated <span data-bs-toggle="tooltip" title="<%= date.toString() %>" id="update-date" data-update-date="<%= date.toISOString() %>"><%= date.toISOString() %></span><span id="link-refresh" style="display:none;"></span></p>
+        <p class="text-muted" style="display: none;margin-top: 10px;" id="update-container-new">Last updated <span data-bs-toggle="tooltip" title="<%= date.toString() %>" id="update-date" data-update-date="<%= date.toISOString() %>"><%= date.toISOString() %></span><span id="link-refresh" style="display:none;"></span></p>
     </div>
 
     <script id="page-script">
+        document.getElementById("ping-time").innerText = "<%= Math.round(ping) %>";
+
         if (location.search.includes("embed")) {
             document.getElementById("desktop-style").removeAttribute("media");
             Array.from(document.getElementsByTagName("details")).map(i => i.open = true);
@@ -285,58 +281,70 @@
             }
         }, 500);
 
-        new Chart(document.getElementById('history').getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
-                datasets: [{
-                    label: 'Ping',
-                    data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
-                    borderColor: '#05b7b1',
-                    backgroundColor: '#05b7b177'
-                }]
-            },
-            options: {
-                animation: {
-                    duration: 0
+        if (window.chart) window.chart.data = {
+            labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+            datasets: [{
+                label: 'Ping',
+                data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
+                borderColor: '#05b7b1',
+                backgroundColor: '#05b7b177'
+            }]
+        }
+
+        if (!window.chart) {
+            window.chart = new Chart(document.getElementById('history').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: JSON.parse(`<%- JSON.stringify(pings[0]) %>`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [{
+                        label: 'Ping',
+                        data: JSON.parse(`<%= JSON.stringify(pings[1]) %>`),
+                        borderColor: '#05b7b1',
+                        backgroundColor: '#05b7b177'
+                    }]
                 },
-                scales: {
-                    y: {
-                        ticks: {
-                            callback: function(label) {
-                                return Math.round(label) + " ms";
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return Math.round(label) + " ms";
+                                }
                             }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
                         }
                     },
-                    x: {
-                        gridLines: {
-                            display: false
-                        },
-                        grid: {
-                            display: false
-                        },
-                        gridLineWidth: 0
-                    }
-                },
-                elements: {
-                    point:{
-                        radius: 0
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.raw.toFixed(2) + ' ms';
-                            }
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                        intersect: false
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.raw.toFixed(2) + ' ms';
+                                }
+                            },
+                            intersect: false
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     </script>
 </div>
