@@ -19,8 +19,8 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('The current outage is now over and everything is working as expected.'),
-                        title: formatPonypush("✅ All systems operational"),
+                        message: formatPonypush('All of the services are now working as expected.'),
+                        title: formatPonypush("🟢 Everything is up"),
                         priority: 3,
                         tags: ['status'],
                         click: "https://status.equestria.dev",
@@ -50,8 +50,8 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('One or more service(s) is/are experiencing temporary performance degradation, this is most likely safe.'),
-                        title: formatPonypush("⚠️ Service is disturbed"),
+                        message: formatPonypush('This service is experiencing temporary performance degradation, this is most likely safe.'),
+                        title: formatPonypush("🟡 [?] is slower than expected"),
                         priority: 3,
                         tags: ['status'],
                         click: "https://status.equestria.dev",
@@ -81,8 +81,8 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('One or more service(s) is/are experiencing a major outage, investigation is needed.'),
-                        title: formatPonypush("🚨 Major outage"),
+                        message: formatPonypush('This service is experiencing a major outage and automatic remediation has failed or is impossible, investigation is needed.'),
+                        title: formatPonypush("🔴 [?] is down"),
                         priority: 3,
                         tags: ['status'],
                         click: "https://status.equestria.dev",
