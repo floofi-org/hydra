@@ -347,6 +347,7 @@ async function check() {
 
     fs.writeFileSync("output.json", JSON.stringify(output, null, 4));
     fs.writeFileSync("web/public/status.json", JSON.stringify({
+        ping: output["ping"],
         code: output['total'],
         image: output['total'] === 2 ? "status-error" : (output['total'] === 1 ? "status-warning" : "status-ok"),
         text: output['total'] === 2 ? "Servers outage" : (output['total'] === 1 ? "Degraded performance" : "All systems nominal"),
