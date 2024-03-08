@@ -23,16 +23,69 @@
 
     <% if (outage && outage['enabled']) { %>
         <div id="general-notice" class="custom-outage alert alert-<%= outage['code'] %>">
-            <p><b style="font-size: 1.5rem;"><%= outage['title'] %></b></p>
+            <p><b style="font-size: 1.5rem;"><%- outage['title'] %></b></p>
+            <%- outage['description'] ?? "" %>
             <% for (let step of outage['steps']) { let date = new Date(step['date']).toUTCString().split(" ") %>
-            <p><b><%= step['type'] %></b> - <%= step['message'] %><br><small style="opacity:.5;"><%= date[2] + " " + date[1] + ", " + date[4].substring(0, date[4].length - 3) + " UTC" %></small></p>
+            <p><b><%- step['type'] %></b> - <%- step['message'] %><br><small style="opacity:.5;"><%= date[2] + " " + date[1] + ", " + date[4].substring(0, date[4].length - 3) + " UTC" %></small></p>
             <% } %>
         </div>
     <% } else { %>
         <div id="general-status" class="alert <%= output["total"] === 2 ? "alert-danger" : (output["total"] === 1 ? "alert-warning" : "alert-success") %>">
-            <b style="font-size: 1.5rem;"><%= output["total"] === 0 ? "All Systems Operational" : (output["total"] === 1 ? "Running with Degraded Performance" : "Systems Outage") %></b>
+            <b style="font-size: 1.5rem;"><%= output["total"] === 0 ? "All systems are operating smoothly" : (output["total"] === 1 ? "Some systems are experiencing degraded performance" : "Some systems are experiencing downtime") %></b>
         </div>
     <% } %>
+
+    <div id="new-infra-maintenance2" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Scheduled maintenance on 8 March 2024</b>
+            </summary>
+
+            <p><b>Note:</b> This maintenance might need to be postponed to a later date, potentially next week.<br><b>Times:</b> 10:00 CET - 12:03 CET</p>
+            <p>Equestria.dev will be updating its German server. This will affect services such as Ponycule, Chatroom, as well as websites that are still using Equestria.dev's DNS server. We apologize for any inconvenience caused.</p>
+            <div>Please refer to this status page for future information, or contact us at <a href="mailto:raindrops@equestria.dev">raindrops@equestria.dev</a>. Thank you for your understanding.</div>
+        </details>
+    </div>
+
+    <div id="new-infra-maintenance" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Scheduled maintenance on 7 March 2024</b>
+            </summary>
+
+            <p><i>This maintenance is now done and services are being started again, sorry for any inconvenience this has caused.</i></p>
+            <hr>
+            <p><b>Times:</b> 08:30 CET - 17:42 CET<br><b>Disclaimer:</b> Hardware issues have made a step of the maintenance take longer than expected, therefore the maintenance overall might be slightly longer. We apologize for the inconvenience.</p>
+            <p>Equestria.dev is deploying its new infrastructure to production environments today. During this period, most services are taken down. It is estimated for this maintenance to take the entire day, and we apologize for the inconvenience.</p>
+            <p>Please refer to this status page for future information, or contact us at <a href="mailto:raindrops@equestria.dev">raindrops@equestria.dev</a>. Thank you for your understanding.</p>
+            <ul>
+                <li><b>Ponycon.info users:</b> The ponycon.info website and all associated infrastructure have been transferred to a temporary server during the maintenance.</li>
+                <li><b>Equestria.dev Live and Label Studio users:</b> These services will be offline for a longer period as they are not our top priority at the moment. They have also been taken down earlier to ensure a smooth transfer process.</li>
+                <li><b>YouTrack users:</b> YouTrack will not be reinstated after this maintenance as it was planned to be discontinued before. Please use our <a href="https://equestria.dev" target="_blank">contact page</a> to report bugs.</li>
+                <li><b>GitLab users:</b> GitLab was shut down at 21:00 CET to take a full backup, so it can easily be restored on the new server installation. Sorry for the inconvenience.</li>
+            </ul>
+        </details>
+    </div>
+
+    <div id="new-infra" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Equestria.dev 2024 infrastructure</b>
+            </summary>
+            <div>Equestria.dev is renovating its infrastructure to prepare for more modern technologies. The following is planned:</div>
+            <ul>
+                <li>New naming scheme based on the names of people who participated on My Little Pony</li>
+                <li>Switching to Cloudflare's DNS servers; using their proxy is not planned because of user privacy concerns</li>
+                <li>Reconfiguration of the host servers with Red Hat Enterprise Linux and of the guest servers with Fedora Cloud</li>
+                <li>Clean up and removal of unused DNS entries and files on servers</li>
+                <li>Deployment of version 13 of the website, as well as IPv6</li>
+                <li><s>Strict and unique use of IPv6 throughout Equestria.dev's internal infrastructure</s></li>
+                <li>Removal and archival of Equestria.dev's YouTrack instance</li>
+            </ul>
+            <p>Some websites, applications, services or pages might be unavailable during this change. Please use this page to keep track of anything as it goes and be aware that Equestria.dev will always value your privacy.</p>
+            <div><b>Currently deployed changes:</b> IPv6 on all websites · Cloudflare proxy on pone.eu.org · Removal of unused DNS entries · Transfer of the equestria.dev domain to Cloudflare DNS · Configuration of DNSSEC · New naming scheme · Reconfiguration of host servers · Removal of YouTrack · Deployment of version 13 of our website</div>
+        </details>
+    </div>
 
     <div>
         <div class="list-group">
@@ -46,8 +99,7 @@
                                 <% let uptimes = []; for (let i = 89; i > -1; i--) {
 
                                     let date = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toISOString().split("T")[0];
-                                    let parts = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toString().split(" ");
-                                    let pretty = parts[0] + " " + parts[1] + " " + parts[2];
+                                    let pretty = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: 'numeric' });
                                     let services = Object.values(output["services"]).filter(i => i.group === group).map(i => i.id);
                                     let list = [];
 
@@ -71,7 +123,7 @@
                                     let diff = Math.abs(1 - (higher - avg));
 
                                 %>
-                                <div title="<%= pretty %>" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                <div title="<b><%= pretty %></b><br><%= (100 - (diff * 100)).toFixed(1) %>% uptime<br><% let minutesDown = Math.round(diff * 1440); let sHoursDown = Math.floor(minutesDown / 60); let sMinutesDown = minutesDown - sHoursDown * 60; %><%= sHoursDown > 0 ? `Down ${sHoursDown} hr ${sMinutesDown} min` : (sMinutesDown > 0 ? `Down ${sMinutesDown} minute${sMinutesDown > 1 ? "s" : ""}` : `No downtime`) %><br><%= (100 - (diff * 100)) >= 99 ? "Compliant with SLA" : "Violating SLA" %>" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
                                     <% if (list.length === 0) { %>
                                         <div class="bg-secondary" style="height: 34px; width: 5px;"></div>
                                     <% } else { %>
@@ -84,7 +136,7 @@
                             </div>
                             <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
                                 <small style="opacity: .5;">90 days ago</small>
-                                <small style="opacity: .75; text-align: center;"><% if (uptimes.length > 0) { %><%= (uptimes.reduce((a, b) => a + b) / uptimes.length).toFixed(1) %> % uptime<% } %></small>
+                                <small style="opacity: .75; text-align: center;"><% if (uptimes.length > 0) { %><%= (uptimes.reduce((a, b) => a + b) / uptimes.length).toFixed(1) %> % uptime · <%= (uptimes.reduce((a, b) => a + b) / uptimes.length) >= 99 ? "Compliant with SLA" : "Violating SLA" %><% } %></small>
                                 <small style="opacity: .5;">Today </small>
                             </div>
                         </div>

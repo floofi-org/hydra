@@ -90,7 +90,7 @@ async function check() {
                 }
 
                 ping = new Date().getTime() - start;
-                console.log("    Response: " + result.status, result.statusText);
+                console.log("    Response: " + result.status, result.statusText, result);
 
                 if (result.status === item.expect) {
                     if (ping > config['slow']) {
@@ -368,18 +368,11 @@ async function web() {
     console.log("Generating webpage...");
     let pings = JSON.parse(fs.readFileSync("./pings.json").toString());
 
-    let rendered = ejs.render(fs.readFileSync("./web/page.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
     let rendered2 = ejs.render(fs.readFileSync("./web/page2.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
     let rendered3 = ejs.render(fs.readFileSync("./web/content.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
 
-    if (new Date().getTime() > 1682240400000) {
-        fs.writeFileSync("./web/public/index.html", rendered2);
-        fs.writeFileSync("./web/public/index2.html", rendered);
-        fs.writeFileSync("./web/public/content.html", rendered3);
-    } else {
-        fs.writeFileSync("./web/public/index.html", rendered);
-        fs.writeFileSync("./web/public/index2.html", rendered2);
-    }
+    fs.writeFileSync("./web/public/index.html", rendered2);
+    fs.writeFileSync("./web/public/content.html", rendered3);
 
     for (let asset of fs.readdirSync("./web/static")) {
         fs.copyFileSync("./web/static/" + asset, "./web/public/" + asset);
