@@ -1,3 +1,4 @@
+const axios = require("axios");
 module.exports = () => {
     const axios = require('axios');
     const fs = require('fs');
@@ -33,8 +34,29 @@ module.exports = () => {
                             },
                             {
                                 action: "view",
-                                label: "Open Proxmox",
+                                label: "Open Console",
                                 url: "https://admin.equestria.dev",
+                                clear: true
+                            }
+                        ]
+                    }, {
+                        auth: {
+                            username: config['ntfy']['user'],
+                            password: config['ntfy']['password']
+                        }
+                    })
+                    await axios.post(config['ntfy']['server'], {
+                        topic: config['ntfy']['public'],
+                        message: formatPonypush('All of the services are now working as expected.'),
+                        title: formatPonypush("🟢 Everything is up"),
+                        priority: 2,
+                        tags: ['status'],
+                        click: "https://status.equestria.dev",
+                        actions: [
+                            {
+                                action: "view",
+                                label: "View status page",
+                                url: "https://status.equestria.dev",
                                 clear: true
                             }
                         ]
@@ -64,8 +86,29 @@ module.exports = () => {
                             },
                             {
                                 action: "view",
-                                label: "Open Proxmox",
+                                label: "Open Console",
                                 url: "https://admin.equestria.dev",
+                                clear: true
+                            }
+                        ]
+                    }, {
+                        auth: {
+                            username: config['ntfy']['user'],
+                            password: config['ntfy']['password']
+                        }
+                    })
+                    await axios.post(config['ntfy']['server'], {
+                        topic: config['ntfy']['public'],
+                        message: formatPonypush('One or more service(s) is/are experiencing temporary performance degradation, this is most likely safe.'),
+                        title: formatPonypush("🟡 Something is slower than expected"),
+                        priority: 2,
+                        tags: ['status'],
+                        click: "https://status.equestria.dev",
+                        actions: [
+                            {
+                                action: "view",
+                                label: "View status page",
+                                url: "https://status.equestria.dev",
                                 clear: true
                             }
                         ]
@@ -95,8 +138,29 @@ module.exports = () => {
                             },
                             {
                                 action: "view",
-                                label: "Open Proxmox",
+                                label: "Open Console",
                                 url: "https://admin.equestria.dev",
+                                clear: true
+                            }
+                        ]
+                    }, {
+                        auth: {
+                            username: config['ntfy']['user'],
+                            password: config['ntfy']['password']
+                        }
+                    })
+                    await axios.post(config['ntfy']['server'], {
+                        topic: config['ntfy']['public'],
+                        message: formatPonypush('One or more service(s) is/are experiencing a major outage and automatic remediation has failed or is impossible, investigation is needed.'),
+                        title: formatPonypush("🔴 Something is down"),
+                        priority: 3,
+                        tags: ['status'],
+                        click: "https://status.equestria.dev",
+                        actions: [
+                            {
+                                action: "view",
+                                label: "View status page",
+                                url: "https://status.equestria.dev",
                                 clear: true
                             }
                         ]
