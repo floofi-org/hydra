@@ -1,0 +1,1890 @@
+<style id="desktop-style" media="not all">
+    #banner, #general-status, #banner-separator, #ping {
+        display: none;
+    }
+
+    body {
+        background-color: #222;
+    }
+
+    hr {
+        filter: invert(1);
+    }
+
+    .list-group-item {
+        filter: invert(1) hue-rotate(180deg) contrast(70%);
+    }
+</style>
+
+<div class="container">
+    <div id="banner-separator">
+        <br><br>
+    </div>
+
+    
+        <div id="general-status" class="alert alert-success">
+            <b style="font-size: 1.5rem;">All systems are operating smoothly</b>
+        </div>
+    
+
+    <!--<div id="new-infra-maintenance2" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Scheduled maintenance on 8 March 2024</b>
+            </summary>
+
+            <p><b>Note:</b> This maintenance might need to be postponed to a later date, potentially next week.<br><b>Times:</b> 10:00 CET - 12:03 CET</p>
+            <p>Equestria.dev will be updating its German server. This will affect services such as Ponycule, Chatroom, as well as websites that are still using Equestria.dev's DNS server. We apologize for any inconvenience caused.</p>
+            <div>Please refer to this status page for future information, or contact us at <a href="mailto:raindrops@equestria.dev">raindrops@equestria.dev</a>. Thank you for your understanding.</div>
+        </details>
+    </div>
+
+    <div id="new-infra-maintenance" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Scheduled maintenance on 7 March 2024</b>
+            </summary>
+
+            <p><i>This maintenance is now done and services are being started again, sorry for any inconvenience this has caused.</i></p>
+            <hr>
+            <p><b>Times:</b> 08:30 CET - 17:42 CET<br><b>Disclaimer:</b> Hardware issues have made a step of the maintenance take longer than expected, therefore the maintenance overall might be slightly longer. We apologize for the inconvenience.</p>
+            <p>Equestria.dev is deploying its new infrastructure to production environments today. During this period, most services are taken down. It is estimated for this maintenance to take the entire day, and we apologize for the inconvenience.</p>
+            <p>Please refer to this status page for future information, or contact us at <a href="mailto:raindrops@equestria.dev">raindrops@equestria.dev</a>. Thank you for your understanding.</p>
+            <ul>
+                <li><b>Ponycon.info users:</b> The ponycon.info website and all associated infrastructure have been transferred to a temporary server during the maintenance.</li>
+                <li><b>Equestria.dev Live and Label Studio users:</b> These services will be offline for a longer period as they are not our top priority at the moment. They have also been taken down earlier to ensure a smooth transfer process.</li>
+                <li><b>YouTrack users:</b> YouTrack will not be reinstated after this maintenance as it was planned to be discontinued before. Please use our <a href="https://equestria.dev" target="_blank">contact page</a> to report bugs.</li>
+                <li><b>GitLab users:</b> GitLab was shut down at 21:00 CET to take a full backup, so it can easily be restored on the new server installation. Sorry for the inconvenience.</li>
+            </ul>
+        </details>
+    </div>
+
+    <div id="new-infra" class="alert alert-secondary">
+        <details>
+            <summary style="margin-bottom: 1rem;">
+                <b style="font-size: 1.5rem;">Equestria.dev 2024 infrastructure</b>
+            </summary>
+            <div>Equestria.dev is renovating its infrastructure to prepare for more modern technologies. The following is planned:</div>
+            <ul>
+                <li>New naming scheme based on the names of people who participated on My Little Pony</li>
+                <li>Switching to Cloudflare's DNS servers; using their proxy is not planned because of user privacy concerns</li>
+                <li>Reconfiguration of the host servers with Red Hat Enterprise Linux and of the guest servers with Fedora Cloud</li>
+                <li>Clean up and removal of unused DNS entries and files on servers</li>
+                <li>Deployment of version 13 of the website, as well as IPv6</li>
+                <li><s>Strict and unique use of IPv6 throughout Equestria.dev's internal infrastructure</s></li>
+                <li>Removal and archival of Equestria.dev's YouTrack instance</li>
+            </ul>
+            <p>Some websites, applications, services or pages might be unavailable during this change. Please use this page to keep track of anything as it goes and be aware that Equestria.dev will always value your privacy.</p>
+            <div><b>Currently deployed changes:</b> IPv6 on all websites · Cloudflare proxy on pone.eu.org · Removal of unused DNS entries · Transfer of the equestria.dev domain to Cloudflare DNS · Configuration of DNSSEC · New naming scheme · Reconfiguration of host servers · Removal of YouTrack · Deployment of version 13 of our website</div>
+        </details>
+    </div>-->
+
+    <div>
+        <div class="list-group">
+            
+                <div class="list-group-item service list-group-item-action">
+                    <div style="list-style: none;">
+                        <b></b>
+
+                        <div class="history-90">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(90, 1fr);">
+                                
+                                <div title="<b>Thursday, January 11</b><br>98.4% uptime<br>Down 24 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.6369047619047672%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, January 12</b><br>99.4% uptime<br>Down 9 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6200396825396859%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, January 13</b><br>99.3% uptime<br>Down 9 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6549678695007444%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, January 14</b><br>98.3% uptime<br>Down 24 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.6617063492063489%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, January 15</b><br>99.6% uptime<br>Down 6 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.44642857142856984%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, January 16</b><br>99.5% uptime<br>Down 7 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5084325396825351%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, January 17</b><br>99.6% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.37202380952381375%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, January 18</b><br>56.3% uptime<br>Down 10 hr 29 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 43.67559523809524%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, January 19</b><br>99.3% uptime<br>Down 11 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.7316468253968256%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, January 20</b><br>99.3% uptime<br>Down 10 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6696428571428603%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, January 21</b><br>99.2% uptime<br>Down 11 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.7975034674063797%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, January 22</b><br>99.4% uptime<br>Down 8 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5704365079365115%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, January 23</b><br>98.0% uptime<br>Down 29 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 2.0420363498009464%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, January 24</b><br>98.1% uptime<br>Down 27 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.8614969135802517%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, January 25</b><br>98.2% uptime<br>Down 25 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.7554012345678993%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, January 26</b><br>92.8% uptime<br>Down 1 hr 43 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 7.17592592592593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, January 27</b><br>99.6% uptime<br>Down 6 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.405092592592593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, January 28</b><br>90.0% uptime<br>Down 2 hr 25 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 10.044213763936948%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, January 29</b><br>63.4% uptime<br>Down 8 hr 47 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 36.56442901234567%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, January 30</b><br>99.2% uptime<br>Down 11 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.7716049382716084%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, January 31</b><br>98.9% uptime<br>Down 15 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.0513117283950657%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, February 1</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.2121913580246937%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, February 2</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.10609567901234129%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, February 3</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.2411265432098797%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, February 4</b><br>99.6% uptime<br>Down 6 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.38714672861014376%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, February 5</b><br>99.5% uptime<br>Down 7 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5015432098765427%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, February 6</b><br>99.6% uptime<br>Down 6 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.4243827160493874%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, February 7</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.347222222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, February 8</b><br>99.5% uptime<br>Down 7 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.47260802469135665%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, February 9</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.318287037037035%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, February 10</b><br>94.4% uptime<br>Down 1 hr 21 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 5.61342592592593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, February 11</b><br>99.3% uptime<br>Down 10 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6824298346789659%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, February 12</b><br>99.7% uptime<br>Down 4 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.27290448343080254%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, February 13</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.2121913580246937%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, February 14</b><br>99.3% uptime<br>Down 10 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.694444444444442%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, February 15</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.3279320987654266%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, February 16</b><br>99.7% uptime<br>Down 4 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.26041666666666297%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, February 17</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.20254629629629095%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, February 18</b><br>97.3% uptime<br>Down 38 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 2.6666666666666616%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, February 19</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.347222222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, February 20</b><br>99.7% uptime<br>Down 4 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.2700617283950657%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, February 21</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.347222222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, February 22</b><br>99.5% uptime<br>Down 8 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5226480836236891%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, February 23</b><br>99.8% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.1639660493827133%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, February 24</b><br>93.0% uptime<br>Down 1 hr 41 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 7.002314814814814%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, February 25</b><br>98.5% uptime<br>Down 21 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.4513648596693574%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, February 26</b><br>99.6% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.3568672839506126%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, February 27</b><br>94.5% uptime<br>Down 1 hr 19 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 5.497685185185186%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, February 28</b><br>88.1% uptime<br>Down 2 hr 51 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 11.882716049382713%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, February 29</b><br>99.2% uptime<br>Down 11 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.78125%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, March 1</b><br>99.8% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.1639660493827133%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, March 2</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.17361111111111605%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, March 3</b><br>94.1% uptime<br>Down 1 hr 26 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 5.941358024691357%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, March 4</b><br>99.4% uptime<br>Down 8 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5883487654321007%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, March 5</b><br>98.5% uptime<br>Down 22 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.5378700499807718%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, March 6</b><br>84.1% uptime<br>Down 3 hr 49 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 15.895061728395065%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, March 7</b><br>88.2% uptime<br>Down 2 hr 49 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-warning" style="height: 34px; width: 5px;">
+                                            <div class="bg-danger" style="height: 34px; width: 5px; opacity: 11.769260549748362%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, March 8</b><br>92.9% uptime<br>Down 1 hr 42 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 7.09458490998739%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, March 9</b><br>94.1% uptime<br>Down 1 hr 25 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 5.921052631578949%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, March 10</b><br>93.2% uptime<br>Down 1 hr 39 min<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 6.847568748861777%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, March 11</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, March 12</b><br>99.3% uptime<br>Down 10 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6601870529983511%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, March 13</b><br>99.8% uptime<br>Down 4 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, March 14</b><br>99.6% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.35635964912280604%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, March 15</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, March 16</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, March 17</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, March 18</b><br>99.0% uptime<br>Down 14 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.9685672514619936%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, March 19</b><br>100.0% uptime<br>No downtime<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.027412280701755165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, March 20</b><br>100.0% uptime<br>No downtime<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.01827485380117011%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, March 21</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, March 22</b><br>99.8% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.164473684210531%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, March 23</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.05482456140351033%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, March 24</b><br>99.4% uptime<br>Down 9 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6396198830409316%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, March 25</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, March 26</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.1005116959064356%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, March 27</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, March 28</b><br>99.8% uptime<br>Down 3 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.17361111111111605%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, March 29</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.10964912280702066%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, March 30</b><br>99.2% uptime<br>Down 11 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.7584064327485374%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, March 31</b><br>99.7% uptime<br>Down 5 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.33808479532163593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, April 1</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.09137426900585055%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, April 2</b><br>99.9% uptime<br>Down 2 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.12792397660819077%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Wednesday, April 3</b><br>98.1% uptime<br>Down 27 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 1.909722222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Thursday, April 4</b><br>99.9% uptime<br>Down 1 minute<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Friday, April 5</b><br>99.4% uptime<br>Down 9 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.6498855835240236%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Saturday, April 6</b><br>99.5% uptime<br>Down 8 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.5400457665903913%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Sunday, April 7</b><br>99.5% uptime<br>Down 7 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.45687134502924165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Monday, April 8</b><br>99.8% uptime<br>Down 4 minutes<br>Compliant with SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="<b>Tuesday, April 9</b><br>96.3% uptime<br>Down 53 minutes<br>Violating SLA" data-bs-html="true" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 5px;">
+                                            <div class="bg-warning" style="height: 34px; width: 5px; opacity: 3.689017063205957%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">90 days ago</small>
+                                <small style="opacity: .75; text-align: center;">98.8 % uptime · Violating SLA</small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+
+                        <div class="history-60">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(60, 1fr);">
+                                
+                                <div title="Sat Feb 10" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 5.61342592592593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Feb 11" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.6824298346789659%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Feb 12" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.27290448343080254%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Feb 13" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.2121913580246937%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Feb 14" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.694444444444442%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Feb 15" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.3279320987654266%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Feb 16" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.26041666666666297%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Feb 17" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.20254629629629095%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Feb 18" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 2.6666666666666616%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Feb 19" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.347222222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Feb 20" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.2700617283950657%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Feb 21" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.347222222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Feb 22" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.5226480836236891%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Feb 23" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.1639660493827133%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Feb 24" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 7.002314814814814%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Feb 25" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 1.4513648596693574%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Feb 26" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.3568672839506126%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Feb 27" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 5.497685185185186%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Feb 28" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 11.882716049382713%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Feb 29" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.78125%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 01" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.1639660493827133%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 02" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.17361111111111605%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 03" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 5.941358024691357%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 04" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.5883487654321007%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 05" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 1.5378700499807718%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 06" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 15.895061728395065%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 07" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-warning" style="height: 34px; width: 8px;">
+                                            <div class="bg-danger" style="height: 34px; width: 8px; opacity: 11.769260549748362%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 08" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 7.09458490998739%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 09" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 5.921052631578949%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 10" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 6.847568748861777%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 11" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 12" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.6601870529983511%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 13" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 14" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.35635964912280604%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 15" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 16" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 17" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 18" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.9685672514619936%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 19" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.027412280701755165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 20" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.01827485380117011%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 21" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 22" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.164473684210531%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 23" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.05482456140351033%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 24" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.6396198830409316%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 25" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 26" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.1005116959064356%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 27" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 28" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.17361111111111605%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 29" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.10964912280702066%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 30" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.7584064327485374%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 31" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.33808479532163593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Apr 01" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.09137426900585055%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Apr 02" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.12792397660819077%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Apr 03" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 1.909722222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Apr 04" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Apr 05" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.6498855835240236%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Apr 06" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.5400457665903913%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Apr 07" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.45687134502924165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Apr 08" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Apr 09" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 8px;">
+                                            <div class="bg-warning" style="height: 34px; width: 8px; opacity: 3.689017063205957%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">60 days ago</small>
+                                <small style="opacity: .75; text-align: center;">98.8 % uptime</small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+
+                        <div class="history-30">
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: repeat(30, 1fr);">
+                                
+                                <div title="Mon Mar 11" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 12" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.6601870529983511%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 13" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 14" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.35635964912280604%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 15" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 16" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 17" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 18" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.9685672514619936%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 19" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.027412280701755165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 20" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.01827485380117011%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 21" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.13706140350877583%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 22" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.164473684210531%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 23" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.05482456140351033%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 24" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.6396198830409316%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Mar 25" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Mar 26" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.1005116959064356%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Mar 27" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.07309941520468044%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Mar 28" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.17361111111111605%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Mar 29" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.10964912280702066%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Mar 30" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.7584064327485374%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Mar 31" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.33808479532163593%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Apr 01" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.09137426900585055%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Apr 02" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.12792397660819077%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Wed Apr 03" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 1.909722222222221%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Thu Apr 04" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.06396198830409539%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Fri Apr 05" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.6498855835240236%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sat Apr 06" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.5400457665903913%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Sun Apr 07" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.45687134502924165%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Mon Apr 08" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 0.24671052631578538%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                                <div title="Tue Apr 09" data-bs-toggle="tooltip" style="display: flex; align-items: center; justify-content: center;">
+                                    
+                                        <div class="bg-success" style="height: 34px; width: 10px;">
+                                            <div class="bg-warning" style="height: 34px; width: 10px; opacity: 3.689017063205957%;"></div>
+                                        </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div style="margin-top: 5px; display: grid; grid-template-columns: max-content 1fr max-content;">
+                                <small style="opacity: .5;">30 days ago</small>
+                                <small style="opacity: .75; text-align: center;">99.9 % uptime</small>
+                                <small style="opacity: .5;">Today </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Administration console</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Chatroom</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Content delivery network</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Delta Stable</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Delta Testing</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Equestria.dev Account</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Equestria.dev Live</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>GitLab</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Label Studio</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Main website</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Notifications backend</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Plex</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Plural Connect</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>PluralKit proxy</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Ponycon Countdown</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Ponycon.info Admin Panel</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Raindrops&#39;s blog</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Raindrops&#39;s page</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                        <div style="margin: 10px 0 10px 20px;">
+                            <span>Sunny Starbot</span>
+                            
+                                <span class="text-success" style="float: right;" data-status-code="0">Operational</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    
+                </div>
+            
+        </div>
+
+        <script>
+
+            Array.from(document.getElementsByClassName("service")).forEach((i) => {
+                let code = 0;
+                let children = Array.from(i.children).filter(i => i.tagName === "DIV").map(i => Array.from(i.children).filter(i => i.className.startsWith("text-"))[0].getAttribute("data-status-code")).map(i => parseInt(i));
+
+                if (children.includes(1)) code = 1;
+                if (children.includes(2)) code = 2;
+                if (children.includes(3)) code = 3;
+
+                console.log(code);
+
+                switch (code) {
+                    case 0:
+                        i.children[0].children[1].innerText = "Operational";
+                        i.children[0].children[1].className = "text-success";
+                        break;
+
+                    case 1:
+                        i.children[0].children[1].innerText = "Degraded Performance";
+                        i.children[0].children[1].className = "text-warning";
+                        break;
+
+                    case 2:
+                        i.children[0].children[1].innerText = "Outage";
+                        i.children[0].children[1].className = "text-danger";
+                        break;
+
+                    case 3:
+                        i.children[0].children[1].innerText = "Under Maintenance";
+                        i.children[0].children[1].className = "text-info";
+                        break;
+                }
+            });
+
+        </script>
+
+        
+
+        <p class="text-muted" style="display: none;margin-top: 10px;" id="update-container-new">Last updated <span data-bs-toggle="tooltip" title="Tue Apr 09 2024 17:28:14 GMT+0000 (Coordinated Universal Time)" id="update-date" data-update-date="2024-04-09T17:28:14.455Z">2024-04-09T17:28:14.455Z</span><span id="link-refresh" style="display:none;"></span></p>
+    </div>
+
+    <script id="page-script">
+        document.getElementById("ping-time").innerText = "78";
+
+        if (location.search.includes("embed")) {
+            document.getElementById("desktop-style").removeAttribute("media");
+            Array.from(document.getElementsByTagName("details")).map(i => i.open = true);
+
+            if (window.parent) {
+                location.hash = "#/" + document.body.clientHeight;
+            }
+        }
+
+        document.getElementById("update-date").innerText = timeAgo((new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime());
+        document.getElementById("update-date").title = (new Date(document.getElementById("update-date").getAttribute("data-update-date"))).toString();
+
+        [...(document.querySelectorAll('[data-bs-toggle="tooltip"]'))].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { html: true, sanitize: false, animation: false }));
+
+        setInterval(() => {
+            document.getElementById("update-date").innerText = timeAgo((new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime());
+
+            if (new Date() - (new Date(document.getElementById("update-date").getAttribute("data-update-date"))).getTime() >= 360000) {
+                document.getElementById("link-refresh").style.display = "inline";
+            }
+        }, 500);
+
+        if (window.chart) window.chart.data = {
+            labels: JSON.parse(`["2024-04-08T18:15:38.103Z","2024-04-08T18:15:41.282Z","2024-04-08T18:20:37.720Z","2024-04-08T18:20:40.687Z","2024-04-08T18:25:32.885Z","2024-04-08T18:25:36.016Z","2024-04-08T18:30:33.081Z","2024-04-08T18:30:36.939Z","2024-04-08T18:35:33.694Z","2024-04-08T18:35:37.000Z","2024-04-08T18:40:33.218Z","2024-04-08T18:40:36.551Z","2024-04-08T18:45:34.685Z","2024-04-08T18:45:37.964Z","2024-04-08T18:50:33.373Z","2024-04-08T18:50:36.341Z","2024-04-08T18:55:33.028Z","2024-04-08T18:55:35.942Z","2024-04-08T19:00:33.325Z","2024-04-08T19:00:36.287Z","2024-04-08T19:05:33.342Z","2024-04-08T19:05:36.780Z","2024-04-08T19:10:33.733Z","2024-04-08T19:10:36.716Z","2024-04-08T19:15:33.773Z","2024-04-08T19:15:37.290Z","2024-04-08T19:20:33.690Z","2024-04-08T19:20:37.223Z","2024-04-08T19:25:34.396Z","2024-04-08T19:25:38.934Z","2024-04-08T19:30:34.217Z","2024-04-08T19:30:37.631Z","2024-04-08T19:35:33.965Z","2024-04-08T19:35:37.035Z","2024-04-08T19:40:43.945Z","2024-04-08T19:40:57.492Z","2024-04-08T19:45:43.717Z","2024-04-08T19:45:56.742Z","2024-04-08T19:50:43.853Z","2024-04-08T19:50:56.871Z","2024-04-08T19:55:43.848Z","2024-04-08T19:55:56.851Z","2024-04-08T20:00:44.267Z","2024-04-08T20:01:02.099Z","2024-04-08T20:05:33.994Z","2024-04-08T20:05:36.997Z","2024-04-08T20:10:33.960Z","2024-04-08T20:10:36.700Z","2024-04-08T20:15:33.908Z","2024-04-08T20:15:36.898Z","2024-04-08T20:20:34.692Z","2024-04-08T20:20:37.386Z","2024-04-08T20:25:34.060Z","2024-04-08T20:25:36.691Z","2024-04-08T20:30:34.317Z","2024-04-08T20:30:36.993Z","2024-04-08T20:35:34.638Z","2024-04-08T20:35:37.186Z","2024-04-08T20:40:34.369Z","2024-04-08T20:40:37.040Z","2024-04-08T20:45:34.302Z","2024-04-08T20:45:36.956Z","2024-04-08T20:50:34.170Z","2024-04-08T20:50:37.108Z","2024-04-08T20:55:35.202Z","2024-04-08T20:55:38.389Z","2024-04-08T21:00:34.416Z","2024-04-08T21:00:37.068Z","2024-04-08T21:05:34.667Z","2024-04-08T21:05:37.286Z","2024-04-08T21:10:34.837Z","2024-04-08T21:10:37.707Z","2024-04-08T21:15:34.921Z","2024-04-08T21:15:37.604Z","2024-04-08T21:20:34.884Z","2024-04-08T21:20:38.671Z","2024-04-08T21:25:35.061Z","2024-04-08T21:25:38.270Z","2024-04-08T21:30:35.145Z","2024-04-08T21:30:38.229Z","2024-04-08T21:35:34.690Z","2024-04-08T21:35:37.449Z","2024-04-08T21:40:35.112Z","2024-04-08T21:40:37.675Z","2024-04-08T21:45:34.819Z","2024-04-08T21:45:37.382Z","2024-04-08T21:50:35.173Z","2024-04-08T21:50:38.102Z","2024-04-08T21:55:34.892Z","2024-04-08T21:55:38.030Z","2024-04-08T22:00:34.774Z","2024-04-08T22:00:37.679Z","2024-04-08T22:05:35.750Z","2024-04-08T22:05:38.779Z","2024-04-08T22:10:35.109Z","2024-04-08T22:10:37.947Z","2024-04-08T22:15:34.899Z","2024-04-08T22:15:37.653Z","2024-04-08T22:20:35.693Z","2024-04-08T22:20:38.795Z","2024-04-08T22:25:34.821Z","2024-04-08T22:25:37.594Z","2024-04-08T22:30:35.127Z","2024-04-08T22:30:38.064Z","2024-04-08T22:35:35.188Z","2024-04-08T22:35:38.005Z","2024-04-08T22:40:35.409Z","2024-04-08T22:40:38.123Z","2024-04-08T22:45:36.112Z","2024-04-08T22:45:38.984Z","2024-04-08T22:50:35.116Z","2024-04-08T22:50:37.630Z","2024-04-08T22:55:35.115Z","2024-04-08T22:55:37.831Z","2024-04-08T23:00:35.501Z","2024-04-08T23:00:38.296Z","2024-04-08T23:05:35.105Z","2024-04-08T23:05:38.017Z","2024-04-08T23:10:35.231Z","2024-04-08T23:10:37.985Z","2024-04-08T23:15:35.041Z","2024-04-08T23:15:37.694Z","2024-04-08T23:20:35.197Z","2024-04-08T23:20:38.044Z","2024-04-08T23:25:35.454Z","2024-04-08T23:25:38.150Z","2024-04-08T23:30:35.434Z","2024-04-08T23:30:38.102Z","2024-04-08T23:35:35.542Z","2024-04-08T23:35:38.184Z","2024-04-08T23:40:35.586Z","2024-04-08T23:40:38.180Z","2024-04-08T23:45:35.371Z","2024-04-08T23:45:37.969Z","2024-04-08T23:50:35.639Z","2024-04-08T23:50:38.249Z","2024-04-08T23:55:35.502Z","2024-04-08T23:55:38.133Z","2024-04-09T00:00:39.203Z","2024-04-09T00:00:42.278Z","2024-04-09T00:05:35.644Z","2024-04-09T00:05:38.365Z","2024-04-09T00:10:36.009Z","2024-04-09T00:10:38.698Z","2024-04-09T00:15:35.829Z","2024-04-09T00:15:38.677Z","2024-04-09T00:20:35.708Z","2024-04-09T00:20:38.224Z","2024-04-09T00:25:36.313Z","2024-04-09T00:25:39.273Z","2024-04-09T00:30:36.068Z","2024-04-09T00:30:38.880Z","2024-04-09T00:35:36.442Z","2024-04-09T00:35:39.175Z","2024-04-09T00:40:35.950Z","2024-04-09T00:40:38.512Z","2024-04-09T00:45:36.539Z","2024-04-09T00:45:39.230Z","2024-04-09T00:50:36.250Z","2024-04-09T00:50:39.014Z","2024-04-09T00:55:36.258Z","2024-04-09T00:55:38.786Z","2024-04-09T01:00:36.299Z","2024-04-09T01:00:38.911Z","2024-04-09T01:05:36.493Z","2024-04-09T01:05:39.011Z","2024-04-09T01:10:36.133Z","2024-04-09T01:10:38.823Z","2024-04-09T01:15:36.571Z","2024-04-09T01:15:39.609Z","2024-04-09T01:20:36.347Z","2024-04-09T01:20:39.004Z","2024-04-09T01:25:36.698Z","2024-04-09T01:25:39.264Z","2024-04-09T01:30:36.401Z","2024-04-09T01:30:39.153Z","2024-04-09T01:35:36.901Z","2024-04-09T01:35:39.608Z","2024-04-09T01:40:36.831Z","2024-04-09T01:40:39.564Z","2024-04-09T01:45:36.677Z","2024-04-09T01:45:39.578Z","2024-04-09T01:50:37.245Z","2024-04-09T01:50:39.866Z","2024-04-09T01:55:36.663Z","2024-04-09T01:55:39.245Z","2024-04-09T02:00:36.707Z","2024-04-09T02:00:39.486Z","2024-04-09T02:05:36.971Z","2024-04-09T02:05:39.595Z","2024-04-09T02:10:36.737Z","2024-04-09T02:10:39.277Z","2024-04-09T02:15:36.920Z","2024-04-09T02:15:39.578Z","2024-04-09T02:20:37.220Z","2024-04-09T02:20:40.020Z","2024-04-09T02:25:37.209Z","2024-04-09T02:25:39.852Z","2024-04-09T02:30:37.203Z","2024-04-09T02:30:39.772Z","2024-04-09T02:35:37.094Z","2024-04-09T02:35:39.537Z","2024-04-09T02:40:37.154Z","2024-04-09T02:40:39.690Z","2024-04-09T02:45:37.132Z","2024-04-09T02:45:39.702Z","2024-04-09T02:50:37.079Z","2024-04-09T02:50:39.845Z","2024-04-09T02:55:37.280Z","2024-04-09T02:55:39.767Z","2024-04-09T03:00:37.271Z","2024-04-09T03:00:39.951Z","2024-04-09T03:05:37.393Z","2024-04-09T03:05:40.186Z","2024-04-09T03:10:37.304Z","2024-04-09T03:10:39.839Z","2024-04-09T03:15:37.523Z","2024-04-09T03:15:40.464Z","2024-04-09T03:20:37.842Z","2024-04-09T03:20:40.513Z","2024-04-09T03:25:37.570Z","2024-04-09T03:25:40.269Z","2024-04-09T03:30:37.734Z","2024-04-09T03:30:40.400Z","2024-04-09T03:35:38.358Z","2024-04-09T03:35:41.237Z","2024-04-09T03:40:37.638Z","2024-04-09T03:40:40.691Z","2024-04-09T03:45:37.784Z","2024-04-09T03:45:40.367Z","2024-04-09T03:50:38.158Z","2024-04-09T03:50:41.310Z","2024-04-09T03:55:38.228Z","2024-04-09T03:55:40.874Z","2024-04-09T04:00:37.917Z","2024-04-09T04:00:40.544Z","2024-04-09T04:05:37.880Z","2024-04-09T04:05:40.674Z","2024-04-09T04:10:38.349Z","2024-04-09T04:10:40.949Z","2024-04-09T04:15:37.827Z","2024-04-09T04:15:40.515Z","2024-04-09T04:20:38.111Z","2024-04-09T04:20:40.758Z","2024-04-09T04:25:38.270Z","2024-04-09T04:25:41.084Z","2024-04-09T04:30:38.381Z","2024-04-09T04:30:40.953Z","2024-04-09T04:35:38.317Z","2024-04-09T04:35:41.349Z","2024-04-09T04:40:38.533Z","2024-04-09T04:40:41.639Z","2024-04-09T04:45:38.511Z","2024-04-09T04:45:41.185Z","2024-04-09T04:50:38.691Z","2024-04-09T04:50:41.812Z","2024-04-09T04:55:38.540Z","2024-04-09T04:55:41.389Z","2024-04-09T05:00:38.343Z","2024-04-09T05:00:41.208Z","2024-04-09T05:05:38.503Z","2024-04-09T05:05:41.057Z","2024-04-09T05:10:38.644Z","2024-04-09T05:10:41.788Z","2024-04-09T05:15:38.384Z","2024-04-09T05:15:40.941Z","2024-04-09T05:20:38.712Z","2024-04-09T05:20:41.322Z","2024-04-09T05:25:38.523Z","2024-04-09T05:25:41.451Z","2024-04-09T05:30:38.666Z","2024-04-09T05:30:41.474Z","2024-04-09T05:35:38.590Z","2024-04-09T05:35:41.489Z","2024-04-09T05:40:38.845Z","2024-04-09T05:40:41.519Z","2024-04-09T05:45:38.889Z","2024-04-09T05:45:41.538Z","2024-04-09T05:50:38.900Z","2024-04-09T05:50:41.365Z","2024-04-09T05:55:38.829Z","2024-04-09T05:55:41.407Z","2024-04-09T06:00:39.967Z","2024-04-09T06:00:43.602Z","2024-04-09T06:05:39.413Z","2024-04-09T06:05:42.901Z","2024-04-09T06:10:39.201Z","2024-04-09T06:10:42.201Z","2024-04-09T06:15:39.182Z","2024-04-09T06:15:42.031Z","2024-04-09T06:20:39.823Z","2024-04-09T06:20:42.771Z","2024-04-09T06:25:39.403Z","2024-04-09T06:25:42.642Z","2024-04-09T06:30:39.843Z","2024-04-09T06:30:42.646Z","2024-04-09T06:35:39.905Z","2024-04-09T06:35:42.620Z","2024-04-09T06:40:39.978Z","2024-04-09T06:40:43.134Z","2024-04-09T06:45:39.642Z","2024-04-09T06:45:42.251Z","2024-04-09T06:50:39.310Z","2024-04-09T06:50:42.050Z","2024-04-09T06:55:39.637Z","2024-04-09T06:55:42.481Z","2024-04-09T07:00:39.847Z","2024-04-09T07:00:42.756Z","2024-04-09T07:05:39.604Z","2024-04-09T07:05:42.242Z","2024-04-09T07:10:39.573Z","2024-04-09T07:10:42.599Z","2024-04-09T07:15:39.774Z","2024-04-09T07:15:42.390Z","2024-04-09T07:20:39.837Z","2024-04-09T07:20:43.739Z","2024-04-09T07:25:39.875Z","2024-04-09T07:25:43.240Z","2024-04-09T07:30:40.195Z","2024-04-09T07:30:42.901Z","2024-04-09T07:35:39.840Z","2024-04-09T07:35:42.738Z","2024-04-09T07:40:39.784Z","2024-04-09T07:40:42.487Z","2024-04-09T07:45:40.227Z","2024-04-09T07:45:43.008Z","2024-04-09T07:50:39.859Z","2024-04-09T07:50:42.726Z","2024-04-09T07:55:40.537Z","2024-04-09T07:55:43.226Z","2024-04-09T08:00:40.165Z","2024-04-09T08:00:42.743Z","2024-04-09T08:05:40.331Z","2024-04-09T08:05:43.035Z","2024-04-09T08:10:40.157Z","2024-04-09T08:10:42.765Z","2024-04-09T08:15:40.456Z","2024-04-09T08:15:43.282Z","2024-04-09T08:20:40.486Z","2024-04-09T08:20:43.236Z","2024-04-09T08:25:40.539Z","2024-04-09T08:25:43.215Z","2024-04-09T08:30:40.463Z","2024-04-09T08:30:43.155Z","2024-04-09T08:35:40.830Z","2024-04-09T08:35:43.590Z","2024-04-09T08:40:40.611Z","2024-04-09T08:40:43.185Z","2024-04-09T08:45:40.833Z","2024-04-09T08:45:43.628Z","2024-04-09T08:50:40.664Z","2024-04-09T08:50:43.294Z","2024-04-09T08:55:40.561Z","2024-04-09T08:55:43.206Z","2024-04-09T09:00:41.243Z","2024-04-09T09:00:44.008Z","2024-04-09T09:05:40.602Z","2024-04-09T09:05:43.465Z","2024-04-09T09:10:40.799Z","2024-04-09T09:10:43.978Z","2024-04-09T09:15:43.516Z","2024-04-09T09:15:46.426Z","2024-04-09T09:20:40.844Z","2024-04-09T09:20:43.584Z","2024-04-09T09:25:40.712Z","2024-04-09T09:25:43.446Z","2024-04-09T09:30:44.799Z","2024-04-09T09:30:47.435Z","2024-04-09T09:35:41.165Z","2024-04-09T09:35:44.171Z","2024-04-09T09:40:41.306Z","2024-04-09T09:40:44.403Z","2024-04-09T09:45:41.176Z","2024-04-09T09:45:43.823Z","2024-04-09T09:50:41.557Z","2024-04-09T09:50:44.304Z","2024-04-09T09:55:40.961Z","2024-04-09T09:55:43.689Z","2024-04-09T10:00:41.648Z","2024-04-09T10:00:45.148Z","2024-04-09T10:05:41.241Z","2024-04-09T10:05:44.148Z","2024-04-09T10:10:41.084Z","2024-04-09T10:10:43.963Z","2024-04-09T10:15:41.041Z","2024-04-09T10:15:43.657Z","2024-04-09T10:20:41.192Z","2024-04-09T10:20:43.767Z","2024-04-09T10:25:41.528Z","2024-04-09T10:25:46.811Z","2024-04-09T10:30:41.906Z","2024-04-09T10:30:45.513Z","2024-04-09T10:35:41.529Z","2024-04-09T10:35:44.433Z","2024-04-09T10:40:41.839Z","2024-04-09T10:40:44.510Z","2024-04-09T10:45:41.428Z","2024-04-09T10:45:44.229Z","2024-04-09T10:50:42.310Z","2024-04-09T10:50:45.186Z","2024-04-09T10:55:41.840Z","2024-04-09T10:55:44.632Z","2024-04-09T11:00:47.078Z","2024-04-09T11:00:49.841Z","2024-04-09T11:05:42.028Z","2024-04-09T11:05:44.701Z","2024-04-09T11:10:41.997Z","2024-04-09T11:10:44.703Z","2024-04-09T11:15:46.668Z","2024-04-09T11:15:49.379Z","2024-04-09T11:20:41.742Z","2024-04-09T11:20:44.595Z","2024-04-09T11:25:42.141Z","2024-04-09T11:25:44.723Z","2024-04-09T11:30:42.065Z","2024-04-09T11:30:44.674Z","2024-04-09T11:35:42.004Z","2024-04-09T11:35:44.647Z","2024-04-09T11:40:41.975Z","2024-04-09T11:40:44.987Z","2024-04-09T11:45:42.117Z","2024-04-09T11:45:44.924Z","2024-04-09T11:50:42.317Z","2024-04-09T11:50:45.107Z","2024-04-09T11:55:42.440Z","2024-04-09T11:55:45.261Z","2024-04-09T12:00:42.374Z","2024-04-09T12:00:44.964Z","2024-04-09T12:05:42.446Z","2024-04-09T12:05:45.376Z","2024-04-09T12:10:42.407Z","2024-04-09T12:10:45.328Z","2024-04-09T12:15:42.749Z","2024-04-09T12:15:45.665Z","2024-04-09T12:20:42.635Z","2024-04-09T12:20:45.302Z","2024-04-09T12:25:42.724Z","2024-04-09T12:25:45.533Z","2024-04-09T12:30:42.841Z","2024-04-09T12:30:50.666Z","2024-04-09T12:35:43.235Z","2024-04-09T12:35:46.345Z","2024-04-09T12:40:43.446Z","2024-04-09T12:40:46.397Z","2024-04-09T12:45:43.418Z","2024-04-09T12:45:47.201Z","2024-04-09T12:50:43.342Z","2024-04-09T12:50:46.371Z","2024-04-09T12:55:42.933Z","2024-04-09T12:55:45.672Z","2024-04-09T13:00:42.966Z","2024-04-09T13:00:45.560Z","2024-04-09T13:05:43.651Z","2024-04-09T13:05:46.479Z","2024-04-09T13:10:43.416Z","2024-04-09T13:10:46.220Z","2024-04-09T13:15:43.145Z","2024-04-09T13:15:46.003Z","2024-04-09T13:20:43.631Z","2024-04-09T13:20:46.355Z","2024-04-09T13:25:43.398Z","2024-04-09T13:25:46.553Z","2024-04-09T13:30:43.711Z","2024-04-09T13:30:46.489Z","2024-04-09T13:35:43.465Z","2024-04-09T13:35:46.238Z","2024-04-09T13:40:43.841Z","2024-04-09T13:40:46.834Z","2024-04-09T13:45:43.804Z","2024-04-09T13:45:46.923Z","2024-04-09T13:50:47.003Z","2024-04-09T13:50:51.897Z","2024-04-09T13:55:44.272Z","2024-04-09T13:55:51.880Z","2024-04-09T14:00:43.776Z","2024-04-09T14:00:46.720Z","2024-04-09T14:05:44.512Z","2024-04-09T14:05:47.495Z","2024-04-09T14:10:43.835Z","2024-04-09T14:10:46.548Z","2024-04-09T14:15:43.669Z","2024-04-09T14:15:46.319Z","2024-04-09T14:20:44.003Z","2024-04-09T14:20:46.950Z","2024-04-09T14:25:44.241Z","2024-04-09T14:25:47.251Z","2024-04-09T14:30:44.013Z","2024-04-09T14:30:51.812Z","2024-04-09T14:35:43.966Z","2024-04-09T14:35:46.980Z","2024-04-09T14:40:49.041Z","2024-04-09T14:40:52.034Z","2024-04-09T14:45:44.261Z","2024-04-09T14:45:47.163Z","2024-04-09T14:50:44.182Z","2024-04-09T14:50:46.894Z","2024-04-09T14:55:44.443Z","2024-04-09T14:55:47.045Z","2024-04-09T15:00:44.169Z","2024-04-09T15:00:46.943Z","2024-04-09T15:05:44.482Z","2024-04-09T15:05:47.360Z","2024-04-09T15:10:44.090Z","2024-04-09T15:10:47.360Z","2024-04-09T15:15:44.203Z","2024-04-09T15:15:47.054Z","2024-04-09T15:20:44.984Z","2024-04-09T15:20:48.195Z","2024-04-09T15:25:44.347Z","2024-04-09T15:25:47.023Z","2024-04-09T15:30:44.537Z","2024-04-09T15:30:47.279Z","2024-04-09T15:35:44.344Z","2024-04-09T15:35:46.989Z","2024-04-09T15:40:44.745Z","2024-04-09T15:40:47.417Z","2024-04-09T15:45:45.347Z","2024-04-09T15:45:48.270Z","2024-04-09T15:50:44.728Z","2024-04-09T15:50:47.810Z","2024-04-09T15:55:44.885Z","2024-04-09T15:55:47.729Z","2024-04-09T16:00:44.658Z","2024-04-09T16:00:48.641Z","2024-04-09T16:05:45.789Z","2024-04-09T16:05:48.699Z","2024-04-09T16:10:45.186Z","2024-04-09T16:10:48.330Z","2024-04-09T16:15:44.989Z","2024-04-09T16:15:48.124Z","2024-04-09T16:20:45.127Z","2024-04-09T16:20:47.971Z","2024-04-09T16:25:44.894Z","2024-04-09T16:25:47.650Z","2024-04-09T16:30:45.051Z","2024-04-09T16:30:49.194Z","2024-04-09T16:35:45.009Z","2024-04-09T16:35:47.930Z","2024-04-09T16:39:35.427Z","2024-04-09T16:39:37.062Z","2024-04-09T16:43:18.597Z","2024-04-09T16:43:20.426Z","2024-04-09T16:48:24.533Z","2024-04-09T16:48:26.331Z","2024-04-09T16:53:24.409Z","2024-04-09T16:53:26.211Z","2024-04-09T16:58:24.752Z","2024-04-09T16:58:26.684Z","2024-04-09T17:03:24.207Z","2024-04-09T17:03:25.849Z","2024-04-09T17:08:25.687Z","2024-04-09T17:08:27.471Z","2024-04-09T17:08:31.710Z","2024-04-09T17:08:33.636Z","2024-04-09T17:11:04.076Z","2024-04-09T17:11:05.859Z","2024-04-09T17:11:26.674Z","2024-04-09T17:11:27.882Z","2024-04-09T17:11:32.818Z","2024-04-09T17:11:33.959Z","2024-04-09T17:11:39.632Z","2024-04-09T17:11:40.666Z","2024-04-09T17:11:56.716Z","2024-04-09T17:11:57.820Z","2024-04-09T17:12:01.773Z","2024-04-09T17:12:02.883Z","2024-04-09T17:12:58.329Z","2024-04-09T17:13:00.095Z","2024-04-09T17:13:07.147Z","2024-04-09T17:13:08.804Z","2024-04-09T17:18:12.635Z","2024-04-09T17:18:14.361Z","2024-04-09T17:23:12.795Z","2024-04-09T17:23:14.604Z","2024-04-09T17:28:12.759Z","2024-04-09T17:28:14.502Z"]`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+            datasets: [{
+                label: 'Ping',
+                data: JSON.parse(`[360.60869565217394,125.69565217391305,341.4782608695652,114.65217391304348,129.7826086956522,124,135.04347826086956,154.91304347826087,163.7391304347826,129.43478260869566,137.65217391304347,132.6086956521739,201.95652173913044,128.6086956521739,141.82608695652175,116.82608695652173,124.43478260869566,112.30434782608695,131.82608695652175,116.52173913043478,129.34782608695653,136.65217391304347,145.34782608695653,115.8695652173913,146.7826086956522,140.30434782608697,141.1304347826087,141.6086956521739,169.04347826086956,182.43478260869566,154.69565217391303,134.7826086956522,143.7391304347826,119.8695652173913,575.7826086956521,575.1304347826087,557.8695652173913,551.695652173913,566.4347826086956,551.6521739130435,558.1739130434783,551.5217391304348,574.3478260869565,795,156.42105263157896,139.57894736842104,147.3684210526316,129.78947368421052,144.6315789473684,138.26315789473685,180.3684210526316,125.36842105263158,143.78947368421052,123.15789473684211,150.78947368421052,122.05263157894737,167.10526315789474,117.26315789473684,154.68421052631578,124.73684210526316,146.78947368421052,122.57894736842105,137.3684210526316,138.6315789473684,188.52631578947367,152.05263157894737,147.3684210526316,122.78947368421052,157.10526315789474,123.63157894736842,163.26315789473685,133.47368421052633,163.73684210526315,126.47368421052632,160,182.78947368421052,169.52631578947367,154.31578947368422,169.57894736842104,144.68421052631578,147.89473684210526,129.05263157894737,166.8421052631579,118.3157894736842,149.6315789473684,119.3157894736842,162.31578947368422,140.3684210526316,145.47368421052633,149.52631578947367,139.1578947368421,135.68421052631578,187.47368421052633,145.26315789473685,153.42105263157896,132.26315789473685,136.6315789473684,129,180.05263157894737,146.73684210526315,132.94736842105263,129.6315789473684,142.3684210526316,140,151,130.42105263157896,159.78947368421052,127.26315789473684,196.73684210526315,134.10526315789474,140.73684210526315,117.10526315789474,141.42105263157896,126.57894736842105,159.8421052631579,131.47368421052633,139.52631578947367,138.26315789473685,144.89473684210526,128,129,124.15789473684211,134.10526315789474,133.57894736842104,140.94736842105263,124.57894736842105,137.21052631578948,124.3157894736842,144.42105263157896,122.10526315789474,144.6315789473684,121.94736842105263,129.10526315789474,120.84210526315789,139.21052631578948,123,132.57894736842104,120.73684210526316,325,142.42105263157896,138.05263157894737,127.73684210526316,152.6315789473684,125.26315789473684,146.47368421052633,132.89473684210526,132.47368421052633,116.89473684210526,161.78947368421052,138.26315789473685,148.31578947368422,132.10526315789474,165.3684210526316,127.94736842105263,136.73684210526315,120.05263157894737,166.57894736842104,127.15789473684211,151.68421052631578,127.94736842105263,148.57894736842104,117.89473684210526,144.6315789473684,123.52631578947368,157,116.57894736842105,133.57894736842104,127,158.3684210526316,142.26315789473685,142.05263157894737,125.52631578947368,153.73684210526315,119.6842105263158,135.21052631578948,130.10526315789474,158.6315789473684,126.3157894736842,155.52631578947367,128.42105263157896,140.73684210526315,137.6315789473684,169.52631578947367,122.84210526315789,134.6315789473684,121.94736842105263,134.57894736842104,128.68421052631578,144.68421052631578,124.36842105263158,131.78947368421052,117.10526315789474,137.6315789473684,124,152.52631578947367,130.42105263157896,152.47368421052633,121.10526315789474,146.52631578947367,120.10526315789474,135.8421052631579,112.52631578947368,138.57894736842104,116.6842105263158,138.1578947368421,120.63157894736842,132.6315789473684,129.31578947368422,140.21052631578948,114.26315789473684,138.6315789473684,125.89473684210526,142.42105263157896,129.21052631578948,134.78947368421052,119,144.21052631578948,137.6315789473684,156.42105263157896,126.47368421052632,140.8421052631579,126,147.1578947368421,126,179,134.8421052631579,135.57894736842104,145.68421052631578,145.89473684210526,119.10526315789474,159.89473684210526,151.31578947368422,163.3684210526316,122.6842105263158,146.47368421052633,122.15789473684211,141.42105263157896,131.73684210526315,164.52631578947367,120.15789473684211,133.68421052631578,127,147.89473684210526,125.26315789473684,153,130.31578947368422,158.52631578947367,120,151.52631578947367,143.89473684210526,159.31578947368422,147.52631578947367,155.68421052631578,124.05263157894737,164.94736842105263,148.94736842105263,158.05263157894737,131.94736842105263,143.52631578947367,135.1578947368421,148.42105263157896,121.21052631578948,154.89473684210526,148.52631578947367,136.6315789473684,118.36842105263158,154.6315789473684,122.36842105263158,140.94736842105263,138.10526315789474,149.3684210526316,132.57894736842104,140.52631578947367,135.89473684210526,150.1578947368421,126.3157894736842,148.26315789473685,123.52631578947368,144.78947368421052,114.42105263157895,142.8421052631579,120.3157894736842,196.68421052631578,175.10526315789474,169.1578947368421,166.1578947368421,155.47368421052633,142.52631578947367,151.52631578947367,133.78947368421052,184.89473684210526,138.94736842105263,156.21052631578948,155.1578947368421,181.68421052631578,131.10526315789474,179.8421052631579,125.3157894736842,177.73684210526315,151.94736842105263,160.8421052631579,121.73684210526316,142.05263157894737,126.47368421052632,153.68421052631578,136.3684210526316,160.89473684210526,134.78947368421052,146.78947368421052,124,143.31578947368422,143.57894736842104,151.89473684210526,120.05263157894737,150.89473684210526,190.73684210526315,149.52631578947367,160.42105263157896,159.52631578947367,127.73684210526316,141.1578947368421,134.73684210526315,135.78947368421052,127.73684210526316,158.21052631578948,129.47368421052633,138.8421052631579,132.78947368421052,168.31578947368422,126.36842105263158,144.78947368421052,118.89473684210526,150.21052631578948,126.6842105263158,140.31578947368422,121.89473684210526,147.78947368421052,135,146.52631578947367,128.1578947368421,144.68421052631578,123.63157894736842,136.73684210526315,127.84210526315789,156.21052631578948,129.57894736842104,141.3684210526316,120.52631578947368,150.05263157894737,128.94736842105263,138.57894736842104,122.89473684210526,130.52631578947367,125.63157894736842,168.3684210526316,129.05263157894737,133.78947368421052,135.31578947368422,142.21052631578948,151,285.36842105263156,138.05263157894737,145.26315789473685,128.10526315789474,135,129.47368421052633,347.05263157894734,122.89473684210526,156.57894736842104,143.57894736842104,161.3684210526316,146.6315789473684,155.78947368421052,124.26315789473684,172.47368421052633,128.10526315789474,143.21052631578948,128.47368421052633,175.47368421052633,168.3684210526316,153.57894736842104,138.10526315789474,145.94736842105263,134.26315789473685,136.05263157894737,121.52631578947368,142.68421052631578,119.63157894736842,157.94736842105263,262.42105263157896,172.1578947368421,174.89473684210526,146.47368421052633,136.68421052631578,159.42105263157896,124.94736842105263,136.73684210526315,132.1578947368421,177.8421052631579,134.89473684210526,149.1578947368421,129.52631578947367,418.8421052631579,131.89473684210526,156,124.47368421052632,152.1578947368421,124.47368421052632,400.05263157894734,127.42105263157895,137.42105263157896,134.6315789473684,152.68421052631578,117.6842105263158,149,121.36842105263158,143.1578947368421,123.36842105263158,138.10526315789474,142.89473684210526,140.42105263157896,131.47368421052633,147.94736842105263,131.8421052631579,154.68421052631578,131.73684210526315,143.31578947368422,120.26315789473684,146.78947368421052,137,141.89473684210526,135.8421052631579,155.3684210526316,138.78947368421052,143.3684210526316,124.36842105263158,147.1578947368421,133.68421052631578,154.31578947368422,395.5263157894737,171.10526315789474,146.89473684210526,177.26315789473685,140.05263157894737,170.78947368421052,181.10526315789474,166.8421052631579,142.94736842105263,140.73684210526315,127.94736842105263,138.3684210526316,119.57894736842105,171.42105263157896,133.52631578947367,159.3684210526316,131.26315789473685,144.10526315789474,135.78947368421052,168.47368421052633,128.1578947368421,153.3684210526316,150.52631578947367,162.1578947368421,130.57894736842104,145.78947368421052,131.3684210526316,163.21052631578948,139.05263157894737,152,148.78947368421052,324.57894736842104,244.26315789473685,175.42105263157896,383.10526315789474,147.10526315789474,138.47368421052633,186.73684210526315,137.89473684210526,150.6315789473684,125.42105263157895,141.21052631578948,124.73684210526316,154.94736842105263,137.68421052631578,163.8421052631579,143.05263157894737,147.47368421052633,393.10526315789474,147.1578947368421,142.10526315789474,405.36842105263156,141.52631578947367,150.26315789473685,133,147.21052631578948,128,158.31578947368422,121.36842105263158,144.26315789473685,130.21052631578948,158.94736842105263,134.78947368421052,140.3684210526316,156.42105263157896,142.68421052631578,133.68421052631578,180.26315789473685,154.57894736842104,148.26315789473685,123.84210526315789,156.1578947368421,129.10526315789474,143.6315789473684,123.42105263157895,159.42105263157896,126.05263157894737,188.26315789473685,134.10526315789474,150.68421052631578,145.73684210526315,155.47368421052633,133.6315789473684,143.89473684210526,192.78947368421052,196.05263157894737,135.8421052631579,164.10526315789474,151,154.57894736842104,149.31578947368422,161.47368421052633,132,145.05263157894737,130.05263157894737,149,202.1578947368421,147.05263157894737,139,190.1578947368421,74.47368421052632,183.47368421052633,82.63157894736842,174.89473684210526,79.78947368421052,165.89473684210526,80.78947368421052,176.6315789473684,87.63157894736842,148.21052631578948,71.26315789473684,187.05263157894737,78.21052631578948,161,86.36842105263158,166.73684210526315,77.6842105263158,68.26315789473684,49.89473684210526,65.78947368421052,46.421052631578945,64.36842105263158,39.78947368421053,55.05263157894737,42.578947368421055,60.26315789473684,43.63157894736842,144.10526315789474,77.36842105263158,124.05263157894737,71.26315789473684,163.42105263157896,77.15789473684211,168.52631578947367,81.10526315789474,164.89473684210526,78.21052631578948]`),
+                borderColor: '#05b7b1',
+                backgroundColor: '#05b7b177'
+            }]
+        }
+
+        if (!window.chart) {
+            window.chart = new Chart(document.getElementById('history').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: JSON.parse(`["2024-04-08T18:15:38.103Z","2024-04-08T18:15:41.282Z","2024-04-08T18:20:37.720Z","2024-04-08T18:20:40.687Z","2024-04-08T18:25:32.885Z","2024-04-08T18:25:36.016Z","2024-04-08T18:30:33.081Z","2024-04-08T18:30:36.939Z","2024-04-08T18:35:33.694Z","2024-04-08T18:35:37.000Z","2024-04-08T18:40:33.218Z","2024-04-08T18:40:36.551Z","2024-04-08T18:45:34.685Z","2024-04-08T18:45:37.964Z","2024-04-08T18:50:33.373Z","2024-04-08T18:50:36.341Z","2024-04-08T18:55:33.028Z","2024-04-08T18:55:35.942Z","2024-04-08T19:00:33.325Z","2024-04-08T19:00:36.287Z","2024-04-08T19:05:33.342Z","2024-04-08T19:05:36.780Z","2024-04-08T19:10:33.733Z","2024-04-08T19:10:36.716Z","2024-04-08T19:15:33.773Z","2024-04-08T19:15:37.290Z","2024-04-08T19:20:33.690Z","2024-04-08T19:20:37.223Z","2024-04-08T19:25:34.396Z","2024-04-08T19:25:38.934Z","2024-04-08T19:30:34.217Z","2024-04-08T19:30:37.631Z","2024-04-08T19:35:33.965Z","2024-04-08T19:35:37.035Z","2024-04-08T19:40:43.945Z","2024-04-08T19:40:57.492Z","2024-04-08T19:45:43.717Z","2024-04-08T19:45:56.742Z","2024-04-08T19:50:43.853Z","2024-04-08T19:50:56.871Z","2024-04-08T19:55:43.848Z","2024-04-08T19:55:56.851Z","2024-04-08T20:00:44.267Z","2024-04-08T20:01:02.099Z","2024-04-08T20:05:33.994Z","2024-04-08T20:05:36.997Z","2024-04-08T20:10:33.960Z","2024-04-08T20:10:36.700Z","2024-04-08T20:15:33.908Z","2024-04-08T20:15:36.898Z","2024-04-08T20:20:34.692Z","2024-04-08T20:20:37.386Z","2024-04-08T20:25:34.060Z","2024-04-08T20:25:36.691Z","2024-04-08T20:30:34.317Z","2024-04-08T20:30:36.993Z","2024-04-08T20:35:34.638Z","2024-04-08T20:35:37.186Z","2024-04-08T20:40:34.369Z","2024-04-08T20:40:37.040Z","2024-04-08T20:45:34.302Z","2024-04-08T20:45:36.956Z","2024-04-08T20:50:34.170Z","2024-04-08T20:50:37.108Z","2024-04-08T20:55:35.202Z","2024-04-08T20:55:38.389Z","2024-04-08T21:00:34.416Z","2024-04-08T21:00:37.068Z","2024-04-08T21:05:34.667Z","2024-04-08T21:05:37.286Z","2024-04-08T21:10:34.837Z","2024-04-08T21:10:37.707Z","2024-04-08T21:15:34.921Z","2024-04-08T21:15:37.604Z","2024-04-08T21:20:34.884Z","2024-04-08T21:20:38.671Z","2024-04-08T21:25:35.061Z","2024-04-08T21:25:38.270Z","2024-04-08T21:30:35.145Z","2024-04-08T21:30:38.229Z","2024-04-08T21:35:34.690Z","2024-04-08T21:35:37.449Z","2024-04-08T21:40:35.112Z","2024-04-08T21:40:37.675Z","2024-04-08T21:45:34.819Z","2024-04-08T21:45:37.382Z","2024-04-08T21:50:35.173Z","2024-04-08T21:50:38.102Z","2024-04-08T21:55:34.892Z","2024-04-08T21:55:38.030Z","2024-04-08T22:00:34.774Z","2024-04-08T22:00:37.679Z","2024-04-08T22:05:35.750Z","2024-04-08T22:05:38.779Z","2024-04-08T22:10:35.109Z","2024-04-08T22:10:37.947Z","2024-04-08T22:15:34.899Z","2024-04-08T22:15:37.653Z","2024-04-08T22:20:35.693Z","2024-04-08T22:20:38.795Z","2024-04-08T22:25:34.821Z","2024-04-08T22:25:37.594Z","2024-04-08T22:30:35.127Z","2024-04-08T22:30:38.064Z","2024-04-08T22:35:35.188Z","2024-04-08T22:35:38.005Z","2024-04-08T22:40:35.409Z","2024-04-08T22:40:38.123Z","2024-04-08T22:45:36.112Z","2024-04-08T22:45:38.984Z","2024-04-08T22:50:35.116Z","2024-04-08T22:50:37.630Z","2024-04-08T22:55:35.115Z","2024-04-08T22:55:37.831Z","2024-04-08T23:00:35.501Z","2024-04-08T23:00:38.296Z","2024-04-08T23:05:35.105Z","2024-04-08T23:05:38.017Z","2024-04-08T23:10:35.231Z","2024-04-08T23:10:37.985Z","2024-04-08T23:15:35.041Z","2024-04-08T23:15:37.694Z","2024-04-08T23:20:35.197Z","2024-04-08T23:20:38.044Z","2024-04-08T23:25:35.454Z","2024-04-08T23:25:38.150Z","2024-04-08T23:30:35.434Z","2024-04-08T23:30:38.102Z","2024-04-08T23:35:35.542Z","2024-04-08T23:35:38.184Z","2024-04-08T23:40:35.586Z","2024-04-08T23:40:38.180Z","2024-04-08T23:45:35.371Z","2024-04-08T23:45:37.969Z","2024-04-08T23:50:35.639Z","2024-04-08T23:50:38.249Z","2024-04-08T23:55:35.502Z","2024-04-08T23:55:38.133Z","2024-04-09T00:00:39.203Z","2024-04-09T00:00:42.278Z","2024-04-09T00:05:35.644Z","2024-04-09T00:05:38.365Z","2024-04-09T00:10:36.009Z","2024-04-09T00:10:38.698Z","2024-04-09T00:15:35.829Z","2024-04-09T00:15:38.677Z","2024-04-09T00:20:35.708Z","2024-04-09T00:20:38.224Z","2024-04-09T00:25:36.313Z","2024-04-09T00:25:39.273Z","2024-04-09T00:30:36.068Z","2024-04-09T00:30:38.880Z","2024-04-09T00:35:36.442Z","2024-04-09T00:35:39.175Z","2024-04-09T00:40:35.950Z","2024-04-09T00:40:38.512Z","2024-04-09T00:45:36.539Z","2024-04-09T00:45:39.230Z","2024-04-09T00:50:36.250Z","2024-04-09T00:50:39.014Z","2024-04-09T00:55:36.258Z","2024-04-09T00:55:38.786Z","2024-04-09T01:00:36.299Z","2024-04-09T01:00:38.911Z","2024-04-09T01:05:36.493Z","2024-04-09T01:05:39.011Z","2024-04-09T01:10:36.133Z","2024-04-09T01:10:38.823Z","2024-04-09T01:15:36.571Z","2024-04-09T01:15:39.609Z","2024-04-09T01:20:36.347Z","2024-04-09T01:20:39.004Z","2024-04-09T01:25:36.698Z","2024-04-09T01:25:39.264Z","2024-04-09T01:30:36.401Z","2024-04-09T01:30:39.153Z","2024-04-09T01:35:36.901Z","2024-04-09T01:35:39.608Z","2024-04-09T01:40:36.831Z","2024-04-09T01:40:39.564Z","2024-04-09T01:45:36.677Z","2024-04-09T01:45:39.578Z","2024-04-09T01:50:37.245Z","2024-04-09T01:50:39.866Z","2024-04-09T01:55:36.663Z","2024-04-09T01:55:39.245Z","2024-04-09T02:00:36.707Z","2024-04-09T02:00:39.486Z","2024-04-09T02:05:36.971Z","2024-04-09T02:05:39.595Z","2024-04-09T02:10:36.737Z","2024-04-09T02:10:39.277Z","2024-04-09T02:15:36.920Z","2024-04-09T02:15:39.578Z","2024-04-09T02:20:37.220Z","2024-04-09T02:20:40.020Z","2024-04-09T02:25:37.209Z","2024-04-09T02:25:39.852Z","2024-04-09T02:30:37.203Z","2024-04-09T02:30:39.772Z","2024-04-09T02:35:37.094Z","2024-04-09T02:35:39.537Z","2024-04-09T02:40:37.154Z","2024-04-09T02:40:39.690Z","2024-04-09T02:45:37.132Z","2024-04-09T02:45:39.702Z","2024-04-09T02:50:37.079Z","2024-04-09T02:50:39.845Z","2024-04-09T02:55:37.280Z","2024-04-09T02:55:39.767Z","2024-04-09T03:00:37.271Z","2024-04-09T03:00:39.951Z","2024-04-09T03:05:37.393Z","2024-04-09T03:05:40.186Z","2024-04-09T03:10:37.304Z","2024-04-09T03:10:39.839Z","2024-04-09T03:15:37.523Z","2024-04-09T03:15:40.464Z","2024-04-09T03:20:37.842Z","2024-04-09T03:20:40.513Z","2024-04-09T03:25:37.570Z","2024-04-09T03:25:40.269Z","2024-04-09T03:30:37.734Z","2024-04-09T03:30:40.400Z","2024-04-09T03:35:38.358Z","2024-04-09T03:35:41.237Z","2024-04-09T03:40:37.638Z","2024-04-09T03:40:40.691Z","2024-04-09T03:45:37.784Z","2024-04-09T03:45:40.367Z","2024-04-09T03:50:38.158Z","2024-04-09T03:50:41.310Z","2024-04-09T03:55:38.228Z","2024-04-09T03:55:40.874Z","2024-04-09T04:00:37.917Z","2024-04-09T04:00:40.544Z","2024-04-09T04:05:37.880Z","2024-04-09T04:05:40.674Z","2024-04-09T04:10:38.349Z","2024-04-09T04:10:40.949Z","2024-04-09T04:15:37.827Z","2024-04-09T04:15:40.515Z","2024-04-09T04:20:38.111Z","2024-04-09T04:20:40.758Z","2024-04-09T04:25:38.270Z","2024-04-09T04:25:41.084Z","2024-04-09T04:30:38.381Z","2024-04-09T04:30:40.953Z","2024-04-09T04:35:38.317Z","2024-04-09T04:35:41.349Z","2024-04-09T04:40:38.533Z","2024-04-09T04:40:41.639Z","2024-04-09T04:45:38.511Z","2024-04-09T04:45:41.185Z","2024-04-09T04:50:38.691Z","2024-04-09T04:50:41.812Z","2024-04-09T04:55:38.540Z","2024-04-09T04:55:41.389Z","2024-04-09T05:00:38.343Z","2024-04-09T05:00:41.208Z","2024-04-09T05:05:38.503Z","2024-04-09T05:05:41.057Z","2024-04-09T05:10:38.644Z","2024-04-09T05:10:41.788Z","2024-04-09T05:15:38.384Z","2024-04-09T05:15:40.941Z","2024-04-09T05:20:38.712Z","2024-04-09T05:20:41.322Z","2024-04-09T05:25:38.523Z","2024-04-09T05:25:41.451Z","2024-04-09T05:30:38.666Z","2024-04-09T05:30:41.474Z","2024-04-09T05:35:38.590Z","2024-04-09T05:35:41.489Z","2024-04-09T05:40:38.845Z","2024-04-09T05:40:41.519Z","2024-04-09T05:45:38.889Z","2024-04-09T05:45:41.538Z","2024-04-09T05:50:38.900Z","2024-04-09T05:50:41.365Z","2024-04-09T05:55:38.829Z","2024-04-09T05:55:41.407Z","2024-04-09T06:00:39.967Z","2024-04-09T06:00:43.602Z","2024-04-09T06:05:39.413Z","2024-04-09T06:05:42.901Z","2024-04-09T06:10:39.201Z","2024-04-09T06:10:42.201Z","2024-04-09T06:15:39.182Z","2024-04-09T06:15:42.031Z","2024-04-09T06:20:39.823Z","2024-04-09T06:20:42.771Z","2024-04-09T06:25:39.403Z","2024-04-09T06:25:42.642Z","2024-04-09T06:30:39.843Z","2024-04-09T06:30:42.646Z","2024-04-09T06:35:39.905Z","2024-04-09T06:35:42.620Z","2024-04-09T06:40:39.978Z","2024-04-09T06:40:43.134Z","2024-04-09T06:45:39.642Z","2024-04-09T06:45:42.251Z","2024-04-09T06:50:39.310Z","2024-04-09T06:50:42.050Z","2024-04-09T06:55:39.637Z","2024-04-09T06:55:42.481Z","2024-04-09T07:00:39.847Z","2024-04-09T07:00:42.756Z","2024-04-09T07:05:39.604Z","2024-04-09T07:05:42.242Z","2024-04-09T07:10:39.573Z","2024-04-09T07:10:42.599Z","2024-04-09T07:15:39.774Z","2024-04-09T07:15:42.390Z","2024-04-09T07:20:39.837Z","2024-04-09T07:20:43.739Z","2024-04-09T07:25:39.875Z","2024-04-09T07:25:43.240Z","2024-04-09T07:30:40.195Z","2024-04-09T07:30:42.901Z","2024-04-09T07:35:39.840Z","2024-04-09T07:35:42.738Z","2024-04-09T07:40:39.784Z","2024-04-09T07:40:42.487Z","2024-04-09T07:45:40.227Z","2024-04-09T07:45:43.008Z","2024-04-09T07:50:39.859Z","2024-04-09T07:50:42.726Z","2024-04-09T07:55:40.537Z","2024-04-09T07:55:43.226Z","2024-04-09T08:00:40.165Z","2024-04-09T08:00:42.743Z","2024-04-09T08:05:40.331Z","2024-04-09T08:05:43.035Z","2024-04-09T08:10:40.157Z","2024-04-09T08:10:42.765Z","2024-04-09T08:15:40.456Z","2024-04-09T08:15:43.282Z","2024-04-09T08:20:40.486Z","2024-04-09T08:20:43.236Z","2024-04-09T08:25:40.539Z","2024-04-09T08:25:43.215Z","2024-04-09T08:30:40.463Z","2024-04-09T08:30:43.155Z","2024-04-09T08:35:40.830Z","2024-04-09T08:35:43.590Z","2024-04-09T08:40:40.611Z","2024-04-09T08:40:43.185Z","2024-04-09T08:45:40.833Z","2024-04-09T08:45:43.628Z","2024-04-09T08:50:40.664Z","2024-04-09T08:50:43.294Z","2024-04-09T08:55:40.561Z","2024-04-09T08:55:43.206Z","2024-04-09T09:00:41.243Z","2024-04-09T09:00:44.008Z","2024-04-09T09:05:40.602Z","2024-04-09T09:05:43.465Z","2024-04-09T09:10:40.799Z","2024-04-09T09:10:43.978Z","2024-04-09T09:15:43.516Z","2024-04-09T09:15:46.426Z","2024-04-09T09:20:40.844Z","2024-04-09T09:20:43.584Z","2024-04-09T09:25:40.712Z","2024-04-09T09:25:43.446Z","2024-04-09T09:30:44.799Z","2024-04-09T09:30:47.435Z","2024-04-09T09:35:41.165Z","2024-04-09T09:35:44.171Z","2024-04-09T09:40:41.306Z","2024-04-09T09:40:44.403Z","2024-04-09T09:45:41.176Z","2024-04-09T09:45:43.823Z","2024-04-09T09:50:41.557Z","2024-04-09T09:50:44.304Z","2024-04-09T09:55:40.961Z","2024-04-09T09:55:43.689Z","2024-04-09T10:00:41.648Z","2024-04-09T10:00:45.148Z","2024-04-09T10:05:41.241Z","2024-04-09T10:05:44.148Z","2024-04-09T10:10:41.084Z","2024-04-09T10:10:43.963Z","2024-04-09T10:15:41.041Z","2024-04-09T10:15:43.657Z","2024-04-09T10:20:41.192Z","2024-04-09T10:20:43.767Z","2024-04-09T10:25:41.528Z","2024-04-09T10:25:46.811Z","2024-04-09T10:30:41.906Z","2024-04-09T10:30:45.513Z","2024-04-09T10:35:41.529Z","2024-04-09T10:35:44.433Z","2024-04-09T10:40:41.839Z","2024-04-09T10:40:44.510Z","2024-04-09T10:45:41.428Z","2024-04-09T10:45:44.229Z","2024-04-09T10:50:42.310Z","2024-04-09T10:50:45.186Z","2024-04-09T10:55:41.840Z","2024-04-09T10:55:44.632Z","2024-04-09T11:00:47.078Z","2024-04-09T11:00:49.841Z","2024-04-09T11:05:42.028Z","2024-04-09T11:05:44.701Z","2024-04-09T11:10:41.997Z","2024-04-09T11:10:44.703Z","2024-04-09T11:15:46.668Z","2024-04-09T11:15:49.379Z","2024-04-09T11:20:41.742Z","2024-04-09T11:20:44.595Z","2024-04-09T11:25:42.141Z","2024-04-09T11:25:44.723Z","2024-04-09T11:30:42.065Z","2024-04-09T11:30:44.674Z","2024-04-09T11:35:42.004Z","2024-04-09T11:35:44.647Z","2024-04-09T11:40:41.975Z","2024-04-09T11:40:44.987Z","2024-04-09T11:45:42.117Z","2024-04-09T11:45:44.924Z","2024-04-09T11:50:42.317Z","2024-04-09T11:50:45.107Z","2024-04-09T11:55:42.440Z","2024-04-09T11:55:45.261Z","2024-04-09T12:00:42.374Z","2024-04-09T12:00:44.964Z","2024-04-09T12:05:42.446Z","2024-04-09T12:05:45.376Z","2024-04-09T12:10:42.407Z","2024-04-09T12:10:45.328Z","2024-04-09T12:15:42.749Z","2024-04-09T12:15:45.665Z","2024-04-09T12:20:42.635Z","2024-04-09T12:20:45.302Z","2024-04-09T12:25:42.724Z","2024-04-09T12:25:45.533Z","2024-04-09T12:30:42.841Z","2024-04-09T12:30:50.666Z","2024-04-09T12:35:43.235Z","2024-04-09T12:35:46.345Z","2024-04-09T12:40:43.446Z","2024-04-09T12:40:46.397Z","2024-04-09T12:45:43.418Z","2024-04-09T12:45:47.201Z","2024-04-09T12:50:43.342Z","2024-04-09T12:50:46.371Z","2024-04-09T12:55:42.933Z","2024-04-09T12:55:45.672Z","2024-04-09T13:00:42.966Z","2024-04-09T13:00:45.560Z","2024-04-09T13:05:43.651Z","2024-04-09T13:05:46.479Z","2024-04-09T13:10:43.416Z","2024-04-09T13:10:46.220Z","2024-04-09T13:15:43.145Z","2024-04-09T13:15:46.003Z","2024-04-09T13:20:43.631Z","2024-04-09T13:20:46.355Z","2024-04-09T13:25:43.398Z","2024-04-09T13:25:46.553Z","2024-04-09T13:30:43.711Z","2024-04-09T13:30:46.489Z","2024-04-09T13:35:43.465Z","2024-04-09T13:35:46.238Z","2024-04-09T13:40:43.841Z","2024-04-09T13:40:46.834Z","2024-04-09T13:45:43.804Z","2024-04-09T13:45:46.923Z","2024-04-09T13:50:47.003Z","2024-04-09T13:50:51.897Z","2024-04-09T13:55:44.272Z","2024-04-09T13:55:51.880Z","2024-04-09T14:00:43.776Z","2024-04-09T14:00:46.720Z","2024-04-09T14:05:44.512Z","2024-04-09T14:05:47.495Z","2024-04-09T14:10:43.835Z","2024-04-09T14:10:46.548Z","2024-04-09T14:15:43.669Z","2024-04-09T14:15:46.319Z","2024-04-09T14:20:44.003Z","2024-04-09T14:20:46.950Z","2024-04-09T14:25:44.241Z","2024-04-09T14:25:47.251Z","2024-04-09T14:30:44.013Z","2024-04-09T14:30:51.812Z","2024-04-09T14:35:43.966Z","2024-04-09T14:35:46.980Z","2024-04-09T14:40:49.041Z","2024-04-09T14:40:52.034Z","2024-04-09T14:45:44.261Z","2024-04-09T14:45:47.163Z","2024-04-09T14:50:44.182Z","2024-04-09T14:50:46.894Z","2024-04-09T14:55:44.443Z","2024-04-09T14:55:47.045Z","2024-04-09T15:00:44.169Z","2024-04-09T15:00:46.943Z","2024-04-09T15:05:44.482Z","2024-04-09T15:05:47.360Z","2024-04-09T15:10:44.090Z","2024-04-09T15:10:47.360Z","2024-04-09T15:15:44.203Z","2024-04-09T15:15:47.054Z","2024-04-09T15:20:44.984Z","2024-04-09T15:20:48.195Z","2024-04-09T15:25:44.347Z","2024-04-09T15:25:47.023Z","2024-04-09T15:30:44.537Z","2024-04-09T15:30:47.279Z","2024-04-09T15:35:44.344Z","2024-04-09T15:35:46.989Z","2024-04-09T15:40:44.745Z","2024-04-09T15:40:47.417Z","2024-04-09T15:45:45.347Z","2024-04-09T15:45:48.270Z","2024-04-09T15:50:44.728Z","2024-04-09T15:50:47.810Z","2024-04-09T15:55:44.885Z","2024-04-09T15:55:47.729Z","2024-04-09T16:00:44.658Z","2024-04-09T16:00:48.641Z","2024-04-09T16:05:45.789Z","2024-04-09T16:05:48.699Z","2024-04-09T16:10:45.186Z","2024-04-09T16:10:48.330Z","2024-04-09T16:15:44.989Z","2024-04-09T16:15:48.124Z","2024-04-09T16:20:45.127Z","2024-04-09T16:20:47.971Z","2024-04-09T16:25:44.894Z","2024-04-09T16:25:47.650Z","2024-04-09T16:30:45.051Z","2024-04-09T16:30:49.194Z","2024-04-09T16:35:45.009Z","2024-04-09T16:35:47.930Z","2024-04-09T16:39:35.427Z","2024-04-09T16:39:37.062Z","2024-04-09T16:43:18.597Z","2024-04-09T16:43:20.426Z","2024-04-09T16:48:24.533Z","2024-04-09T16:48:26.331Z","2024-04-09T16:53:24.409Z","2024-04-09T16:53:26.211Z","2024-04-09T16:58:24.752Z","2024-04-09T16:58:26.684Z","2024-04-09T17:03:24.207Z","2024-04-09T17:03:25.849Z","2024-04-09T17:08:25.687Z","2024-04-09T17:08:27.471Z","2024-04-09T17:08:31.710Z","2024-04-09T17:08:33.636Z","2024-04-09T17:11:04.076Z","2024-04-09T17:11:05.859Z","2024-04-09T17:11:26.674Z","2024-04-09T17:11:27.882Z","2024-04-09T17:11:32.818Z","2024-04-09T17:11:33.959Z","2024-04-09T17:11:39.632Z","2024-04-09T17:11:40.666Z","2024-04-09T17:11:56.716Z","2024-04-09T17:11:57.820Z","2024-04-09T17:12:01.773Z","2024-04-09T17:12:02.883Z","2024-04-09T17:12:58.329Z","2024-04-09T17:13:00.095Z","2024-04-09T17:13:07.147Z","2024-04-09T17:13:08.804Z","2024-04-09T17:18:12.635Z","2024-04-09T17:18:14.361Z","2024-04-09T17:23:12.795Z","2024-04-09T17:23:14.604Z","2024-04-09T17:28:12.759Z","2024-04-09T17:28:14.502Z"]`).map(i => new Date(i).toDateString().split(" ")[2] + " " + new Date(i).toDateString().split(" ")[1] + " " + new Date(i).toTimeString().split(" ")[0].substring(0, 5)),
+                    datasets: [{
+                        label: 'Ping',
+                        data: JSON.parse(`[360.60869565217394,125.69565217391305,341.4782608695652,114.65217391304348,129.7826086956522,124,135.04347826086956,154.91304347826087,163.7391304347826,129.43478260869566,137.65217391304347,132.6086956521739,201.95652173913044,128.6086956521739,141.82608695652175,116.82608695652173,124.43478260869566,112.30434782608695,131.82608695652175,116.52173913043478,129.34782608695653,136.65217391304347,145.34782608695653,115.8695652173913,146.7826086956522,140.30434782608697,141.1304347826087,141.6086956521739,169.04347826086956,182.43478260869566,154.69565217391303,134.7826086956522,143.7391304347826,119.8695652173913,575.7826086956521,575.1304347826087,557.8695652173913,551.695652173913,566.4347826086956,551.6521739130435,558.1739130434783,551.5217391304348,574.3478260869565,795,156.42105263157896,139.57894736842104,147.3684210526316,129.78947368421052,144.6315789473684,138.26315789473685,180.3684210526316,125.36842105263158,143.78947368421052,123.15789473684211,150.78947368421052,122.05263157894737,167.10526315789474,117.26315789473684,154.68421052631578,124.73684210526316,146.78947368421052,122.57894736842105,137.3684210526316,138.6315789473684,188.52631578947367,152.05263157894737,147.3684210526316,122.78947368421052,157.10526315789474,123.63157894736842,163.26315789473685,133.47368421052633,163.73684210526315,126.47368421052632,160,182.78947368421052,169.52631578947367,154.31578947368422,169.57894736842104,144.68421052631578,147.89473684210526,129.05263157894737,166.8421052631579,118.3157894736842,149.6315789473684,119.3157894736842,162.31578947368422,140.3684210526316,145.47368421052633,149.52631578947367,139.1578947368421,135.68421052631578,187.47368421052633,145.26315789473685,153.42105263157896,132.26315789473685,136.6315789473684,129,180.05263157894737,146.73684210526315,132.94736842105263,129.6315789473684,142.3684210526316,140,151,130.42105263157896,159.78947368421052,127.26315789473684,196.73684210526315,134.10526315789474,140.73684210526315,117.10526315789474,141.42105263157896,126.57894736842105,159.8421052631579,131.47368421052633,139.52631578947367,138.26315789473685,144.89473684210526,128,129,124.15789473684211,134.10526315789474,133.57894736842104,140.94736842105263,124.57894736842105,137.21052631578948,124.3157894736842,144.42105263157896,122.10526315789474,144.6315789473684,121.94736842105263,129.10526315789474,120.84210526315789,139.21052631578948,123,132.57894736842104,120.73684210526316,325,142.42105263157896,138.05263157894737,127.73684210526316,152.6315789473684,125.26315789473684,146.47368421052633,132.89473684210526,132.47368421052633,116.89473684210526,161.78947368421052,138.26315789473685,148.31578947368422,132.10526315789474,165.3684210526316,127.94736842105263,136.73684210526315,120.05263157894737,166.57894736842104,127.15789473684211,151.68421052631578,127.94736842105263,148.57894736842104,117.89473684210526,144.6315789473684,123.52631578947368,157,116.57894736842105,133.57894736842104,127,158.3684210526316,142.26315789473685,142.05263157894737,125.52631578947368,153.73684210526315,119.6842105263158,135.21052631578948,130.10526315789474,158.6315789473684,126.3157894736842,155.52631578947367,128.42105263157896,140.73684210526315,137.6315789473684,169.52631578947367,122.84210526315789,134.6315789473684,121.94736842105263,134.57894736842104,128.68421052631578,144.68421052631578,124.36842105263158,131.78947368421052,117.10526315789474,137.6315789473684,124,152.52631578947367,130.42105263157896,152.47368421052633,121.10526315789474,146.52631578947367,120.10526315789474,135.8421052631579,112.52631578947368,138.57894736842104,116.6842105263158,138.1578947368421,120.63157894736842,132.6315789473684,129.31578947368422,140.21052631578948,114.26315789473684,138.6315789473684,125.89473684210526,142.42105263157896,129.21052631578948,134.78947368421052,119,144.21052631578948,137.6315789473684,156.42105263157896,126.47368421052632,140.8421052631579,126,147.1578947368421,126,179,134.8421052631579,135.57894736842104,145.68421052631578,145.89473684210526,119.10526315789474,159.89473684210526,151.31578947368422,163.3684210526316,122.6842105263158,146.47368421052633,122.15789473684211,141.42105263157896,131.73684210526315,164.52631578947367,120.15789473684211,133.68421052631578,127,147.89473684210526,125.26315789473684,153,130.31578947368422,158.52631578947367,120,151.52631578947367,143.89473684210526,159.31578947368422,147.52631578947367,155.68421052631578,124.05263157894737,164.94736842105263,148.94736842105263,158.05263157894737,131.94736842105263,143.52631578947367,135.1578947368421,148.42105263157896,121.21052631578948,154.89473684210526,148.52631578947367,136.6315789473684,118.36842105263158,154.6315789473684,122.36842105263158,140.94736842105263,138.10526315789474,149.3684210526316,132.57894736842104,140.52631578947367,135.89473684210526,150.1578947368421,126.3157894736842,148.26315789473685,123.52631578947368,144.78947368421052,114.42105263157895,142.8421052631579,120.3157894736842,196.68421052631578,175.10526315789474,169.1578947368421,166.1578947368421,155.47368421052633,142.52631578947367,151.52631578947367,133.78947368421052,184.89473684210526,138.94736842105263,156.21052631578948,155.1578947368421,181.68421052631578,131.10526315789474,179.8421052631579,125.3157894736842,177.73684210526315,151.94736842105263,160.8421052631579,121.73684210526316,142.05263157894737,126.47368421052632,153.68421052631578,136.3684210526316,160.89473684210526,134.78947368421052,146.78947368421052,124,143.31578947368422,143.57894736842104,151.89473684210526,120.05263157894737,150.89473684210526,190.73684210526315,149.52631578947367,160.42105263157896,159.52631578947367,127.73684210526316,141.1578947368421,134.73684210526315,135.78947368421052,127.73684210526316,158.21052631578948,129.47368421052633,138.8421052631579,132.78947368421052,168.31578947368422,126.36842105263158,144.78947368421052,118.89473684210526,150.21052631578948,126.6842105263158,140.31578947368422,121.89473684210526,147.78947368421052,135,146.52631578947367,128.1578947368421,144.68421052631578,123.63157894736842,136.73684210526315,127.84210526315789,156.21052631578948,129.57894736842104,141.3684210526316,120.52631578947368,150.05263157894737,128.94736842105263,138.57894736842104,122.89473684210526,130.52631578947367,125.63157894736842,168.3684210526316,129.05263157894737,133.78947368421052,135.31578947368422,142.21052631578948,151,285.36842105263156,138.05263157894737,145.26315789473685,128.10526315789474,135,129.47368421052633,347.05263157894734,122.89473684210526,156.57894736842104,143.57894736842104,161.3684210526316,146.6315789473684,155.78947368421052,124.26315789473684,172.47368421052633,128.10526315789474,143.21052631578948,128.47368421052633,175.47368421052633,168.3684210526316,153.57894736842104,138.10526315789474,145.94736842105263,134.26315789473685,136.05263157894737,121.52631578947368,142.68421052631578,119.63157894736842,157.94736842105263,262.42105263157896,172.1578947368421,174.89473684210526,146.47368421052633,136.68421052631578,159.42105263157896,124.94736842105263,136.73684210526315,132.1578947368421,177.8421052631579,134.89473684210526,149.1578947368421,129.52631578947367,418.8421052631579,131.89473684210526,156,124.47368421052632,152.1578947368421,124.47368421052632,400.05263157894734,127.42105263157895,137.42105263157896,134.6315789473684,152.68421052631578,117.6842105263158,149,121.36842105263158,143.1578947368421,123.36842105263158,138.10526315789474,142.89473684210526,140.42105263157896,131.47368421052633,147.94736842105263,131.8421052631579,154.68421052631578,131.73684210526315,143.31578947368422,120.26315789473684,146.78947368421052,137,141.89473684210526,135.8421052631579,155.3684210526316,138.78947368421052,143.3684210526316,124.36842105263158,147.1578947368421,133.68421052631578,154.31578947368422,395.5263157894737,171.10526315789474,146.89473684210526,177.26315789473685,140.05263157894737,170.78947368421052,181.10526315789474,166.8421052631579,142.94736842105263,140.73684210526315,127.94736842105263,138.3684210526316,119.57894736842105,171.42105263157896,133.52631578947367,159.3684210526316,131.26315789473685,144.10526315789474,135.78947368421052,168.47368421052633,128.1578947368421,153.3684210526316,150.52631578947367,162.1578947368421,130.57894736842104,145.78947368421052,131.3684210526316,163.21052631578948,139.05263157894737,152,148.78947368421052,324.57894736842104,244.26315789473685,175.42105263157896,383.10526315789474,147.10526315789474,138.47368421052633,186.73684210526315,137.89473684210526,150.6315789473684,125.42105263157895,141.21052631578948,124.73684210526316,154.94736842105263,137.68421052631578,163.8421052631579,143.05263157894737,147.47368421052633,393.10526315789474,147.1578947368421,142.10526315789474,405.36842105263156,141.52631578947367,150.26315789473685,133,147.21052631578948,128,158.31578947368422,121.36842105263158,144.26315789473685,130.21052631578948,158.94736842105263,134.78947368421052,140.3684210526316,156.42105263157896,142.68421052631578,133.68421052631578,180.26315789473685,154.57894736842104,148.26315789473685,123.84210526315789,156.1578947368421,129.10526315789474,143.6315789473684,123.42105263157895,159.42105263157896,126.05263157894737,188.26315789473685,134.10526315789474,150.68421052631578,145.73684210526315,155.47368421052633,133.6315789473684,143.89473684210526,192.78947368421052,196.05263157894737,135.8421052631579,164.10526315789474,151,154.57894736842104,149.31578947368422,161.47368421052633,132,145.05263157894737,130.05263157894737,149,202.1578947368421,147.05263157894737,139,190.1578947368421,74.47368421052632,183.47368421052633,82.63157894736842,174.89473684210526,79.78947368421052,165.89473684210526,80.78947368421052,176.6315789473684,87.63157894736842,148.21052631578948,71.26315789473684,187.05263157894737,78.21052631578948,161,86.36842105263158,166.73684210526315,77.6842105263158,68.26315789473684,49.89473684210526,65.78947368421052,46.421052631578945,64.36842105263158,39.78947368421053,55.05263157894737,42.578947368421055,60.26315789473684,43.63157894736842,144.10526315789474,77.36842105263158,124.05263157894737,71.26315789473684,163.42105263157896,77.15789473684211,168.52631578947367,81.10526315789474,164.89473684210526,78.21052631578948]`),
+                        borderColor: '#05b7b1',
+                        backgroundColor: '#05b7b177'
+                    }]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(label) {
+                                    return Math.round(label) + " ms";
+                                }
+                            }
+                        },
+                        x: {
+                            gridLines: {
+                                display: false
+                            },
+                            grid: {
+                                display: false
+                            },
+                            gridLineWidth: 0
+                        }
+                    },
+                    elements: {
+                        point:{
+                            radius: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.raw.toFixed(2) + ' ms';
+                                }
+                            },
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</div>

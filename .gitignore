@@ -3,3 +3,7 @@ output.json
 config.yaml
 pings.json
 history.json
+public.json
+web/public
+new/public.json
+new/.vercel

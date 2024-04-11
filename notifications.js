@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fs = require("fs");
 module.exports = () => {
     const axios = require('axios');
     const fs = require('fs');
@@ -6,17 +7,21 @@ module.exports = () => {
     const config = YAML.parse(fs.readFileSync("./config.yaml").toString());
 
     const last = parseInt(fs.readFileSync("./last.txt").toString().trim());
+    const secondLast = fs.existsSync("./second-last.txt") ? parseInt(fs.readFileSync("./second-last.txt").toString().trim()) : -1;
     const current = JSON.parse(fs.readFileSync("./output.json").toString()).total;
 
     function formatPonypush(text) {
         return "Update to Ponypush 3.1.0 or later — ($PA1$$" + Buffer.from(text).toString("base64") + "$$)";
     }
 
-    console.log(last, current);
+    console.log(secondLast, last, current);
 
-    if (last !== current) {
+    if (last === current && last !== secondLast) {
+        console.log("Dispatching notification");
+
         switch (current) {
             case 0:
+                if (secondLast === 0) break;
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
@@ -124,7 +129,7 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('One or more service(s) is/are experiencing a major outage and automatic remediation has failed or is impossible, investigation is needed.'),
+                        message: formatPonypush('One or more service(s) is/are experiencing a major outage, investigation is needed.'),
                         title: formatPonypush("🔴 Something is down"),
                         priority: 3,
                         tags: ['status'],
@@ -173,7 +178,8 @@ module.exports = () => {
                 })();
                 break;
         }
-
-        fs.writeFileSync("./last.txt", current.toString());
     }
+
+    fs.writeFileSync("./second-last.txt", last.toString());
+    fs.writeFileSync("./last.txt", current.toString());
 }

@@ -101,7 +101,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
-                            details: "The service is reachable from an off-site network, but it is running with degraded performance."
+                            details: "The service is reachable from an off-site network, but it is running with degraded performance.",
+                            type: item.category ?? null
                         }
                     } else {
                         console.log("    Is expected, marking as online");
@@ -111,7 +112,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "online",
-                            details: "The service is entirely operational and responds within a reasonable amount of time."
+                            details: "The service is entirely operational and responds within a reasonable amount of time.",
+                            type: item.category ?? null
                         }
                     }
                 } else if (result.status < 500) {
@@ -122,7 +124,8 @@ async function check() {
                         group: item.group ?? "Default",
                         ping,
                         status: "notWorking",
-                        details: "The service is reachable from an off-site network, but does not behave like it should (warning code: " + result.status + ")."
+                        details: "The service is reachable from an off-site network, but does not behave like it should (warning code: " + result.status + ").",
+                        type: item.category ?? null
                     }
                 } else if (result.status) {
                     console.log("    Is unexpected, marking as offline");
@@ -132,7 +135,8 @@ async function check() {
                         group: item.group ?? "Default",
                         ping,
                         status: "offline",
-                        details: "The service returns a server error upon connection (error code: " + result.status + ")."
+                        details: "The service returns a server error upon connection (error code: " + result.status + ").",
+                        type: item.category ?? null
                     }
                 } else {
                     console.log("    Is unexpected, marking as offline");
@@ -142,7 +146,8 @@ async function check() {
                         group: item.group ?? "Default",
                         ping,
                         status: "offline",
-                        details: "The service is currently unreachable from an off-site network (error message: " + result.message + ")."
+                        details: "The service is currently unreachable from an off-site network (error message: " + result.message + ").",
+                        type: item.category ?? null
                     }
                 }
 
@@ -165,7 +170,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
-                            details: "The service is reachable from an off-site network, but it is running with degraded performance."
+                            details: "The service is reachable from an off-site network, but it is running with degraded performance.",
+                            type: item.category ?? null
                         }
                     } else {
                         console.log("    Is expected, marking as online");
@@ -175,7 +181,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "online",
-                            details: "The service is entirely operational and responds within a reasonable amount of time."
+                            details: "The service is entirely operational and responds within a reasonable amount of time.",
+                            type: item.category ?? null
                         }
                     }
                 } catch (e) {
@@ -190,7 +197,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
-                            details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time."
+                            details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time.",
+                            type: item.category ?? null
                         }
                     } else {
                         console.log("    Result:", e.code);
@@ -201,7 +209,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "offline",
-                            details: "The service is currently unreachable from an off-site network (error code: " + e.code + ")."
+                            details: "The service is currently unreachable from an off-site network (error code: " + e.code + ").",
+                            type: item.category ?? null
                         }
                     }
                 }
@@ -225,7 +234,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
-                            details: "The service is reachable from an off-site network, but it is running with degraded performance."
+                            details: "The service is reachable from an off-site network, but it is running with degraded performance.",
+                            type: item.category ?? null
                         }
                     } else {
                         console.log("    Is expected, marking as online");
@@ -235,7 +245,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "online",
-                            details: "The service is entirely operational and responds within a reasonable amount of time."
+                            details: "The service is entirely operational and responds within a reasonable amount of time.",
+                            type: item.category ?? null
                         }
                     }
                 } catch (e) {
@@ -250,7 +261,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "notWorking",
-                            details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time."
+                            details: "The service is potentially reachable from an off-site network, but the attempt to connect took longer than the maximum allowed time.",
+                            type: item.category ?? null
                         }
                     } else {
                         console.log("    Result:", e.code);
@@ -261,7 +273,8 @@ async function check() {
                             group: item.group ?? "Default",
                             ping,
                             status: "offline",
-                            details: "The service is currently unreachable from an off-site network (error code: " + e.code + ")."
+                            details: "The service is currently unreachable from an off-site network (error code: " + e.code + ").",
+                            type: item.category ?? null
                         }
                     }
                 }
@@ -276,7 +289,8 @@ async function check() {
                     group: item.group ?? "Default",
                     ping: -1,
                     status: null,
-                    details: "An error occurred while processing status for this service."
+                    details: "An error occurred while processing status for this service.",
+                    type: item.category ?? null
                 };
                 break;
         }
@@ -377,6 +391,53 @@ async function web() {
     for (let asset of fs.readdirSync("./web/static")) {
         fs.copyFileSync("./web/static/" + asset, "./web/public/" + asset);
     }
+
+    let uptimes = {};
+
+    for (let i = 89; i > -1; i--) {
+        let date = new Date(new Date(new Date().toISOString().split("T")[0]).getTime() - 86400000 * i).toISOString().split("T")[0];
+        let services = Object.values(output["services"]).map(i => i.id);
+        let list = [];
+
+        for (let service of services) {
+            if (history[service]) {
+                if (history[service][date]) {
+                    list.push(...history[service][date]);
+                }
+            }
+        }
+
+        let perType = [0, 0, 0, 0];
+
+        for (let item of list) {
+            perType[item]++;
+        }
+
+        let total = perType.reduce((a, b) => a + b);
+        perType = perType.map(i => (i / total) * 100);
+
+        uptimes[date] = perType;
+    }
+
+    fs.writeFileSync("./public.json", JSON.stringify({
+        global: output["total"],
+        ping: output['ping'],
+        time: output['date'],
+        breakdown: uptimes,
+        services: output['services'].map(i => {
+            return {
+                id: require('crypto').createHash('md5').update(i.id).digest("hex"),
+                label: i.name,
+                ping: i.ping,
+                status: i.status === "online" ? 0 : (i.status === "notWorking" ? 1 : (i.status === "offline" ? 2 : 3)),
+                type: i.type
+            }
+        }),
+        notice: config['outage']['enabled'] ? config['outage'] : null,
+    }));
+    fs.copyFileSync("./public.json", "./new/public.json");
+    fs.copyFileSync("./public.json", "./git/public.json");
+    require('child_process').exec("git add -A && git commit -m \"$(date)\" && git push origin master", { cwd: "./git" });
 
     console.log("Done!");
 }

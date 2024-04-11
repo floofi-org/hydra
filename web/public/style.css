@@ -1,0 +1,133 @@
+.container {
+    max-width: 960px;
+}
+
+.service:nth-child(1) {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+
+.service:nth-last-child(1) {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.service[open] > summary > span {
+    display: none;
+}
+
+.service[open] .icon-open {
+    display: none;
+}
+
+.service[open] .icon-close {
+    display: inline !important;
+}
+
+.tooltip {
+    --bs-tooltip-max-width: 20vw;
+}
+
+.status-service:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+tr:nth-last-child(1) .status-service {
+    border-bottom: none !important;
+}
+
+@media (min-width: 100px) {
+    tr:nth-child(1) .status-service {
+        border-top: none !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .status-service {
+        display: block;
+        width: 100% !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+
+    .status-filler {
+        display: none !important;
+    }
+
+    .tooltip {
+        --bs-tooltip-max-width: 80vw;
+    }
+}
+
+@media (min-width: 800px) {
+    .history-60, .history-30 {
+        display: none;
+    }
+
+    .history-90 {
+        display: block;
+    }
+}
+
+@media (max-width: 800px) {
+    .history-30, .history-90 {
+        display: none;
+    }
+
+    .history-60 {
+        display: block;
+    }
+}
+
+@media (max-width: 670px) {
+    .history-60, .history-90 {
+        display: none;
+    }
+
+    .history-30 {
+        display: block;
+    }
+}
+
+.custom-outage *:nth-last-child(1) {
+    margin-bottom: 0 !important;
+}
+
+.maintenances *:nth-last-child(1) {
+    margin-bottom: 0 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    #banner {
+        background-color: #252525 !important;
+    }
+
+    body {
+        background-color: #353535 !important;
+        color: white !important;
+    }
+
+    .list-group-item {
+        background: #444 !important;
+        color: white !important;
+    }
+
+    .list-group-item:hover {
+        background: #555 !important;
+        color: white !important;
+    }
+
+    .list-group-item:active {
+        background: #666 !important;
+        color: white !important;
+    }
+
+    .icon-open, .icon-close {
+        filter: invert(1) !important;
+    }
+
+    .alert {
+        filter: invert(1) hue-rotate(180deg) !important;
+    }
+}
