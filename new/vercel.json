@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/font/(.*).ttf",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=3600, maxage=3600, must-revalidate, stale-while-revalidate=300, stale-if-error=86400"
+        }
+      ]
+    }
+  ]
+}
