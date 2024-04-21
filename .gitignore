@@ -7,3 +7,6 @@ public.json
 web/public
 new/public.json
 new/.vercel
+node_modules
+second-last.txt
+last.txt
