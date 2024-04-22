@@ -66,6 +66,7 @@ async function check() {
 
     for (let item of config['services']) {
         console.log(`[${item.id}] ${item.name}`);
+        item.group = "";
 
         let result, start, ping;
 
@@ -360,12 +361,12 @@ async function check() {
     }
 
     fs.writeFileSync("output.json", JSON.stringify(output, null, 4));
-    fs.writeFileSync("web/public/status.json", JSON.stringify({
+    fs.writeFileSync("git/status.json", JSON.stringify({
         ping: output["ping"],
         code: output['total'],
         image: output['total'] === 2 ? "status-error" : (output['total'] === 1 ? "status-warning" : "status-ok"),
         text: output['total'] === 2 ? "Servers outage" : (output['total'] === 1 ? "Degraded performance" : "All systems nominal"),
-        outages: Object.values(output.services).filter(i => i["status"] === "offline" || i["status"] === "notWorking").map(i => [i.group, i.name])
+        outages: Object.values(output.services).filter(i => i["status"] === "offline" || i["status"] === "notWorking").map(i => [null, i.name])
     }, null, 4));
 
     pingHistory[new Date().toISOString()] = pings.reduce((a, b) => a + b) / pings.length;
@@ -380,18 +381,6 @@ async function check() {
 
 async function web() {
     console.log("Generating webpage...");
-    let pings = JSON.parse(fs.readFileSync("./pings.json").toString());
-
-    let rendered2 = ejs.render(fs.readFileSync("./web/page2.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
-    let rendered3 = ejs.render(fs.readFileSync("./web/content.ejs").toString(), { config, services: output["servers"], ping: output["ping"], pings: [Object.keys(pings), Object.values(pings)], outage: config['outage'], maintenances: config['maintenances'], history: JSON.parse(fs.readFileSync("./history.json").toString()), date: new Date(output["date"]), servers: JSON.parse(fs.readFileSync("./servers.json").toString()) });
-
-    fs.writeFileSync("./web/public/index.html", rendered2);
-    fs.writeFileSync("./web/public/content.html", rendered3);
-
-    for (let asset of fs.readdirSync("./web/static")) {
-        fs.copyFileSync("./web/static/" + asset, "./web/public/" + asset);
-    }
-
     let uptimes = {};
 
     for (let i = 89; i > -1; i--) {
@@ -435,68 +424,16 @@ async function web() {
         }),
         notice: config['outage']['enabled'] ? config['outage'] : null,
     }));
-    fs.copyFileSync("./public.json", "./new/public.json");
     fs.copyFileSync("./public.json", "./git/public.json");
     require('child_process').exec("git add -A && git commit -m \"$(date)\" && git push origin master", { cwd: "./git" });
 
     console.log("Done!");
 }
 
-async function servers() {
-    console.log("Processing servers...");
-    let list = JSON.parse(fs.readFileSync("./servers.json").toString());
-
-    for (let server of config['servers']) {
-        console.log("    " + server.id);
-        if (!list[server.id]) list[server.id] = {};
-        let stats = null;
-
-        try {
-            stats = JSON.parse(require('child_process').execSync(server['command'], { timeout: 30000, stdio: ["ignore", "pipe", "ignore"] }).toString().trim());
-            stats["color"] = "hsl(" + Math.round(rgb2hue(...require('crypto').createHash("sha1").update(server.id).digest("hex").substring(0, 6).split(" ").map(i => [parseInt(i.substring(0, 2), 16), parseInt(i.substring(2, 4), 16), parseInt(i.substring(4, 6), 16)])[0])) + "deg 75% 60%)";
-        } catch (e) {
-            stats = null;
-        }
-
-        list[server.id][new Date().toISOString()] = stats;
-        let newList = {};
-
-        for (let key of Object.keys(list[server.id]).splice(-576)) {
-            newList[key] = list[server.id][key];
-        }
-
-        list[server.id] = newList;
-    }
-
-    if (!list["_total"]) list["_total"] = {};
-
-    let total = list["_total"];
-    delete list["_total"];
-
-    total[new Date().toISOString()] = {
-        ram: {
-            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.ram.used).reduce((a, b) => a + b),
-            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.ram.total).reduce((a, b) => a + b)
-        },
-        cpu: {
-            usage: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.cpu.usage).reduce((a, b) => a + b) / Object.values(list).length,
-        },
-        disk: {
-            used: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.disk.used).reduce((a, b) => a + b),
-            total: Object.values(list).map((i) => Object.values(i)[Object.values(i).length - 1]).filter(i => i).map((i) => i.disk.total).reduce((a, b) => a + b)
-        }
-    };
-
-    let realTotal = {};
-    for (let key of Object.keys(total).splice(-576)) {
-        realTotal[key] = total[key];
-    }
-
-    list["_total"] = realTotal;
-
-    fs.writeFileSync("./servers.json", JSON.stringify(list, null, 4));
-    require('./notifications')();
+async function notifications() {
+    console.log("Dispatching notifications");
+    await require('./notifications')();
     console.log("Done!");
 }
 
-(async () => { await check(); await check(); await servers(); await web(); console.log("Update completed"); setInterval(async () => { await check(); await check(); await servers(); await web(); }, config['interval']); })()
+(async () => { await check(); await notifications(); await web(); console.log("Update completed"); setInterval(async () => { await check(); await notifications(); await web(); }, config['interval']); })()

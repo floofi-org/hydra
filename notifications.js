@@ -1,5 +1,3 @@
-const axios = require("axios");
-const fs = require("fs");
 module.exports = () => {
     const axios = require('axios');
     const fs = require('fs');
@@ -9,9 +7,21 @@ module.exports = () => {
     const last = parseInt(fs.readFileSync("./last.txt").toString().trim());
     const secondLast = fs.existsSync("./second-last.txt") ? parseInt(fs.readFileSync("./second-last.txt").toString().trim()) : -1;
     const current = JSON.parse(fs.readFileSync("./output.json").toString()).total;
+    const outages = JSON.parse(fs.readFileSync("./git/status.json").toString()).outages;
 
     function formatPonypush(text) {
         return "Update to Ponypush 3.1.0 or later — ($PA1$$" + Buffer.from(text).toString("base64") + "$$)";
+    }
+
+    function generateOutageList() {
+        if (outages.length === 0) return "Something is";
+        if (outages.length === 1) return outages[0][1] + " is";
+
+        let names = outages.map(i => i[1]);
+        let namesButOne = names.slice(0, -1);
+        let lastName = names[names.length - 1];
+
+        return namesButOne.join(", ") + " and " + lastName + " are";
     }
 
     console.log(secondLast, last, current);
@@ -22,6 +32,7 @@ module.exports = () => {
         switch (current) {
             case 0:
                 if (secondLast === 0) break;
+
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
@@ -77,7 +88,7 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('One or more service(s) is/are experiencing temporary performance degradation, this is most likely safe.'),
+                        message: formatPonypush(generateOutageList() + ' experiencing temporary performance degradation, this is most likely safe.'),
                         title: formatPonypush("🟡 Something is slower than expected"),
                         priority: 2,
                         tags: ['status'],
@@ -104,7 +115,7 @@ module.exports = () => {
                     })
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['public'],
-                        message: formatPonypush('One or more service(s) is/are experiencing temporary performance degradation, this is most likely safe.'),
+                        message: formatPonypush(generateOutageList() + ' experiencing temporary performance degradation, this is most likely safe.'),
                         title: formatPonypush("🟡 Something is slower than expected"),
                         priority: 2,
                         tags: ['status'],
@@ -129,7 +140,7 @@ module.exports = () => {
                 (async () => {
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['topic'],
-                        message: formatPonypush('One or more service(s) is/are experiencing a major outage, investigation is needed.'),
+                        message: formatPonypush(generateOutageList() + ' experiencing a major outage, investigation is needed.'),
                         title: formatPonypush("🔴 Something is down"),
                         priority: 3,
                         tags: ['status'],
@@ -156,7 +167,7 @@ module.exports = () => {
                     })
                     await axios.post(config['ntfy']['server'], {
                         topic: config['ntfy']['public'],
-                        message: formatPonypush('One or more service(s) is/are experiencing a major outage and automatic remediation has failed or is impossible, investigation is needed.'),
+                        message: formatPonypush(generateOutageList() + ' experiencing a major outage, investigation is needed.'),
                         title: formatPonypush("🔴 Something is down"),
                         priority: 3,
                         tags: ['status'],
