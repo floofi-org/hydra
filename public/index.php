@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Equestria.dev Status</title>
     <link rel="icon" href="./logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./style.css">
+    <style>
+        <?= file_get_contents("./style.css") ?>
+    </style>
 </head>
 <body>
+    <noscript>This website requires JavaScript/ECMAScript to function. Please enable JavaScript (also known as ECMAScript) and refresh this page.</noscript>
     <div id="eqs-dark-theme-indicator"></div>
     <div id="eqs-loader">
         <svg id="eqs-loader-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
@@ -63,6 +66,21 @@
         </svg>
     </div>
     <div id="eqs-app"></div>
-    <script src="./app.js"></script>
+
+    <script>
+        <?= file_get_contents("./app.js") ?>
+    </script>
+
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <!--suppress HtmlUnknownTarget -->
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <!--suppress HtmlUnknownTarget -->
+    <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

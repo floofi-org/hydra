@@ -12,3 +12,6 @@ public/.vercel
 node_modules
 second-last.txt
 last.txt
+public/index.html
+public/*.min.js
+public/*.min.csss
