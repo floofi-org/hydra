@@ -1,4 +1,4 @@
-const VERSION = "3.2.1";
+const VERSION = "3.3.0";
 const URL = "https://d6gd1hq6b89h1s1v.public.blob.vercel-storage.com/public/status.json";
 
 function timeAgo(time, html) {
@@ -244,29 +244,37 @@ function fillGlobal() {
             res();
         }
 
-        document.getElementById("eqs-app-global-box-ping").innerText = Math.round(statusData['ping']) + " ms";
-
-        switch (window.statusData['global']) {
-            case 0: // OK
-                document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-success");
-                document.getElementById("eqs-app-global-box-text").innerText = "Everything is operational";
-                document.getElementById("eqs-app-global-box-icon").src = "./status-success" + (hasDarkTheme ? "-dark" : "") + ".svg";
-                break;
-            case 1: // Warning
-                document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-warning");
-                document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are slower than usual" : "A service is slower than usual";
-                document.getElementById("eqs-app-global-box-icon").src = "./status-warning" + (hasDarkTheme ? "-dark" : "") + ".svg";
-                break;
-            case 2: // Down
-                document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-critical");
-                document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are unavailable" : "A service is unavailable";
-                document.getElementById("eqs-app-global-box-icon").src = "./status-critical" + (hasDarkTheme ? "-dark" : "") + ".svg";
-                break;
-            case 3: // Maintenance
-                document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
-                document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are under maintenance" : "A service is under maintenance";
-                document.getElementById("eqs-app-global-box-icon").src = "./status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
-                break;
+        if (window.statusData['notice']) {
+            document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
+            document.getElementById("eqs-app-global-box-text").classList.remove("eqs-ellipsis");
+            document.getElementById("eqs-app-global-box-text").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 7px;'>" + window.statusData['notice']['description'] + "</p><a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a></div>";
+            document.getElementById("eqs-app-global-box-icon").src = "./status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
+            document.getElementById("eqs-app-global-box-ping").innerText = "";
+        } else {
+            document.getElementById("eqs-app-global-box-ping").innerText = Math.round(statusData['ping']) + " ms";
+            document.getElementById("eqs-app-global-box-text").classList.add("eqs-ellipsis");
+            switch (window.statusData['global']) {
+                case 0: // OK
+                    document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-success");
+                    document.getElementById("eqs-app-global-box-text").innerText = "Everything is operational";
+                    document.getElementById("eqs-app-global-box-icon").src = "./status-success" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    break;
+                case 1: // Warning
+                    document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-warning");
+                    document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are slower than usual" : "A service is slower than usual";
+                    document.getElementById("eqs-app-global-box-icon").src = "./status-warning" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    break;
+                case 2: // Down
+                    document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-critical");
+                    document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are unavailable" : "A service is unavailable";
+                    document.getElementById("eqs-app-global-box-icon").src = "./status-critical" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    break;
+                case 3: // Maintenance
+                    document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
+                    document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are under maintenance" : "A service is under maintenance";
+                    document.getElementById("eqs-app-global-box-icon").src = "./status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    break;
+            }
         }
     });
 }
@@ -299,6 +307,10 @@ function fillBreakdown() {
 
 function genericServiceFill(list, name, link) {
     for (let service of list) {
+        if (service.ping >= 5000) {
+            service.status = 2;
+        }
+
         document.getElementById("eqs-app-" + name + "-box-inner").insertAdjacentHTML("beforeend", `
         <div id="eqs-app-service-${service.id}" class="eqs-app-service eqs-app-${name}-service">
             <div id="eqs-app-service-${service.id}-label" class="eqs-ellipsis eqs-app-service-label">${link ? `<a id="eqs-app-service-${service.id}-link" class="eqs-app-service-link" target="_blank" href="https://${service.label}/">${service.label}</a>` : service.label}</div>

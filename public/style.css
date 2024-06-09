@@ -419,15 +419,16 @@ html, body {
     height: 100%;
 }
 
-.eqs-app-service-link {
+.eqs-app-service-link, #eqs-app-global-box a {
     color: var(--theme-link-main);
 }
 
-.eqs-app-service-link:hover {
+.eqs-app-service-link:hover, #eqs-app-global-box a:hover {
     color: var(--theme-link-hover);
 }
 
-.eqs-app-service-link:active, .eqs-app-service-link:focus, .eqs-app-service-link:focus-visible, .eqs-app-service-link:focus-within {
+.eqs-app-service-link:active, .eqs-app-service-link:focus, .eqs-app-service-link:focus-visible, .eqs-app-service-link:focus-within,
+#eqs-app-global-box a:active, #eqs-app-global-box a:focus, #eqs-app-global-box a:focus-visible, #eqs-app-global-box a:focus-within {
     color: var(--theme-link-active);
 }
 

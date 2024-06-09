@@ -3,6 +3,7 @@
   <component name="SshConfigs">
     <configs>
       <sshConfig host="bridlewood.equestria.dev" id="cd5dc535-319d-4c75-ad8f-1101d05d0e21" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="fedora" useOpenSSHConfig="true" />
+      <sshConfig authType="OPEN_SSH" host="de1.equestria.dev" id="37838d70-aaee-422f-a040-ea749cf5d6de" port="22" nameFormat="DESCRIPTIVE" username="root" useOpenSSHConfig="true" />
     </configs>
   </component>
 </project>

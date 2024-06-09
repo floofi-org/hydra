@@ -70,17 +70,5 @@
     <script>
         <?= file_get_contents("./app.js") ?>
     </script>
-
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <!--suppress HtmlUnknownTarget -->
-    <script defer src="/_vercel/insights/script.js"></script>
-
-    <script>
-        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <!--suppress HtmlUnknownTarget -->
-    <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
