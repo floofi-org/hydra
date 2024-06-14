@@ -15,3 +15,7 @@ last.txt
 public/index.html
 public/*.min.js
 public/*.min.csss
+public2
+statusng/config.yaml
+statusng/history.json
+statusng/target
