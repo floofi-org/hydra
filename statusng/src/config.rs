@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
-use std::net::{AddrParseError, SocketAddr, ToSocketAddrs};
+use std::net::{SocketAddr, ToSocketAddrs};
 use serde::Deserialize;
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::io;
@@ -144,12 +144,12 @@ impl HttpServiceConfig {
             url.push_str(&format!(":{}", self.port));
         }
 
-        let path = if self.url.starts_with("/") {
-            &self.url
+        if self.url.starts_with('/') {
+            url.push_str(&self.url)
         } else {
-            &format!("/{}", self.url)
+            url.push('/');
+            url.push_str(&self.url);
         };
-        url.push_str(path);
 
         url
     }
