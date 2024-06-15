@@ -9,7 +9,7 @@ use std::time::Duration;
 use simple_logger::SimpleLogger;
 use log::{info, debug, LevelFilter, error, warn};
 use crate::config::{BaseHistory, Config, ServiceCode, ServiceConfig};
-use crate::processors::{http, tcp, Processor};
+use crate::processors::{Http, Tcp, Processor};
 
 fn display_summary(name: &String, status: &ServiceCode, ping: u32) {
     match status {
@@ -29,12 +29,12 @@ fn start_process(config: Config, history: BaseHistory) {
         match base_service {
             ServiceConfig::HttpServiceConfig(service) => {
                 info!("{} is an HTTP service, using the http processor", &service.host);
-                let result = http::Http::process(&service, timeout, slow_threshold);
+                let result = Http::process(&service, timeout, slow_threshold);
                 display_summary(&service.host, &result.status, result.ping);
             }
             ServiceConfig::TcpServiceConfig(service) => {
                 info!("{} is a TCP service, using the tcp processor", &service.host);
-                let result = tcp::Tcp::process(&service, timeout, slow_threshold);
+                let result = Tcp::process(&service, timeout, slow_threshold);
                 display_summary(&service.host, &result.status, result.ping);
             }
         }
