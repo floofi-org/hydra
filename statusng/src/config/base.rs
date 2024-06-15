@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use crate::config::Service;
 
 #[derive(Deserialize, Debug)]
@@ -11,9 +11,9 @@ pub struct Config {
     pub services: Vec<Service>
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct OutageConfig {
-    enabled: bool,
+    pub enabled: bool,
     title: String,
     description: String,
     link: String

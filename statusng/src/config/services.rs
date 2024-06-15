@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use crate::config::{HttpService, TcpService};
 use crate::processors::{Http, Processor, ProcessorResult, Tcp};
 
@@ -8,12 +8,12 @@ use crate::processors::{Http, Processor, ProcessorResult, Tcp};
 #[serde(tag = "type")]
 pub enum Service {
     #[serde(rename = "http", alias = "https")]
-    HttpServiceConfig(HttpService),
+    Http(HttpService),
     #[serde(rename = "tcp")]
-    TcpServiceConfig(TcpService),
+    Tcp(TcpService),
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, PartialEq, Copy, Clone)]
 pub enum ServiceCategory {
     #[serde(rename = "websites")]
     Websites,
@@ -23,7 +23,7 @@ pub enum ServiceCategory {
     Network
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug, Copy, Clone)]
 pub enum ServiceHostingProvider {
     #[serde(rename = "equestriadev")]
     EquestriaDev,
@@ -38,24 +38,31 @@ pub enum ServiceHostingProvider {
 }
 
 impl Service {
-    pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+    pub fn process(self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         match self {
-            Service::HttpServiceConfig(service) => Http::process(service, timeout, slow_threshold),
-            Service::TcpServiceConfig(service) => Tcp::process(service, timeout, slow_threshold),
+            Service::Http(service) => Http::process(service, timeout, slow_threshold),
+            Service::Tcp(service) => Tcp::process(service, timeout, slow_threshold),
         }
     }
 
     pub fn get_legacy_id(&self) -> &str {
         match self {
-            Service::HttpServiceConfig(service) => &service._legacy_id,
-            Service::TcpServiceConfig(service) => &service._legacy_id,
+            Service::Http(service) => &service._legacy_id,
+            Service::Tcp(service) => &service._legacy_id,
         }
     }
 
     pub fn get_unique_id(&self) -> String {
         match self {
-            Service::HttpServiceConfig(service) => format!("{}:{}", service.host, service.port),
-            Service::TcpServiceConfig(service) => format!("{}:{}", service.host, service.port),
+            Service::Http(service) => service.get_unique_id(),
+            Service::Tcp(service) => service.get_unique_id(),
+        }
+    }
+
+    pub fn get_label(&self) -> String {
+        match self {
+            Service::Http(service) => service.get_label(),
+            Service::Tcp(service) => service.get_label(),
         }
     }
 }
@@ -63,8 +70,8 @@ impl Service {
 impl Display for Service {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Service::HttpServiceConfig(service) => write!(f, "{} is an http service", service.host),
-            Service::TcpServiceConfig(service) => write!(f, "{} is a tcp service", service.host),
+            Service::Http(service) => write!(f, "{} is an http service", service.host),
+            Service::Tcp(service) => write!(f, "{} is a tcp service", service.host),
         }
     }
 }

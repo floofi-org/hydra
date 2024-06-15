@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use std::fs;
 use serde::{Deserialize, Serialize};
-use crate::config::{Service, ServiceCode};
+use crate::config::{Service, ServiceStatus};
 use crate::error::StatusError;
 use chrono::{DateTime, Utc};
 use std::time::SystemTime;
 
-type ServiceHistory = HashMap<String, Vec<ServiceCode>>;
+type ServiceHistory = HashMap<String, Vec<ServiceStatus>>;
 
 fn get_date() -> String {
     let now = SystemTime::now();
@@ -18,10 +18,10 @@ fn get_date() -> String {
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct BaseHistory(HashMap<String, ServiceHistory>);
+pub struct BaseHistory(pub HashMap<String, ServiceHistory>);
 
 impl BaseHistory {
-    pub fn add_entry(&mut self, service: &Service, code: ServiceCode) {
+    pub fn add_entry(&mut self, service: &Service, code: ServiceStatus) {
         let hm_root = &mut self.0;
 
         let key = if hm_root.contains_key(service.get_legacy_id()) {

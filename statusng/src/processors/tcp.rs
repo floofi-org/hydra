@@ -1,7 +1,7 @@
 use std::net::{Shutdown, SocketAddr, TcpStream};
 use std::time::{Duration, Instant};
 use log::{error, info, warn};
-use crate::config::{ServiceCode, TcpService};
+use crate::config::{Service, ServiceStatus, TcpService};
 use crate::error::StatusError;
 use crate::processors::{Processor, ProcessorResult};
 
@@ -21,12 +21,12 @@ fn get_valid_address(service: &TcpService) -> Result<SocketAddr, StatusError> {
 }
 
 impl Processor<TcpService> for Tcp {
-    fn process(service: &TcpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
-        info!(target: "tcp", "Processing {}", service.host);
+    fn process(service: TcpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+        info!("Processing {}", service.host);
 
         match get_valid_address(&service) {
             Ok(address) => {
-                info!(target: "tcp", "Connecting to {}", &address);
+                info!("Connecting to {}", &address);
 
                 let start = Instant::now();
                 let stream = TcpStream::connect_timeout(&address, timeout);
@@ -35,40 +35,40 @@ impl Processor<TcpService> for Tcp {
                 match stream {
                     Ok(stream) => {
                         if let Err(e) = stream.shutdown(Shutdown::Both) {
-                            warn!(target: "tcp", "Failed to close socket: {:?}", e);
+                            warn!("Failed to close socket: {:?}", e);
                         }
 
                         ProcessorResult {
                             status: match (&service.maintenance, ping) {
-                                (false, ping) if ping > slow_threshold as u128 => ServiceCode::Unstable,
-                                (false, _) => ServiceCode::Online,
-                                (true, _) => ServiceCode::Maintenance,
+                                (false, ping) if ping > slow_threshold as u128 => ServiceStatus::Unstable,
+                                (false, _) => ServiceStatus::Online,
+                                (true, _) => ServiceStatus::Maintenance,
                             },
                             ping: ping as u32,
-                            host: service.host.clone()
+                            service: Service::Tcp(service)
                         }
                     },
                     Err(e) => {
-                        error!(target: "tcp", "Failed to connect: {:?}", e);
+                        error!("Failed to connect: {:?}", e);
 
                         ProcessorResult {
                             status: if service.maintenance {
-                                ServiceCode::Maintenance
+                                ServiceStatus::Maintenance
                             } else {
-                                ServiceCode::Offline
+                                ServiceStatus::Offline
                             },
                             ping: ping as u32,
-                            host: service.host.clone()
+                            service: Service::Tcp(service)
                         }
                     }
                 }
             },
             Err(err) => {
-                error!(target: "tcp", "{}", err);
+                error!("{}", err);
                 ProcessorResult {
-                    status: ServiceCode::Offline,
+                    status: ServiceStatus::Offline,
                     ping: 0,
-                    host: service.host.clone()
+                    service: Service::Tcp(service)
                 }
             }
         }
