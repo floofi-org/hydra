@@ -8,7 +8,7 @@ use std::fs;
 use std::time::Duration;
 use simple_logger::SimpleLogger;
 use log::{info, debug, LevelFilter, error, warn};
-use crate::config::{BaseHistory, Config, ServiceCode, ServiceConfig};
+use crate::config::{BaseHistory, Config, load_data, ServiceCode, ServiceConfig};
 use crate::processors::{http, tcp, Processor};
 
 fn display_summary(name: &String, status: &ServiceCode, ping: u32) {
@@ -48,22 +48,16 @@ fn main() {
         .init().unwrap();
     info!("Started statusng.");
 
-    let config_raw = fs::read_to_string("./config.yaml")
-        .unwrap(); // TODO: Handle errors
-    let config: Config = serde_yaml::from_str(&config_raw)
-        .unwrap(); // TODO: Handle errors
+    match load_data() {
+        Ok((config, history)) => {
+            info!("Loaded data.");
 
-    debug!("Done loading config.yaml.");
-
-    let history_raw = fs::read_to_string("./history.json")
-        .unwrap(); // TODO: Handle errors
-    let history: BaseHistory = serde_json::from_str(&history_raw)
-        .unwrap(); // TODO: Handle errors
-
-    debug!("Done loading history.json.");
-    info!("Loaded data.");
-
-    let interval = config.interval;
-    debug!("Refreshing every {} ms.", interval);
-    start_process(config, history);
+            let interval = config.interval;
+            debug!("Refreshing every {} ms.", interval);
+            start_process(config, history);
+        }
+        Err(err) => {
+            error!("Failed to load data: {:?}", err);
+        }
+    }
 }

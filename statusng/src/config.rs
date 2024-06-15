@@ -3,8 +3,10 @@ use std::fmt::{Display, Formatter};
 use std::net::{AddrParseError, SocketAddr, ToSocketAddrs};
 use serde::Deserialize;
 use serde_repr::{Deserialize_repr, Serialize_repr};
-use std::io;
+use std::{fs, io};
 use std::vec::IntoIter;
+use log::debug;
+use serde::ser::Error;
 
 #[derive(Deserialize, Debug)]
 pub struct Config {
@@ -160,4 +162,16 @@ impl TcpServiceConfig {
         format!("{}:{}", self.host, self.port)
             .to_socket_addrs()
     }
+}
+
+pub fn load_data() -> Result<(Config, BaseHistory), Box<dyn Error>> {
+    let config_raw = fs::read_to_string("./config.yaml")?;
+    let config: Config = serde_yaml::from_str(&config_raw)?;
+    debug!("Done loading config.yaml.");
+
+    let history_raw = fs::read_to_string("./history.json")?;
+    let history: BaseHistory = serde_json::from_str(&history_raw)?;
+    debug!("Done loading history.json.");
+
+    Ok((config, history))
 }
