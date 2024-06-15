@@ -74,7 +74,7 @@ async function loadBaseApp() {
         document.getElementById("eqs-app").innerHTML = `
 <nav id="eqs-app-nav">
     <div id="eqs-app-nav-inner" class="eqs-container">
-        <img src="./logo.svg" alt="Equestria.dev" id="eqs-app-nav-logo">
+        <img src="static/logo/logo.svg" alt="Equestria.dev" id="eqs-app-nav-logo">
         <div id="eqs-app-nav-items">
             <div id="eqs-app-nav-item-title">
                 <span id="eqs-app-nav-item-inner" class="eqs-app-nav-desktop">Systems Status</span>
@@ -189,12 +189,12 @@ async function loadBaseApp() {
     </div>
     
     <div id="eqs-app-copyright" class="eqs-container eqs-container-lazy">
-        <img id="eqs-app-copyright-logo-dark" src="logo-footer-dark.svg" alt="Equestria.dev">
-        <img id="eqs-app-copyright-logo-light" src="logo-footer-light.svg" alt="Equestria.dev">
+        <img id="eqs-app-copyright-logo-dark" src="static/logo/logo-footer-dark.svg" alt="Equestria.dev">
+        <img id="eqs-app-copyright-logo-light" src="static/logo/logo-footer-light.svg" alt="Equestria.dev">
         <div id="eqs-app-copyright-text">©<span id="eqs-app-copyright-text-year"></span> Equestria.dev Developers, All rights reserved.<span id="eqs-app-version"></span></div>
         <div id="eqs-app-copyright-powered-by">
             <a href="https://vercel.com/?utm_source=powered-by-vercel" target="_blank">
-                <img alt="Powered by Vercel" src="./powered-by-vercel.svg" id="eqs-app-copyright-powered-by-img">
+                <img alt="Powered by Vercel" src="static/logo/powered-by-vercel.svg" id="eqs-app-copyright-powered-by-img">
             </a>
         </div>
     </div>
@@ -248,7 +248,7 @@ function fillGlobal() {
             document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
             document.getElementById("eqs-app-global-box-text").classList.remove("eqs-ellipsis");
             document.getElementById("eqs-app-global-box-text").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 7px;'>" + window.statusData['notice']['description'] + "</p><a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a></div>";
-            document.getElementById("eqs-app-global-box-icon").src = "./status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
+            document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
             document.getElementById("eqs-app-global-box-ping").innerText = "";
         } else {
             document.getElementById("eqs-app-global-box-ping").innerText = Math.round(statusData['ping']) + " ms";
@@ -257,22 +257,22 @@ function fillGlobal() {
                 case 0: // OK
                     document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-success");
                     document.getElementById("eqs-app-global-box-text").innerText = "Everything is operational";
-                    document.getElementById("eqs-app-global-box-icon").src = "./status-success" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-success" + (hasDarkTheme ? "-dark" : "") + ".svg";
                     break;
                 case 1: // Warning
                     document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-warning");
                     document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are slower than usual" : "A service is slower than usual";
-                    document.getElementById("eqs-app-global-box-icon").src = "./status-warning" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-warning" + (hasDarkTheme ? "-dark" : "") + ".svg";
                     break;
                 case 2: // Down
                     document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-critical");
                     document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are unavailable" : "A service is unavailable";
-                    document.getElementById("eqs-app-global-box-icon").src = "./status-critical" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-critical" + (hasDarkTheme ? "-dark" : "") + ".svg";
                     break;
                 case 3: // Maintenance
                     document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
                     document.getElementById("eqs-app-global-box-text").innerText = down > 1 ? down + " services are under maintenance" : "A service is under maintenance";
-                    document.getElementById("eqs-app-global-box-icon").src = "./status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
+                    document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
                     break;
             }
         }
@@ -315,11 +315,11 @@ function genericServiceFill(list, name, link) {
         <div id="eqs-app-service-${service.id}" class="eqs-app-service eqs-app-${name}-service">
             <div id="eqs-app-service-${service.id}-label" class="eqs-ellipsis eqs-app-service-label">${link ? `<a id="eqs-app-service-${service.id}-link" class="eqs-app-service-link" target="_blank" href="https://${service.label}/">${service.label}</a>` : service.label}</div>
             <div id="eqs-app-service-${service.id}-status" class="eqs-app-service-status eqs-app-service-status-${service.status === 0 ? 'success' : (service.status === 1 ? 'warning' : (service.status === 2 ? 'critical' : 'info'))}">
-                <img id="eqs-app-service-${service.id}-status-icon" class="eqs-app-service-status-icon" alt="" src="./status-${service.status === 0 ? 'success' : (service.status === 1 ? 'warning' : (service.status === 2 ? 'critical' : 'info'))}${hasDarkTheme ? "-dark" : ""}.svg">
+                <img id="eqs-app-service-${service.id}-status-icon" class="eqs-app-service-status-icon" alt="" src="./static/icons/status-${service.status === 0 ? 'success' : (service.status === 1 ? 'warning' : (service.status === 2 ? 'critical' : 'info'))}${hasDarkTheme ? "-dark" : ""}.svg">
                 <span id="eqs-app-service-${service.id}-status-message" class="eqs-ellipsis eqs-app-service-status-message">${service.status <= 1 ? service.ping + " ms" : (service.status === 2 ? 'Offline' : 'Maintenance')}</span>
             </div>
             <div id="eqs-app-service-${service.id}-hosting" class="eqs-app-service-hosting">
-                <img alt="${service['hosting']}" src="./hosting/${service['hosting']}.png" id="eqs-app-service-${service.id}-hosting-img" class="eqs-app-service-hosting-img">
+                <img alt="${service['hosting']}" src="./static/hosting/${service['hosting']}.png" id="eqs-app-service-${service.id}-hosting-img" class="eqs-app-service-hosting-img">
             </div>
         </div>
         `);
@@ -365,17 +365,23 @@ function preloadImage(src) {
 // -----
 
 window.addEventListener('load', async () => {
-    await preloadImage("./logo.svg");
-    await preloadImage("./logo-footer-dark.svg");
-    await preloadImage("./logo-footer-light.svg");
-    await preloadImage("./status-critical.svg");
-    await preloadImage("./status-critical-dark.svg");
-    await preloadImage("./status-info.svg");
-    await preloadImage("./status-info-dark.svg");
-    await preloadImage("./status-success.svg");
-    await preloadImage("./status-success-dark.svg");
-    await preloadImage("./status-warning.svg");
-    await preloadImage("./status-warning-dark.svg");
+    await preloadImage("./static/logo/logo.svg");
+    await preloadImage("./static/logo/logo-footer-dark.svg");
+    await preloadImage("./static/logo/logo-footer-light.svg");
+    await preloadImage("./static/logo/powered-by-vercel.svg");
+    await preloadImage("./static/icons/status-critical.svg");
+    await preloadImage("./static/icons/status-critical-dark.svg");
+    await preloadImage("./static/icons/status-info.svg");
+    await preloadImage("./static/icons/status-info-dark.svg");
+    await preloadImage("./static/icons/status-success.svg");
+    await preloadImage("./static/icons/status-success-dark.svg");
+    await preloadImage("./static/icons/status-warning.svg");
+    await preloadImage("./static/icons/status-warning-dark.svg");
+    await preloadImage("./static/hosting/equestriadev.png");
+    await preloadImage("./static/hosting/gitbook.png");
+    await preloadImage("./static/hosting/ovh.png");
+    await preloadImage("./static/hosting/scaleway.png");
+    await preloadImage("./static/hosting/vercel.png");
 
     window.hasDarkTheme = document.getElementById("eqs-dark-theme-indicator").checkVisibility();
 

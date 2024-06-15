@@ -1,3 +1,4 @@
 *.max.*
 build.sh
 index.php
+src/*.js.map
