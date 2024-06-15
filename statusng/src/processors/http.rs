@@ -1,12 +1,12 @@
 use std::time::{Duration, Instant};
 use log::{debug, info};
 use ureq::{Error, Response};
-use crate::config::{HttpServiceConfig, ServiceCode};
+use crate::config::{ServiceCode, HttpService};
 use crate::processors::{Processor, ProcessorResult};
 
 pub struct Http;
 
-fn do_request(service: &HttpServiceConfig, timeout: Duration) -> (Result<Response, Error>, u128) {
+fn do_request(service: &HttpService, timeout: Duration) -> (Result<Response, Error>, u128) {
     let url = service.get_url();
     info!(target: "http", "Requesting {}", url);
 
@@ -38,14 +38,14 @@ fn check_success(response: Result<Response, Error>, expected_code: u16) -> bool 
     }
 }
 
-impl Processor<HttpServiceConfig> for Http {
-    fn process(service: &HttpServiceConfig, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+impl Processor<HttpService> for Http {
+    fn process(service: HttpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         info!(target: "http", "Processing {}", service.host);
-        let (response, ping) = do_request(service, timeout);
+        let (response, ping) = do_request(&service, timeout);
 
         let success = check_success(response, service.expected_code);
 
-        let status = match (service.maintenance, success, ping) {
+        let status = match (&service.maintenance, success, ping) {
             (true, _, _) => ServiceCode::Maintenance,
             (_, true, ping) if ping > slow_threshold as u128 => ServiceCode::Unstable,
             (_, false, _) => ServiceCode::Offline,
@@ -55,6 +55,7 @@ impl Processor<HttpServiceConfig> for Http {
         ProcessorResult {
             status,
             ping: ping as u32,
+            host: service.host.clone()
         }
     }
 }

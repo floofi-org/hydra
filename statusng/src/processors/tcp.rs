@@ -1,36 +1,35 @@
-use std::net::{Shutdown, TcpStream};
+use std::net::{Shutdown, SocketAddr, TcpStream};
 use std::time::{Duration, Instant};
 use log::{error, info, warn};
-use crate::config::{ServiceCode, TcpServiceConfig};
+use crate::config::{ServiceCode, TcpService};
+use crate::error::StatusError;
 use crate::processors::{Processor, ProcessorResult};
 
 pub struct Tcp;
 
-impl Processor<TcpServiceConfig> for Tcp {
-    fn process(service: &TcpServiceConfig, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+fn get_valid_address(service: &TcpService) -> Result<SocketAddr, StatusError> {
+    let mut address = service.get_address()?;
+
+    let addr = address.next();
+
+    match addr {
+        Some(a) => Ok(a),
+        None => {
+            Err(StatusError::from(format!("Found no valid addresses from {}:{}", &service.host, service.port)))
+        }
+    }
+}
+
+impl Processor<TcpService> for Tcp {
+    fn process(service: TcpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         info!(target: "tcp", "Processing {}", service.host);
 
-        let address = service.get_address();
-
-        match address {
-            Ok(mut addr) => {
-                let addr = addr.next();
-                let addr = match addr {
-                    Some(a) => a,
-                    None => {
-                        error!(target: "tcp", "Found no valid addresses from {}:{}", &service.host, service.port);
-
-                        return ProcessorResult {
-                            status: ServiceCode::Offline,
-                            ping: 0,
-                        };
-                    }
-                };
-
-                info!(target: "tcp", "Connecting to {}", &addr);
+        match get_valid_address(&service) {
+            Ok(address) => {
+                info!(target: "tcp", "Connecting to {}", &address);
 
                 let start = Instant::now();
-                let stream = TcpStream::connect_timeout(&addr, timeout);
+                let stream = TcpStream::connect_timeout(&address, timeout);
                 let ping = start.elapsed().as_millis();
 
                 match stream {
@@ -40,8 +39,13 @@ impl Processor<TcpServiceConfig> for Tcp {
                         }
 
                         ProcessorResult {
-                            status: ServiceCode::Online,
+                            status: if ping > slow_threshold as u128 {
+                                ServiceCode::Unstable
+                            } else {
+                                ServiceCode::Online
+                            },
                             ping: ping as u32,
+                            host: service.host
                         }
                     },
                     Err(e) => {
@@ -50,16 +54,17 @@ impl Processor<TcpServiceConfig> for Tcp {
                         ProcessorResult {
                             status: ServiceCode::Offline,
                             ping: ping as u32,
+                            host: service.host
                         }
                     }
                 }
-            }
+            },
             Err(err) => {
-                error!(target: "tcp", "Failed to parse address {}:{}: {:?}", &service.host, service.port, err);
-
+                error!(target: "tcp", "{}", err);
                 ProcessorResult {
                     status: ServiceCode::Offline,
                     ping: 0,
+                    host: service.host
                 }
             }
         }
