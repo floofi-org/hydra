@@ -21,7 +21,7 @@ fn get_valid_address(service: &TcpService) -> Result<SocketAddr, StatusError> {
 }
 
 impl Processor<TcpService> for Tcp {
-    fn process(service: TcpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+    fn process(service: &TcpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         info!(target: "tcp", "Processing {}", service.host);
 
         match get_valid_address(&service) {
@@ -45,7 +45,7 @@ impl Processor<TcpService> for Tcp {
                                 (true, _) => ServiceCode::Maintenance,
                             },
                             ping: ping as u32,
-                            host: service.host
+                            host: service.host.clone()
                         }
                     },
                     Err(e) => {
@@ -58,7 +58,7 @@ impl Processor<TcpService> for Tcp {
                                 ServiceCode::Offline
                             },
                             ping: ping as u32,
-                            host: service.host
+                            host: service.host.clone()
                         }
                     }
                 }
@@ -68,7 +68,7 @@ impl Processor<TcpService> for Tcp {
                 ProcessorResult {
                     status: ServiceCode::Offline,
                     ping: 0,
-                    host: service.host
+                    host: service.host.clone()
                 }
             }
         }

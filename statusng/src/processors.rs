@@ -15,7 +15,7 @@ pub struct ProcessorResult {
 }
 
 pub trait Processor<C> {
-    fn process(service: C, timeout: Duration, slow_threshold: u32) -> ProcessorResult;
+    fn process(service: &C, timeout: Duration, slow_threshold: u32) -> ProcessorResult;
 }
 
 impl Display for ProcessorResult {

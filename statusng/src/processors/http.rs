@@ -39,7 +39,7 @@ fn check_success(response: Result<Response, Error>, expected_code: u16) -> bool 
 }
 
 impl Processor<HttpService> for Http {
-    fn process(service: HttpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+    fn process(service: &HttpService, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         info!(target: "http", "Processing {}", service.host);
         let (response, ping) = do_request(&service, timeout);
 

@@ -38,10 +38,24 @@ pub enum ServiceHostingProvider {
 }
 
 impl Service {
-    pub fn process(self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+    pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         match self {
             Service::HttpServiceConfig(service) => Http::process(service, timeout, slow_threshold),
             Service::TcpServiceConfig(service) => Tcp::process(service, timeout, slow_threshold),
+        }
+    }
+
+    pub fn get_legacy_id(&self) -> &str {
+        match self {
+            Service::HttpServiceConfig(service) => &service._legacy_id,
+            Service::TcpServiceConfig(service) => &service._legacy_id,
+        }
+    }
+
+    pub fn get_unique_id(&self) -> String {
+        match self {
+            Service::HttpServiceConfig(service) => format!("{}:{}", service.host, service.port),
+            Service::TcpServiceConfig(service) => format!("{}:{}", service.host, service.port),
         }
     }
 }
