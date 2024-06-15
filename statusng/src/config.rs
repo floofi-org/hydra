@@ -19,7 +19,7 @@ pub use tcp::*;
 
 pub fn load_data() -> Result<(Config, BaseHistory), StatusError> {
     let config_raw = fs::read_to_string("./config.yaml")?;
-    let config: Config = serde_yaml::from_str(&config_raw)?;
+    let config: Config = serde_yml::from_str(&config_raw)?;
     debug!("Done loading config.yaml.");
 
     let history_raw = fs::read_to_string("./history.json")?;

@@ -3,14 +3,14 @@ use std::io;
 
 #[derive(Debug)]
 pub enum StatusError {
-    YamlParseError(serde_yaml::Error),
+    YamlParseError(serde_yml::Error),
     JsonParseError(serde_json::Error),
     IoError(io::Error),
     GenericError(String)
 }
 
-impl From<serde_yaml::Error> for StatusError {
-    fn from(value: serde_yaml::Error) -> Self {
+impl From<serde_yml::Error> for StatusError {
+    fn from(value: serde_yml::Error) -> Self {
         Self::YamlParseError(value)
     }
 }
