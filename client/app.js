@@ -1,4 +1,4 @@
-const VERSION = "3.3.0";
+const VERSION = "3.3.1";
 const URL = "https://d6gd1hq6b89h1s1v.public.blob.vercel-storage.com/public/status.json";
 
 function timeAgo(time, html) {
