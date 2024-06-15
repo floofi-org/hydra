@@ -5,6 +5,10 @@ use crate::config::{ServiceCode, TcpService};
 use crate::error::StatusError;
 use crate::processors::{Processor, ProcessorResult};
 
+#[cfg(test)]
+#[path="tests/tcp.rs"]
+mod tests;
+
 pub struct Tcp;
 
 fn get_valid_address(service: &TcpService) -> Result<SocketAddr, StatusError> {
@@ -39,10 +43,10 @@ impl Processor<TcpService> for Tcp {
                         }
 
                         ProcessorResult {
-                            status: if ping > slow_threshold as u128 {
-                                ServiceCode::Unstable
-                            } else {
-                                ServiceCode::Online
+                            status: match (&service.maintenance, ping) {
+                                (false, ping) if ping > slow_threshold as u128 => ServiceCode::Unstable,
+                                (false, _) => ServiceCode::Online,
+                                (true, _) => ServiceCode::Maintenance,
                             },
                             ping: ping as u32,
                             host: service.host
@@ -52,7 +56,11 @@ impl Processor<TcpService> for Tcp {
                         error!(target: "tcp", "Failed to connect: {:?}", e);
 
                         ProcessorResult {
-                            status: ServiceCode::Offline,
+                            status: if service.maintenance {
+                                ServiceCode::Maintenance
+                            } else {
+                                ServiceCode::Offline
+                            },
                             ping: ping as u32,
                             host: service.host
                         }

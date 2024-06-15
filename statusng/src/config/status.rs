@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
-#[derive(Deserialize_repr, Serialize_repr, Debug)]
+#[derive(Deserialize_repr, Serialize_repr, Debug, PartialEq)]
 #[repr(u8)]
 pub enum ServiceCode {
     Online = 0,

@@ -4,6 +4,10 @@ use ureq::{Error, Response};
 use crate::config::{ServiceCode, HttpService};
 use crate::processors::{Processor, ProcessorResult};
 
+#[cfg(test)]
+#[path="tests/http.rs"]
+mod tests;
+
 pub struct Http;
 
 fn do_request(service: &HttpService, timeout: Duration) -> (Result<Response, Error>, u128) {

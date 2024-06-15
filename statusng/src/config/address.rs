@@ -3,6 +3,10 @@ use std::net::{SocketAddr, ToSocketAddrs};
 use std::vec::IntoIter;
 use crate::config::{HttpService, TcpService};
 
+#[cfg(test)]
+#[path="tests/address.rs"]
+mod tests;
+
 impl HttpService {
     //noinspection HttpUrlsUsage - Stupid RustRover
     pub fn get_url(&self) -> String {

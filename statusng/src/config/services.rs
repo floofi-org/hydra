@@ -4,6 +4,10 @@ use serde::Deserialize;
 use crate::config::{HttpService, TcpService};
 use crate::processors::{Http, Processor, ProcessorResult, Tcp};
 
+#[cfg(test)]
+#[path="tests/services.rs"]
+mod tests;
+
 #[derive(Deserialize, Debug)]
 #[serde(tag = "type")]
 pub enum Service {

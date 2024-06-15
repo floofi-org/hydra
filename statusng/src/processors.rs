@@ -8,6 +8,10 @@ pub mod tcp;
 pub use http::Http;
 pub use tcp::Tcp;
 
+#[cfg(test)]
+#[path="tests/processors.rs"]
+mod tests;
+
 pub struct ProcessorResult {
     pub status: ServiceCode,
     pub ping: u32,
