@@ -1,8 +1,7 @@
-use std::net::{AddrParseError, Shutdown, SocketAddr, TcpStream};
+use std::net::{Shutdown, TcpStream};
 use std::time::{Duration, Instant};
-use log::{debug, error, info, warn};
-use ureq::{Error, Response};
-use crate::config::{HttpServiceConfig, ServiceCode, TcpServiceConfig};
+use log::{error, info, warn};
+use crate::config::{ServiceCode, TcpServiceConfig};
 use crate::processors::{Processor, ProcessorResult};
 
 pub struct Tcp;

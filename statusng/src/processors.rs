@@ -4,6 +4,9 @@ use crate::config::ServiceCode;
 pub mod http;
 pub mod tcp;
 
+pub use http::Http;
+pub use tcp::Tcp;
+
 pub struct ProcessorResult {
     pub status: ServiceCode,
     pub ping: u32
