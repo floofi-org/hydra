@@ -1,9 +1,9 @@
 use std::collections::HashMap;
-use std::{fs, io};
+use std::fs;
 use serde::{Deserialize, Serialize};
 use crate::config::{Service, ServiceCode};
 use crate::error::StatusError;
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, Utc};
 use std::time::SystemTime;
 
 type ServiceHistory = HashMap<String, Vec<ServiceCode>>;

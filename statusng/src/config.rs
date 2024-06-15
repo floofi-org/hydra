@@ -12,7 +12,6 @@ pub mod tcp;
 
 pub use base::*;
 pub use status::*;
-pub use address::*;
 pub use services::*;
 pub use history::*;
 pub use http::*;
