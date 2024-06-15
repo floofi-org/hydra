@@ -7,6 +7,11 @@ public.json
 web/public
 new/public.json
 new/.vercel
+client/public.json
+client/.vercel
+client/index.html
+client/*.min.js
+client/*.min.csss
 public/public.json
 public/.vercel
 node_modules
