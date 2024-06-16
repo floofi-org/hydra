@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::config::{Service, ServiceCategory, ServiceHostingProvider, ServiceStatus};
+use crate::models::service::{Service, ServiceCategory, ServiceHostingProvider, ServiceStatus};
 use crate::processors::ProcessorResult;
 
 #[derive(Serialize, Debug)]

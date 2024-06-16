@@ -1,8 +1,13 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 use serde::{Deserialize, Serialize};
-use crate::config::{HttpService, TcpService};
+use crate::models::service::kind::{HttpService, TcpService};
 use crate::processors::{Http, Processor, ProcessorResult, Tcp};
+
+mod status;
+pub mod kind;
+
+pub use status::ServiceStatus;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "type")]

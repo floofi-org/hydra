@@ -1,12 +1,12 @@
 use std::collections::HashMap;
 use serde::Serialize;
-use crate::config::BaseHistory;
+use crate::models::History;
 
 #[derive(Serialize, Debug)]
-pub struct MiniHistory(pub(crate) HashMap<String, [f32; 4]>);
+pub struct Breakdown(pub(crate) HashMap<String, [f32; 4]>);
 
-impl MiniHistory {
-    pub fn from_base(value: BaseHistory) -> Self {
+impl Breakdown {
+    pub fn from_base(value: History) -> Self {
         let mut mini_history = Self(HashMap::new());
 
         for hm_service in value.0.into_values() {

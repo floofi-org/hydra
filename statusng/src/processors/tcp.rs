@@ -1,7 +1,7 @@
 use std::net::{Shutdown, SocketAddr, TcpStream};
 use std::time::{Duration, Instant};
 use log::{error, info, warn};
-use crate::config::{Service, ServiceStatus, TcpService};
+use crate::models::service::{Service, ServiceStatus, kind::TcpService};
 use crate::error::StatusError;
 use crate::processors::{Processor, ProcessorResult};
 

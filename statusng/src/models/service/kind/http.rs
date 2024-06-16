@@ -1,5 +1,5 @@
 use serde::Deserialize;
-use crate::config::{ServiceCategory, ServiceHostingProvider};
+use crate::models::service::{ServiceCategory, ServiceHostingProvider};
 
 #[derive(Deserialize, Debug)]
 pub struct HttpService {
@@ -25,6 +25,33 @@ fn default_tls() -> bool {
 }
 
 impl HttpService {
+    //noinspection HttpUrlsUsage - Stupid RustRover
+    pub fn get_url(&self) -> String {
+        let mut url = String::from("");
+
+        url.push_str(if self.tls {
+            "https://"
+        } else {
+            "http://"
+        });
+
+        url.push_str(&self.host);
+
+        if (self.tls && self.port != 443) ||
+            (!self.tls && self.port != 80) {
+            url.push_str(&format!(":{}", self.port));
+        }
+
+        if self.url.starts_with('/') {
+            url.push_str(&self.url)
+        } else {
+            url.push('/');
+            url.push_str(&self.url);
+        };
+
+        url
+    }
+
     pub fn get_unique_id(&self) -> String {
         format!("{}:{}", self.host, self.port)
     }

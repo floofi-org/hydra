@@ -1,5 +1,5 @@
 use serde::Serialize;
-use crate::config::ServiceStatus;
+use crate::models::service::ServiceStatus;
 
 #[derive(Serialize, Debug)]
 struct PublicAPIv1 {

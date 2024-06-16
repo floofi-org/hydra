@@ -1,5 +1,10 @@
+use std::io;
+use std::net::{SocketAddr, ToSocketAddrs};
+use std::vec::IntoIter;
+
 use serde::Deserialize;
-use crate::config::{ServiceCategory, ServiceHostingProvider};
+
+use crate::models::service::{ServiceCategory, ServiceHostingProvider};
 
 #[derive(Deserialize, Debug)]
 pub struct TcpService {
@@ -24,5 +29,10 @@ impl TcpService {
             ServiceCategory::Network | ServiceCategory::Servers => self.name.clone().unwrap_or(self.host.clone()),
             _ => self.host.clone()
         }
+    }
+
+    pub fn get_address(&self) -> io::Result<IntoIter<SocketAddr>> {
+        format!("{}:{}", self.host, self.port)
+            .to_socket_addrs()
     }
 }

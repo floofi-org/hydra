@@ -3,14 +3,14 @@ use std::time::Duration;
 
 use log::{debug, error, info};
 
-use statusng::config::{BaseHistory, Config};
 use statusng::error::StatusError;
-use statusng::export::PrivateAPI;
+use statusng::export::private::PrivateAPI;
+use statusng::models::{Config, History};
 
 pub struct App {
     config: Config,
     api: PrivateAPI,
-    history: BaseHistory,
+    history: History,
 }
 
 impl App {

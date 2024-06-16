@@ -1,7 +1,7 @@
 use std::time::{Duration, Instant};
 use log::{debug, info};
 use ureq::{Error, Response};
-use crate::config::{ServiceStatus, HttpService, Service};
+use crate::models::service::{ServiceStatus, Service, kind::HttpService};
 use crate::processors::{Processor, ProcessorResult};
 
 pub struct Http;

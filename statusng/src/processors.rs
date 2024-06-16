@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
-use crate::config::{Service, ServiceStatus};
+use crate::models::service::{Service, ServiceStatus};
 
 pub mod http;
 pub mod tcp;

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::fs;
 use serde::{Deserialize, Serialize};
-use crate::config::{Service, ServiceStatus};
+use crate::models::service::{Service, ServiceStatus};
 use crate::error::StatusError;
 use chrono::{DateTime, Utc};
 use std::time::SystemTime;
@@ -18,9 +18,9 @@ fn get_date() -> String {
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct BaseHistory(pub HashMap<String, ServiceHistory>);
+pub struct History(pub HashMap<String, ServiceHistory>);
 
-impl BaseHistory {
+impl History {
     pub fn add_entry(&mut self, service: &Service, code: ServiceStatus) {
         let hm_root = &mut self.0;
 

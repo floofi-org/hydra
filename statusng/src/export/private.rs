@@ -3,17 +3,28 @@ use std::fs;
 use std::time::SystemTime;
 use chrono::{DateTime, Utc};
 use serde::Serialize;
-use crate::config::{BaseHistory, OutageConfig, ServiceStatus};
+
+use crate::models::History;
+use crate::models::{
+    service::ServiceStatus,
+    config::OutageConfig,
+};
+
 use crate::error::StatusError;
-use crate::export::{ClientService, MiniHistory};
 use crate::processors::ProcessorResult;
+
+mod service;
+mod breakdown;
+
+use service::ClientService;
+use breakdown::Breakdown;
 
 #[derive(Serialize, Debug)]
 pub struct PrivateAPI {
     global: ServiceStatus,
     ping: f32,
     time: DateTime<Utc>,
-    breakdown: MiniHistory,
+    breakdown: Breakdown,
     services: Vec<ClientService>,
     notice: Option<OutageConfig>
 }
@@ -27,7 +38,7 @@ impl Default for PrivateAPI {
             global: ServiceStatus::Online,
             ping: 0.0,
             time: now,
-            breakdown: MiniHistory(HashMap::new()),
+            breakdown: Breakdown(HashMap::new()),
             services: vec![],
             notice: None
         }
@@ -45,7 +56,7 @@ impl PrivateAPI {
         self.services.push(item.into());
     }
 
-    pub fn seal(&mut self, history: BaseHistory) {
+    pub fn seal(&mut self, history: History) {
         self.ping = self.services.iter()
             .map(|s| s.ping)
             .reduce(|a, b| a + b)
@@ -64,7 +75,7 @@ impl PrivateAPI {
             ServiceStatus::Online
         };
 
-        self.breakdown = MiniHistory::from_base(history);
+        self.breakdown = Breakdown::from_base(history);
     }
 
     pub fn sync(self) -> Result<(), StatusError> {
