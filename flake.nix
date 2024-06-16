@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     fenix = {
-      url = "github:nix-community/fenix";
+      url = "github:nix-community/fenix/staging";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

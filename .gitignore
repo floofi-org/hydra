@@ -12,3 +12,5 @@ out-private.json
 out-public.json
 out-public-v2.json
 out-public-v1.json
+
+/.direnv
