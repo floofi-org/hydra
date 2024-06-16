@@ -11,7 +11,7 @@ pub struct Config {
     pub services: Vec<Service>
 }
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct OutageConfig {
     pub enabled: bool,
     title: String,
