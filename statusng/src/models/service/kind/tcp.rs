@@ -1,6 +1,5 @@
 use std::io;
 use std::net::{SocketAddr, ToSocketAddrs};
-use std::vec::IntoIter;
 
 use serde::Deserialize;
 
@@ -31,8 +30,13 @@ impl TcpService {
         }
     }
 
-    pub fn get_address(&self) -> io::Result<IntoIter<SocketAddr>> {
+    pub fn get_socket(&self) -> io::Result<Option<SocketAddr>> {
+        let mut addrs = self.get_address().to_socket_addrs()?;
+
+        Ok(addrs.next())
+    }
+
+    pub fn get_address(&self) -> String {
         format!("{}:{}", self.host, self.port)
-            .to_socket_addrs()
     }
 }
