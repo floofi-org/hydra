@@ -25,21 +25,19 @@ impl Display for ServiceStatus {
 impl ServiceStatus {
     fn as_image_string(&self) -> String {
         match self {
-            ServiceStatus::Online => String::from("status-ok"),
-            ServiceStatus::Unstable => String::from("status-warning"),
-            ServiceStatus::Offline => String::from("status-error"),
-            ServiceStatus::Maintenance => String::from("status-error")
+            Self::Online => String::from("status-ok"),
+            Self::Unstable => String::from("status-warning"),
+            Self::Offline => String::from("status-error"),
+            Self::Maintenance => String::from("status-error")
         }
     }
-}
 
-impl From<ServiceStatus> for String {
-    fn from(value: ServiceStatus) -> Self {
-        match value {
-            ServiceStatus::Online => String::from("All systems nominal"),
-            ServiceStatus::Unstable => String::from("Degraded performance"),
-            ServiceStatus::Offline => String::from("Servers outage"),
-            ServiceStatus::Maintenance => String::from("Servers outage")
+    fn get_description(&self) -> &str {
+        match self {
+            Self::Online => "All systems nominal",
+            Self::Unstable => "Degraded performance",
+            Self::Offline => "Servers outage",
+            Self::Maintenance => "Servers outage",
         }
     }
 }
