@@ -212,6 +212,7 @@ html, body {
 }
 
 #eqs-app-error {
+    background-color: var(--theme-main-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,6 +259,7 @@ html, body {
 
 #eqs-app-error-reload {
     margin-bottom: 20px;
+    text-decoration: none;
 }
 
 #eqs-app-error-detail {
@@ -335,26 +337,10 @@ html, body {
 }
 
 #eqs-app-breakdown-box-inner {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(7, 1fr);
-    grid-gap: 10px;
-}
-
-.eqs-app-breakdown-item {
-    background-color: var(--theme-mono-fill);
-    height: 12px;
-    border-radius: 12px;
+    /*height: 160px;*/
+    overflow: hidden;
     display: flex;
-    align-self: center;
-    --eqs-app-breakdown-success: var(--theme-green);
-    --eqs-app-breakdown-warning: var(--theme-yellow);
-    --eqs-app-breakdown-critical: var(--theme-red);
-    --eqs-app-breakdown-info: var(--theme-blue);
-}
-
-.eqs-app-breakdown-week {
-    color: var(--theme-secondary-text);
+    align-items: end;
 }
 
 #eqs-app-network-box-inner {
@@ -445,7 +431,7 @@ html, body {
     width: 16px;
     height: 16px;
     position: relative;
-    left: -5px;
+    left: -3px;
 }
 
 #eqs-app-nav-item-update-btn {
@@ -534,4 +520,67 @@ html, body {
 
 #eqs-dark-theme-indicator {
     display: none;
+}
+
+#eqs-app-global-box-text-uptime, #eqs-app-global-box-text-main {
+    position: absolute;
+    opacity: 1;
+    transition: opacity 100ms;
+}
+
+#eqs-app-global-box-text-uptime {
+    color: var(--theme-secondary-text);
+    opacity: 0;
+}
+
+#eqs-app-global-box-text.eqs-ellipsis {
+    height: 22px;
+}
+
+#eqs-app-global:hover #eqs-app-global-box-text-uptime, #eqs-app-global:focus #eqs-app-global-box-text-uptime {
+    opacity: 1;
+}
+
+#eqs-app-global:hover #eqs-app-global-box-text-main, #eqs-app-global:focus #eqs-app-global-box-text-main {
+    opacity: 0;
+}
+
+#eqs-app-breakdown-box-cursor {
+    position: absolute;
+    margin-top: -160px;
+    height: 160px;
+    transition: opacity 100ms, margin-left 100ms;
+    opacity: 0;
+}
+
+#eqs-app-breakdown-box-cursor-line {
+    height: 100%;
+    width: 2px;
+    background-image: linear-gradient(180deg, var(--theme-secondary-text) 0%, #00000000 100%);
+}
+
+#eqs-app-breakdown-box-cursor-text {
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-top: -165px;
+    margin-left: 2px;
+    padding-right: 10px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    color: var(--theme-secondary-text);
+    background-color: var(--theme-secondary-bg);
+    width: max-content;
+    font-size: 14px;
+}
+
+#eqs-app-global-box {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--theme-nav-border);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#eqs-app-breakdown-box {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
 }

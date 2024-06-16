@@ -1,15 +1,7 @@
-import Log from './Log.js';
-import Config from './Config.js';
-import PrivateAPI from "./PrivateAPI.js";
+function error(e) {
+    console.error(e);
 
-(async () => {
-    Log.info("statusng-client version " + Config.version);
-    let api;
-
-    try {
-        api = await PrivateAPI.fetch(Config.url);
-    } catch (e) {
-        (document.getElementById("eqs-app") as HTMLDivElement).innerHTML = `
+    document.getElementById("eqs-app").innerHTML = `
 <div id="eqs-app-error">
     <div id="eqs-app-error-inner">
         <svg id="eqs-app-error-icon" viewBox="0 0 16 16" fill="none">
@@ -20,14 +12,11 @@ import PrivateAPI from "./PrivateAPI.js";
         <div id="eqs-app-error-title">Unable to load status page</div>
         <div id="eqs-app-error-message">An error has occurred while attempting to load the status page, please try again later.</div>
         <button id="eqs-app-error-reload" class="btn" tabindex="1">Try again</button>
+        <div id="eqs-app-error-detail"></div>
     </div>
 </div>
 `;
-        (document.getElementById("eqs-app-error-reload") as HTMLButtonElement).onclick = () => location.reload();
-        (document.getElementById("eqs-loader") as HTMLDivElement).style.display = "none";
-        Log.error("Failed to load data");
-        return;
-    }
-
-    Log.info("Downloaded data successfully");
-})();
+    document.getElementById("eqs-app-error-reload").onclick = () => location.reload();
+    document.getElementById("eqs-app-error-detail").innerText = e.message ?? e.name;
+    document.getElementById("eqs-loader").style.display = "none";
+}

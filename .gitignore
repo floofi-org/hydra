@@ -5,8 +5,6 @@ client/.vercel
 client/index.html
 client/*.min.js
 client/*.min.csss
-client/src/*.js.map
-client/src/*.js
 statusng/config.yaml
 statusng/history.json
 statusng/target
