@@ -1,6 +1,5 @@
 function fillBreakdown() {
     let breakdown = Object.values(window.statusData['breakdown']).reverse();
-    console.log(breakdown);
 
     function buildSVG() {
         let width = document.getElementById("eqs-app-global-box").clientWidth;

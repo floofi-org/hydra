@@ -1,8 +1,8 @@
-function genericServiceFill(list, name, link) {
+function genericServiceFill(name, link) {
+    let list = window.statusData['services'].filter(i => i.type === name);
+
     for (let service of list) {
-        if (service.ping >= 5000) {
-            service.status = 2;
-        }
+        if (service.ping >= 5000) service.status = 2;
 
         document.getElementById("eqs-app-" + name + "-box-inner").insertAdjacentHTML("beforeend", `
         <div id="eqs-app-service-${service.id}" class="eqs-app-service eqs-app-${name}-service">
@@ -17,4 +17,10 @@ function genericServiceFill(list, name, link) {
         </div>
         `);
     }
+
+    document.getElementById("eqs-app-" + name).classList.add("eqs-container-show");
 }
+
+let fillWebsites = () => genericServiceFill("websites", true);
+let fillServers = () => genericServiceFill("servers", true);
+let fillNetwork = () => genericServiceFill("network", true);

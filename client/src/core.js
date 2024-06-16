@@ -148,13 +148,14 @@ async function loadBaseApp() {
         document.getElementById("eqs-app-version").innerHTML = "<span id='eqs-app-version-separator'> · </span>Version " + VERSION;
         document.getElementById("eqs-loader").style.display = "none";
 
-        await fillUpdateTime();
         await fillGlobal();
-        await fillBreakdown();
-        await fillNetwork();
-        await fillWebsites();
-        await fillServers();
-        await completeLoading();
+
+        fillUpdateTime();
+        fillBreakdown();
+        fillNetwork();
+        fillWebsites();
+        fillServers();
+        completeLoading();
     } catch (e) {
         error(e);
     }
@@ -165,7 +166,7 @@ function completeLoading() {
     document.getElementById("eqs-app-copyright").classList.add("eqs-container-show");
 
     setInterval(async () => {
-        await fillUpdateTime();
+        fillUpdateTime();
 
         if (new Date().getTime() - new Date(window.statusData['time']).getTime() >= 600000) {
             await loadBaseApp();

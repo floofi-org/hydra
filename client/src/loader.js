@@ -15,23 +15,19 @@ function preloadImage(src) {
 }
 
 window.addEventListener('load', async () => {
-    await preloadImage("./static/logo/logo.svg");
-    await preloadImage("./static/logo/logo-footer-dark.svg");
-    await preloadImage("./static/logo/logo-footer-light.svg");
-    await preloadImage("./static/logo/powered-by-vercel.svg");
-    await preloadImage("./static/icons/status-critical.svg");
-    await preloadImage("./static/icons/status-critical-dark.svg");
-    await preloadImage("./static/icons/status-info.svg");
-    await preloadImage("./static/icons/status-info-dark.svg");
-    await preloadImage("./static/icons/status-success.svg");
-    await preloadImage("./static/icons/status-success-dark.svg");
-    await preloadImage("./static/icons/status-warning.svg");
-    await preloadImage("./static/icons/status-warning-dark.svg");
-    await preloadImage("./static/hosting/equestriadev.png");
-    await preloadImage("./static/hosting/gitbook.png");
-    await preloadImage("./static/hosting/ovh.png");
-    await preloadImage("./static/hosting/scaleway.png");
-    await preloadImage("./static/hosting/vercel.png");
+    for (let i of [
+        "./static/logo/logo.svg", "./static/logo/logo-footer-dark.svg",
+        "./static/logo/logo-footer-light.svg", "./static/logo/powered-by-vercel.svg",
+        "./static/icons/status-critical.svg", "./static/icons/status-critical-dark.svg",
+        "./static/icons/status-info.svg", "./static/icons/status-info-dark.svg",
+        "./static/icons/status-success.svg", "./static/icons/status-success-dark.svg",
+        "./static/icons/status-warning.svg", "./static/icons/status-warning-dark.svg",
+        "./static/hosting/equestriadev.png", "./static/hosting/gitbook.png",
+        "./static/hosting/ovh.png", "./static/hosting/scaleway.png",
+        "./static/hosting/vercel.png"
+    ]) {
+        await preloadImage(i);
+    }
 
     window.hasDarkTheme = document.getElementById("eqs-dark-theme-indicator").checkVisibility();
 

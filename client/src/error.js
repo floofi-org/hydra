@@ -12,11 +12,9 @@ function error(e) {
         <div id="eqs-app-error-title">Unable to load status page</div>
         <div id="eqs-app-error-message">An error has occurred while attempting to load the status page, please try again later.</div>
         <button id="eqs-app-error-reload" class="btn" tabindex="1">Try again</button>
-        <div id="eqs-app-error-detail"></div>
     </div>
 </div>
 `;
     document.getElementById("eqs-app-error-reload").onclick = () => location.reload();
-    document.getElementById("eqs-app-error-detail").innerText = e.message ?? e.name;
     document.getElementById("eqs-loader").style.display = "none";
 }

@@ -1,12 +1,8 @@
 function timeAgo(time, html) {
-    if (!isNaN(parseInt(time))) {
-        time = new Date(time).getTime();
-    }
+    if (!isNaN(parseInt(time))) time = new Date(time).getTime();
 
     let periods = ["second", "minute", "hour", "day", "week", "month", "year", "age"];
-
     let lengths = ["60", "60", "24", "7", "4.35", "12", "100"];
-
     let now = new Date().getTime();
 
     let difference = Math.round((now - time) / 1000);
@@ -28,12 +24,8 @@ function timeAgo(time, html) {
     }
 
     difference = Math.round(difference);
-
     period = periods[j];
-
     return `${difference} ${period}${difference > 1 ? "s" : ""} ${tense}`;
 }
 
-function fillUpdateTime() {
-    document.getElementById("eqs-app-nav-item-update-inner").innerHTML = "<span class='eqs-app-nav-desktop'>Last updated </span>" + timeAgo(window.statusData['time'], true);
-}
+let fillUpdateTime = () => document.getElementById("eqs-app-nav-item-update-inner").innerHTML = "<span class='eqs-app-nav-desktop'>Last updated </span>" + timeAgo(window.statusData['time'], true);
