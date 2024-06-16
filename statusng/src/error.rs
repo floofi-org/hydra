@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use std::io;
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug)]
 pub enum StatusError {

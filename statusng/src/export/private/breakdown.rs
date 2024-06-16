@@ -1,5 +1,7 @@
 use std::collections::HashMap;
+
 use serde::Serialize;
+
 use crate::models::History;
 
 #[derive(Serialize, Debug)]

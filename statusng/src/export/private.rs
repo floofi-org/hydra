@@ -1,11 +1,12 @@
-use std::collections::HashMap;
 use std::fs;
+use std::collections::HashMap;
 use std::time::SystemTime;
+
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
-use crate::models::History;
 use crate::models::{
+    History,
     service::ServiceStatus,
     config::OutageConfig,
 };

@@ -1,10 +1,12 @@
-use std::collections::HashMap;
 use std::fs;
-use serde::{Deserialize, Serialize};
-use crate::models::service::{Service, ServiceStatus};
-use crate::error::StatusError;
-use chrono::{DateTime, Utc};
+use std::collections::HashMap;
 use std::time::SystemTime;
+
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+
+use crate::error::StatusError;
+use super::service::{Service, ServiceStatus};
 
 type ServiceHistory = HashMap<String, Vec<ServiceStatus>>;
 

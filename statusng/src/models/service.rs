@@ -1,8 +1,10 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
+
 use serde::{Deserialize, Serialize};
-use crate::models::service::kind::{HttpService, TcpService};
-use crate::processors::{Http, Processor, ProcessorResult, Tcp};
+
+use kind::{HttpService, TcpService};
+use crate::processors::{Processor, ProcessorResult, Http, Tcp};
 
 mod status;
 pub mod kind;

@@ -1,8 +1,10 @@
 use std::net::{Shutdown, SocketAddr, TcpStream};
 use std::time::{Duration, Instant};
+
 use log::{error, info, warn};
-use crate::models::service::{Service, ServiceStatus, kind::TcpService};
+
 use crate::error::StatusError;
+use crate::models::service::{Service, ServiceStatus, kind::TcpService};
 use crate::processors::{Processor, ProcessorResult};
 
 pub struct Tcp;

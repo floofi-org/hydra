@@ -1,4 +1,5 @@
 use std::fmt::{Display, Formatter};
+
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
 #[derive(Deserialize_repr, Serialize_repr, Debug, Copy, Clone, PartialEq)]

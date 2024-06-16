@@ -1,4 +1,5 @@
 use serde::Serialize;
+
 use crate::models::service::ServiceStatus;
 
 #[derive(Serialize, Debug)]

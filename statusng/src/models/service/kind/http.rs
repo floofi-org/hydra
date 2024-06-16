@@ -1,4 +1,5 @@
 use serde::Deserialize;
+
 use crate::models::service::{ServiceCategory, ServiceHostingProvider};
 
 #[derive(Deserialize, Debug)]
