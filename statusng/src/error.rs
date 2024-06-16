@@ -35,11 +35,11 @@ impl From<String> for StatusError {
 
 impl Display for StatusError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match &self {
-            Self::GenericError(message) => write!(f, "{}", message),
-            Self::IoError(err) => write!(f, "{:?}", err),
+        match self {
+            Self::YamlParseError(err) => write!(f, "{:?}", err),
             Self::JsonParseError(err) => write!(f, "{:?}", err),
-            Self::YamlParseError(err) => write!(f, "{:?}", err)
+            Self::IoError(err) => write!(f, "{:?}", err),
+            Self::GenericError(message) => write!(f, "{}", message),
         }
     }
 }
