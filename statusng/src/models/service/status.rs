@@ -23,10 +23,6 @@ impl Display for ServiceStatus {
 }
 
 impl ServiceStatus {
-    pub fn as_usize(&self) -> usize {
-        self.clone() as usize
-    }
-
     fn as_image_string(&self) -> String {
         match self {
             ServiceStatus::Online => String::from("status-ok"),

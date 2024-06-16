@@ -15,7 +15,7 @@ impl Breakdown {
             for (date, entries) in hm_service {
                 let minih_date = mini_history.0.entry(date).or_default();
                 for s in entries {
-                    minih_date[s.as_usize()] += 1.0
+                    minih_date[s as usize] += 1.0
                 }
             }
         }
