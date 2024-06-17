@@ -15,9 +15,9 @@ pub struct App {
 
 impl App {
     pub fn build() -> Result<Self, StatusError> {
-        let config = fs::read_to_string("./self.config.yaml")?;
+        let config = fs::read_to_string("./config.yaml")?;
         let config: Config = serde_yml::from_str(&config)?;
-        debug!("Done loading self.config.yaml.");
+        debug!("Done loading config.yaml.");
 
         let history = fs::read_to_string("./history.json")?;
         let history = serde_json::from_str(&history)?;
