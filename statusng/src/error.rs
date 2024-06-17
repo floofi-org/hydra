@@ -1,6 +1,8 @@
 use std::io;
 use std::fmt::{Display, Formatter};
 
+pub type StatusResult<T> = Result<T, StatusError>;
+
 #[derive(Debug)]
 pub enum StatusError {
     YamlParseError(serde_yml::Error),

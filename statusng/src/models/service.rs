@@ -4,16 +4,35 @@ use std::time::Duration;
 use serde::{Deserialize, Serialize};
 
 use kind::{HttpService, TcpService};
-use crate::processors::{Processor, ProcessorResult, Http, Tcp};
 
 mod status;
+mod processor;
+
 pub mod kind;
 
-pub use status::ServiceStatus;
+pub use status::*;
+pub use processor::*;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "type")]
-pub enum Service {
+pub struct Service {
+    pub maintenance: bool,
+    pub host: String,
+    pub port: u16,
+    pub name: Option<String>,  // By default, use 'host'
+    pub category: ServiceCategory,
+    #[serde(alias = "hosting")]
+    pub hosting_provider: ServiceHostingProvider,
+    #[serde(alias = "id")]
+    pub _legacy_id: String,
+
+    #[serde(flatten)]
+    pub service_type: ServiceType,
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(untagged)]
+pub enum ServiceType {
     #[serde(rename = "http", alias = "https")]
     Http(HttpService),
     #[serde(rename = "tcp")]
@@ -45,40 +64,56 @@ pub enum ServiceHostingProvider {
 }
 
 impl Service {
-    pub fn process(self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
-        match self {
-            Service::Http(service) => Http::process(service, timeout, slow_threshold),
-            Service::Tcp(service) => Tcp::process(service, timeout, slow_threshold),
+    pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
+        let result = self.process_service(timeout);
+        let status = self.make_status(&result, slow_threshold);
+        let ping = result.unwrap_or(0);
+
+        ProcessorResult {
+            ping,
+            status,
+        }
+    }
+
+    fn process_service(&self, timeout: Duration) -> ServiceResult {
+        let ping = match &self.service_type {
+            ServiceType::Http(service) => service.process(self, timeout)?,
+            ServiceType::Tcp(service) => service.process(self, timeout)?,
+        };
+
+        Ok(ping)
+    }
+
+    fn make_status(&self, result: &ServiceResult, slow_threshold: u32) -> ServiceStatus {
+        match result {
+            Ok(ping) if *ping < slow_threshold => ServiceStatus::Online,
+            Ok(_) => ServiceStatus::Unstable,
+            Err(_) if self.maintenance => ServiceStatus::Maintenance,
+            _ => ServiceStatus::Offline,
         }
     }
 
     pub fn get_legacy_id(&self) -> &str {
-        match self {
-            Service::Http(service) => &service._legacy_id,
-            Service::Tcp(service) => &service._legacy_id,
-        }
+        &self._legacy_id
     }
 
     pub fn get_unique_id(&self) -> String {
-        match self {
-            Service::Http(service) => service.get_unique_id(),
-            Service::Tcp(service) => service.get_unique_id(),
-        }
+        format!("{}:{}", self.host, self.port)
     }
 
     pub fn get_label(&self) -> String {
-        match self {
-            Service::Http(service) => service.get_label(),
-            Service::Tcp(service) => service.get_label(),
+        match self.category {
+            ServiceCategory::Network | ServiceCategory::Servers => self.name.clone().unwrap_or_else(|| self.host.clone()),
+            _ => self.host.clone()
         }
     }
 }
 
 impl Display for Service {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Service::Http(service) => write!(f, "{} is an http service", service.host),
-            Service::Tcp(service) => write!(f, "{} is a tcp service", service.host),
+        match self.service_type {
+            ServiceType::Http(_) => write!(f, "{} is an http service", self.host),
+            ServiceType::Tcp(_) => write!(f, "{} is a tcp service", self.host),
         }
     }
 }

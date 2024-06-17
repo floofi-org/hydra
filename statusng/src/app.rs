@@ -1,10 +1,12 @@
 use std::fs;
 use std::time::Duration;
 
-use log::{debug, error, info};
+use log::{debug, error, info, warn};
 
+use serde_json::error;
 use statusng::error::StatusError;
 use statusng::export::private::PrivateAPI;
+use statusng::models::service::ServiceStatus;
 use statusng::models::{Config, History};
 
 pub struct App {
@@ -40,14 +42,19 @@ impl App {
         let timeout = Duration::from_millis(self.config.timeout as u64);
         let slow_threshold = self.config.slow_threshold;
 
-        for base_service in self.config.services {
-            info!("{}", base_service);
-            let result = base_service.process(timeout, slow_threshold);
+        for service in self.config.services {
+            info!("{}", service);
+            let result = service.process(timeout, slow_threshold);
 
-            self.history.add_entry(&result.service, result.status);
-            self.api.add(&result);
+            self.history.add_entry(&service, result.status);
+            self.api.add(&service, &result);
 
-            info!("{}", result);
+            match result.status {
+                ServiceStatus::Online => info!("{}: Online (ping: {})", service.get_label(), result.ping),
+                ServiceStatus::Unstable => warn!("{}: Unstable (ping: {})", service.get_label(), result.ping),
+                ServiceStatus::Offline => error!("{}: Offline", service.get_label()),
+                ServiceStatus::Maintenance => info!("{}: Maintenance (ping: {})", service.get_label(), result.ping),
+            }
         }
 
         self.history.vacuum();

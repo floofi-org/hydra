@@ -7,12 +7,12 @@ use serde::Serialize;
 
 use crate::models::{
     History,
-    service::ServiceStatus,
+    service::{Service, ServiceStatus},
     config::OutageConfig,
 };
 
 use crate::error::StatusError;
-use crate::processors::ProcessorResult;
+use crate::models::service::ProcessorResult;
 
 mod service;
 mod breakdown;
@@ -53,8 +53,8 @@ impl PrivateAPI {
         api
     }
 
-    pub fn add(&mut self, item: &ProcessorResult) {
-        self.services.push(item.into());
+    pub fn add(&mut self, service: &Service, item: &ProcessorResult) {
+        self.services.push(ClientService::new(service, item.status, item.ping));
     }
 
     pub fn seal(&mut self, history: History) {

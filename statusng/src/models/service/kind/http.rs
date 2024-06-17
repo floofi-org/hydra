@@ -1,19 +1,14 @@
 use serde::Deserialize;
 
-use crate::models::service::{ServiceCategory, ServiceHostingProvider};
+use std::time::{Duration, Instant};
+
+use log::debug;
+use ureq::{Error, Response};
+
+use crate::models::service::{Service, ServiceProcessor};
 
 #[derive(Deserialize, Debug)]
 pub struct HttpService {
-    pub maintenance: bool,
-    pub host: String,
-    pub port: u16,
-    pub name: Option<String>,  // By default, use 'host'
-    pub category: ServiceCategory,
-    #[serde(alias = "hosting")]
-    pub hosting_provider: ServiceHostingProvider,
-    #[serde(alias = "id")]
-    pub _legacy_id: String,
-
     pub url: String,
     #[serde(alias = "expect")]
     pub expected_code: u16,
@@ -21,13 +16,28 @@ pub struct HttpService {
     pub tls: bool
 }
 
+pub enum HttpError {
+    TransportError(Box<ureq::Error>),
+    UnexpectedCode(u16),
+}
+
 fn default_tls() -> bool {
     true
 }
 
 impl HttpService {
+    fn make_request(url: &str, timeout: Duration) -> Result<Response, Box<Error>> {
+        let user_agent = format!("Mozilla/5.0 (Equestriadev; statusng; +https://status.equestria.dev) statusng/{}", crate::VERSION);
+
+        ureq::get(url)
+            .timeout(timeout)
+            .set("User-Agent", &user_agent)
+            .call()
+            .map_err(Box::new)
+    }
+
     //noinspection HttpUrlsUsage - Stupid RustRover
-    pub fn get_url(&self) -> String {
+    fn get_url(&self, host: &str, port: u16) -> String {
         let mut url = String::from("");
 
         url.push_str(if self.tls {
@@ -36,11 +46,12 @@ impl HttpService {
             "http://"
         });
 
-        url.push_str(&self.host);
+        url.push_str(host);
 
-        if (self.tls && self.port != 443) ||
-            (!self.tls && self.port != 80) {
-            url.push_str(&format!(":{}", self.port));
+        let push_port = (self.tls && port != 443) || (!self.tls && port != 80);
+        if push_port {
+            url.push(':');
+            url.push_str(&port.to_string());
         }
 
         if self.url.starts_with('/') {
@@ -52,15 +63,30 @@ impl HttpService {
 
         url
     }
+}
 
-    pub fn get_unique_id(&self) -> String {
-        format!("{}:{}", self.host, self.port)
-    }
+impl ServiceProcessor<HttpError> for HttpService {
+    fn process(&self, service: &Service, timeout: Duration) -> Result<u32, HttpError> {
+        let url = self.get_url(&service.host, service.port);
 
-    pub fn get_label(&self) -> String {
-        match self.category {
-            ServiceCategory::Network | ServiceCategory::Servers => self.name.clone().unwrap_or(self.host.clone()),
-            _ => self.host.clone()
+        let start = Instant::now();
+        let response = Self::make_request(&url, timeout)?;
+
+        let ping = start.elapsed().as_millis() as u32;
+
+        let code = response.status();
+        debug!("ureq reported status code {}", code);
+
+        if code == self.expected_code {
+            Ok(ping)
+        } else {
+            Err(HttpError::UnexpectedCode(code))
         }
+    }
+}
+
+impl From<Box<Error>> for HttpError {
+    fn from(value: Box<Error>) -> Self {
+        Self::TransportError(value)
     }
 }

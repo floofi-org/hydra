@@ -2,6 +2,8 @@ use std::fmt::{Display, Formatter};
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
+use super::ServiceResult;
+
 #[derive(Deserialize_repr, Serialize_repr, Debug, Copy, Clone, PartialEq)]
 #[repr(u8)]
 pub enum ServiceStatus {

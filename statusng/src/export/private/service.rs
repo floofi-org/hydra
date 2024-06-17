@@ -1,7 +1,7 @@
 use serde::Serialize;
 
-use crate::models::service::{Service, ServiceCategory, ServiceHostingProvider, ServiceStatus};
-use crate::processors::ProcessorResult;
+use crate::models::service::{ServiceCategory, ServiceHostingProvider, ServiceStatus};
+use crate::models::Service;
 
 #[derive(Serialize, Debug)]
 pub struct ClientService {
@@ -15,21 +15,15 @@ pub struct ClientService {
     service_hosting_provider: ServiceHostingProvider
 }
 
-impl From<&ProcessorResult> for ClientService {
-    fn from(value: &ProcessorResult) -> Self {
-        ClientService {
-            id: format!("{:x}", md5::compute(value.service.get_unique_id().into_bytes())),
-            label: value.service.get_label(),
-            ping: value.ping,
-            status: value.status,
-            category: match &value.service {
-                Service::Http(service) => service.category,
-                Service::Tcp(service) => service.category
-            },
-            service_hosting_provider: match &value.service {
-                Service::Http(service) => service.hosting_provider,
-                Service::Tcp(service) => service.hosting_provider
-            }
+impl ClientService {
+    pub fn new(service: &Service, status: ServiceStatus, ping: u32) -> Self {
+        Self {
+            id: format!("{:x}", md5::compute(service.get_unique_id().into_bytes())),
+            label: service.get_label(),
+            ping,
+            status,
+            category: service.category,
+            service_hosting_provider: service.hosting_provider,
         }
     }
 }
