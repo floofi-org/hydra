@@ -12,11 +12,11 @@ type ServiceHistory = HashMap<String, Vec<ServiceStatus>>;
 
 fn get_current_date() -> String {
     let now: DateTime<Utc> = SystemTime::now().into();
-    now.format("%Y-%m-%d").to_string()
+    now.format("%F").to_string()
 }
 
 fn should_keep_entry(current_date: NaiveDate, entry_key: &str) -> bool {
-    let date = NaiveDate::parse_from_str("%Y-%m-%d", entry_key)
+    let date = NaiveDate::parse_from_str(entry_key, "%F")
         .unwrap_or_default();
     let difference = current_date - date;
 
