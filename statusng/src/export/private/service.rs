@@ -17,8 +17,10 @@ pub struct ClientService {
 
 impl ClientService {
     pub fn new(service: &Service, status: ServiceStatus, ping: u32) -> Self {
+        let hash = md5::compute(service.get_unique_id().into_bytes());
+
         Self {
-            id: format!("{:x}", md5::compute(service.get_unique_id().into_bytes())),
+            id: format!("{:x}", hash),
             label: service.get_label(),
             ping,
             status,

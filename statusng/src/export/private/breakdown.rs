@@ -3,32 +3,38 @@ use std::collections::HashMap;
 use serde::Serialize;
 
 use crate::models::History;
+use crate::models::service::ServiceStatus;
+
+type StatusBreakdown = [f32; 4];
 
 #[derive(Serialize, Debug)]
-pub struct Breakdown(pub(crate) HashMap<String, [f32; 4]>);
+pub struct Breakdown(pub(crate) HashMap<String, StatusBreakdown>);
 
 impl Breakdown {
-    pub fn from_base(value: History) -> Self {
-        let mut mini_history = Self(HashMap::new());
+    pub fn from_base(history: History) -> Self {
+        let mut map: HashMap<String, StatusBreakdown> = HashMap::new();
 
-        for hm_service in value.0.into_values() {
-            for (date, entries) in hm_service {
-                let minih_date = mini_history.0.entry(date).or_default();
-                for s in entries {
-                    minih_date[s as usize] += 1.0
-                }
-            }
+        for (date, statuses) in history.0.into_values().flatten() {
+            accumulate_entry(&mut map, date, &statuses);
         }
 
-        for minih_date in mini_history.0.values_mut() {
-            let total = minih_date[0] + minih_date[1] + minih_date[2] + minih_date[3];
+        calc_percentages(&mut map);
+        Self(map)
+    }
+}
 
-            minih_date[0] = (minih_date[0] / total) * 100.0;
-            minih_date[1] = (minih_date[1] / total) * 100.0;
-            minih_date[2] = (minih_date[2] / total) * 100.0;
-            minih_date[3] = (minih_date[3] / total) * 100.0;
-        }
+fn accumulate_entry(map: &mut HashMap<String, StatusBreakdown>, date: String, statuses: &[ServiceStatus]) {
+    let entry = map.entry(date).or_default();
+    for status in statuses {
+        entry[*status as usize] += 1.0;
+    }
+}
 
-        mini_history
+fn calc_percentages(map: &mut HashMap<String, StatusBreakdown>) {
+    let total = map.len() as f32;
+
+    for (_, entry) in map.iter_mut() {
+        entry.iter_mut()
+            .for_each(|s| *s = *s / total * 100.0);
     }
 }

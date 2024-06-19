@@ -47,10 +47,11 @@ impl Default for PrivateAPI {
 }
 
 impl PrivateAPI {
-    pub fn new(outage: Option<OutageConfig>) -> Self {
-        let mut api = Self::default();
-        api.notice = outage;
-        api
+    pub fn new(notice: Option<OutageConfig>) -> Self {
+        Self {
+            notice,
+            ..Default::default()
+        }
     }
 
     pub fn add(&mut self, service: &Service, item: &ProcessorResult) {
@@ -58,25 +59,32 @@ impl PrivateAPI {
     }
 
     pub fn seal(&mut self, history: History) {
-        self.ping = self.services.iter()
-            .map(|s| s.ping)
-            .reduce(|a, b| a + b)
-            .unwrap_or(0) as f32 / self.services.len() as f32;
+        self.ping = self.calc_average_ping();
+        self.global = self.calc_global_status();
+        self.breakdown = Breakdown::from_base(history);
+    }
 
-        self.global = if self.services.iter()
-            .find(|s| s.status == ServiceStatus::Offline).is_some() {
-            ServiceStatus::Offline
-        } else if self.services.iter()
-            .find(|s| s.status == ServiceStatus::Unstable).is_some() {
-            ServiceStatus::Unstable
-        } else if self.services.iter()
-            .find(|s| s.status == ServiceStatus::Maintenance).is_some() {
+    fn calc_average_ping(&self) -> f32 {
+        let total = self.services.iter()
+            .map(|s| s.ping)
+            .sum::<u32>() as f32;
+
+        let count = self.services.len() as f32;
+
+        total / count
+    }
+
+    fn calc_global_status(&self) -> ServiceStatus {
+        let status = self.services.iter()
+            .map(|s| s.status)
+            .max()
+            .unwrap_or_default();
+
+        if let ServiceStatus::Maintenance = status {
             ServiceStatus::Offline
         } else {
-            ServiceStatus::Online
-        };
-
-        self.breakdown = Breakdown::from_base(history);
+            status
+        }
     }
 
     pub fn sync(self) -> Result<(), StatusError> {

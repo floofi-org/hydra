@@ -2,11 +2,15 @@ use std::fmt::{Display, Formatter};
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
-use super::ServiceResult;
 
-#[derive(Deserialize_repr, Serialize_repr, Debug, Copy, Clone, PartialEq)]
+#[derive(Deserialize_repr, Serialize_repr)]
+#[derive(Default, Debug)]
+#[derive(Copy, Clone)]
+#[derive(PartialEq, Eq)]
+#[derive(PartialOrd, Ord)]
 #[repr(u8)]
 pub enum ServiceStatus {
+    #[default]
     Online = 0,
     Unstable = 1,
     Offline = 2,
