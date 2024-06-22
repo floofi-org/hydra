@@ -1,6 +1,4 @@
 async function loadBaseApp() {
-    document.getElementById("eqs-app").innerHTML = "";
-
     window.oldDate = null;
     if (window.statusData) window.oldDate = statusData.time;
 
@@ -14,6 +12,7 @@ async function loadBaseApp() {
     if (window.statusData.time === window.oldDate) return;
 
     try {
+        document.getElementById("eqs-app").innerHTML = "";
         document.getElementById("eqs-app").innerHTML = `
 <nav id="eqs-app-nav">
     <div id="eqs-app-nav-inner" class="eqs-container">
@@ -164,12 +163,4 @@ async function loadBaseApp() {
 function completeLoading() {
     document.getElementById("eqs-app-loader").style.display = "none";
     document.getElementById("eqs-app-copyright").classList.add("eqs-container-show");
-
-    setInterval(async () => {
-        fillUpdateTime();
-
-        if (new Date().getTime() - new Date(window.statusData['time']).getTime() >= 600000) {
-            await loadBaseApp();
-        }
-    }, 1000);
 }

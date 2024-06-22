@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Equestria.dev Status</title>
+    <link rel="icon" href="static/logo/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div id="eqs-dark-theme-indicator"></div>
+<div id="eqs-loader">
+    <svg id="eqs-loader-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
+        <g transform="rotate(0 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.875s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(45 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(90 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.625s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(135 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(180 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.375s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(225 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(270 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.125s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+        <g transform="rotate(315 50 50)">
+            <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
+                <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s"
+                         repeatCount="indefinite"/>
+            </rect>
+        </g>
+    </svg>
+</div>
+<div id="eqs-app">
+    <noscript>
+        <div id="eqs-app-error">
+            <div id="eqs-app-error-inner">
+                <svg id="eqs-app-error-icon" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="6.5" stroke="var(--theme-icon-stroke)"/>
+                    <path d="M8 4.5L8 8" stroke="var(--theme-icon-stroke)" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="8" cy="10.75" r="0.75" fill="var(--theme-icon-stroke)"/>
+                </svg>
+                <div id="eqs-app-error-title">JavaScript is disabled</div>
+                <div id="eqs-app-error-message">Please enable JavaScript (also known as ECMAScript) and refresh this page.</div>
+                <a href="" id="eqs-app-error-reload" class="btn" tabindex="1">Try again</a>
+                <div id="eqs-app-error-detail"></div>
+            </div>
+        </div>
+    </noscript>
+</div>
+
+<script src="src/breakdown.js"></script>
+<script src="src/config.js"></script>
+<script src="src/core.js"></script>
+<script src="src/error.js"></script>
+<script src="src/global.js"></script>
+<script src="src/service.js"></script>
+<script src="src/update.js"></script>
+<script src="src/loader.js"></script>
+</body>
+</html>

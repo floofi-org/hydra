@@ -37,4 +37,12 @@ window.addEventListener('load', async () => {
     });
 
     await loadBaseApp();
+
+    setInterval(async () => {
+        fillUpdateTime();
+
+        if (new Date().getTime() - new Date(window.statusData['time']).getTime() >= 600000) {
+            await loadBaseApp();
+        }
+    }, 1000);
 });

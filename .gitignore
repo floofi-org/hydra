@@ -2,7 +2,6 @@ config.yaml
 history.json
 client/public.json
 client/.vercel
-client/index.html
 client/*.min.js
 client/*.min.csss
 statusng/config.yaml
