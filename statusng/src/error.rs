@@ -7,6 +7,7 @@ pub type StatusResult<T> = Result<T, StatusError>;
 pub enum StatusError {
     YamlParseError(serde_yml::Error),
     JsonParseError(serde_json::Error),
+    UreqError(ureq::Error),
     IoError(io::Error),
     GenericError(String)
 }
@@ -29,6 +30,12 @@ impl From<io::Error> for StatusError {
     }
 }
 
+impl From<ureq::Error> for StatusError {
+    fn from(value: ureq::Error) -> Self {
+        Self::UreqError(value)
+    }
+}
+
 impl From<String> for StatusError {
     fn from(value: String) -> Self {
         Self::GenericError(value)
@@ -41,6 +48,7 @@ impl Display for StatusError {
             Self::YamlParseError(err) => write!(f, "{:?}", err),
             Self::JsonParseError(err) => write!(f, "{:?}", err),
             Self::IoError(err) => write!(f, "{:?}", err),
+            Self::UreqError(err) => write!(f, "{:?}", err),
             Self::GenericError(message) => write!(f, "{}", message),
         }
     }

@@ -10,6 +10,7 @@ use crate::models::service::{Service, ServiceProcessor};
 #[derive(Deserialize, Debug)]
 pub struct TcpService {}
 
+#[derive(Debug)]
 pub enum TcpError {
     ConnectionError(io::Error),
     AddressNotFound

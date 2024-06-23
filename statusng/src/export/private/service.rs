@@ -6,7 +6,7 @@ use crate::models::Service;
 #[derive(Serialize, Debug)]
 pub struct ClientService {
     id: String,
-    label: String,
+    pub label: String,
     pub ping: u32,
     pub status: ServiceStatus,
     #[serde(alias = "type")]

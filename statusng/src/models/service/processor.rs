@@ -17,6 +17,7 @@ pub struct ProcessorResult {
     pub ping: u32,
 }
 
+#[derive(Debug)]
 pub enum ServiceError {
     Http(HttpError),
     Tcp(TcpError)

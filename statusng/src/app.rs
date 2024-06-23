@@ -6,6 +6,7 @@ use log::{debug, error, info, warn};
 use serde_json::error;
 use statusng::error::StatusError;
 use statusng::export::private::PrivateAPI;
+use statusng::export::public::PublicAPIv1;
 use statusng::models::service::ServiceStatus;
 use statusng::models::{Config, History};
 
@@ -50,10 +51,10 @@ impl App {
             self.api.add(&service, &result);
 
             match result.status {
-                ServiceStatus::Online => info!("{}: Online (ping: {})", service.get_label(), result.ping),
-                ServiceStatus::Unstable => warn!("{}: Unstable (ping: {})", service.get_label(), result.ping),
+                ServiceStatus::Online => info!("{}: Online (ping: {} ms)", service.get_label(), result.ping),
+                ServiceStatus::Unstable => warn!("{}: Unstable (ping: {} ms)", service.get_label(), result.ping),
                 ServiceStatus::Offline => error!("{}: Offline", service.get_label()),
-                ServiceStatus::Maintenance => info!("{}: Maintenance (ping: {})", service.get_label(), result.ping),
+                ServiceStatus::Maintenance => info!("{}: Maintenance (ping: {} ms)", service.get_label(), result.ping),
             }
         }
 
@@ -62,9 +63,16 @@ impl App {
             error!("Failed to save history to disk: {}", e);
         }
 
+        info!("Saving private API data to disk and sending to Vercel...");
         self.api.seal(self.history);
         if let Err(e) = self.api.sync(&self.config.vercel_token) {
             error!("Failed to save private API data to disk: {}", e);
+        }
+
+        info!("Saving public API data to disk and sending to Vercel...");
+        let public_api_v1 = PublicAPIv1::from_private_api(&self.api);
+        if let Err(e) = public_api_v1.sync(&self.config.vercel_token) {
+            error!("Failed to save public API v1 data to disk: {}", e);
         }
     }
 }

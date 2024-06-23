@@ -1,5 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
+use log::debug;
 
 use serde::{Deserialize, Serialize};
 
@@ -66,12 +67,22 @@ pub enum ServiceHostingProvider {
 impl Service {
     pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         let result = self.process_service(timeout);
-        let status = self.make_status(&result, slow_threshold);
-        let ping = result.unwrap_or(0);
 
-        ProcessorResult {
-            ping,
-            status,
+        match &result {
+            Err(e) => {
+                ProcessorResult {
+                    ping: 0,
+                    status: ServiceStatus::Offline,
+                }
+            },
+            Ok(ping) => {
+                let status = self.make_status(&result, slow_threshold);
+
+                ProcessorResult {
+                    ping: *ping,
+                    status,
+                }
+            }
         }
     }
 

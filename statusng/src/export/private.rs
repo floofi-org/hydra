@@ -23,11 +23,11 @@ use crate::export::vercel::Vercel;
 
 #[derive(Serialize, Debug)]
 pub struct PrivateAPI {
-    global: ServiceStatus,
-    ping: f32,
+    pub global: ServiceStatus,
+    pub ping: f32,
     time: DateTime<Utc>,
     breakdown: Breakdown,
-    services: Vec<ClientService>,
+    pub services: Vec<ClientService>,
     notice: Option<OutageConfig>
 }
 
@@ -88,9 +88,13 @@ impl PrivateAPI {
         }
     }
 
-    pub fn sync(self, token: &str) -> Result<(), StatusError> {
-        fs::write("./out-private.json", serde_json::to_string(&self)?)?;
+    pub fn sync(&self, token: &str) -> Result<(), StatusError> {
+        let data = serde_json::to_string(&self)?;
         let vercel = Vercel::new(token);
+
+        fs::write("./out-private.json", &data)?;
+        vercel.put(&data, "public/status-beta.json", 360)?;
+
         Ok(())
     }
 }
