@@ -66,7 +66,7 @@ impl Service {
     pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         let result = self.process_service(timeout);
 
-        match &result {
+        match result {
             Err(_) => {
                 ProcessorResult {
                     ping: 0,
@@ -77,7 +77,7 @@ impl Service {
                 let status = self.make_status(&result, slow_threshold);
 
                 ProcessorResult {
-                    ping: *ping,
+                    ping,
                     status,
                 }
             }
