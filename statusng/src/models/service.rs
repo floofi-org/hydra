@@ -65,22 +65,12 @@ pub enum ServiceHostingProvider {
 impl Service {
     pub fn process(&self, timeout: Duration, slow_threshold: u32) -> ProcessorResult {
         let result = self.process_service(timeout);
+        let status = self.make_status(&result, slow_threshold);
+        let ping = result.unwrap_or(0);
 
-        match result {
-            Err(_) => {
-                ProcessorResult {
-                    ping: 0,
-                    status: ServiceStatus::Offline,
-                }
-            },
-            Ok(ping) => {
-                let status = self.make_status(&result, slow_threshold);
-
-                ProcessorResult {
-                    ping,
-                    status,
-                }
-            }
+        ProcessorResult {
+            ping,
+            status,
         }
     }
 
