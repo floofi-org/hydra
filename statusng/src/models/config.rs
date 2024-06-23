@@ -8,6 +8,8 @@ pub struct Config {
     #[serde(alias = "slow")]
     pub slow_threshold: u32,
     pub timeout: u32,
+    #[serde(alias = "vercel")]
+    pub vercel_token: String,
     pub outage: OutageConfig,
     pub services: Vec<Service>
 }

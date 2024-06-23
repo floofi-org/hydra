@@ -63,7 +63,7 @@ impl App {
         }
 
         self.api.seal(self.history);
-        if let Err(e) = self.api.sync() {
+        if let Err(e) = self.api.sync(&self.config.vercel_token) {
             error!("Failed to save private API data to disk: {}", e);
         }
     }

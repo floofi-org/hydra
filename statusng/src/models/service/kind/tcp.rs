@@ -8,7 +8,7 @@ use serde::Deserialize;
 use crate::models::service::{Service, ServiceProcessor};
 
 #[derive(Deserialize, Debug)]
-pub struct TcpService;
+pub struct TcpService {}
 
 pub enum TcpError {
     ConnectionError(io::Error),

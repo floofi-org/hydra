@@ -19,6 +19,7 @@ mod breakdown;
 
 use service::ClientService;
 use breakdown::Breakdown;
+use crate::export::vercel::Vercel;
 
 #[derive(Serialize, Debug)]
 pub struct PrivateAPI {
@@ -87,8 +88,9 @@ impl PrivateAPI {
         }
     }
 
-    pub fn sync(self) -> Result<(), StatusError> {
+    pub fn sync(self, token: &str) -> Result<(), StatusError> {
         fs::write("./out-private.json", serde_json::to_string(&self)?)?;
+        let vercel = Vercel::new(token);
         Ok(())
     }
 }
