@@ -13,7 +13,7 @@ pub struct TcpService {}
 #[derive(Debug)]
 pub enum TcpError {
     ConnectionError(io::Error),
-    AddressNotFound
+    AddressNotFound,
 }
 
 impl TcpService {
@@ -45,7 +45,6 @@ impl ServiceProcessor<TcpError> for TcpService {
         Ok(ping)
     }
 }
-
 
 impl From<io::Error> for TcpError {
     fn from(value: io::Error) -> Self {

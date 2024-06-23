@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use super::Service;
+use crate::models::service::Service;
 
 #[derive(Deserialize, Debug)]
 pub struct Config {

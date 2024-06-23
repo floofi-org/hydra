@@ -1,7 +1,7 @@
 use crate::error::StatusError;
 
 pub struct Vercel<'a> {
-    token: &'a str
+    token: &'a str,
 }
 
 impl<'a> Vercel<'a> {

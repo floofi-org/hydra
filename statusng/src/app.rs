@@ -3,15 +3,15 @@ use std::time::Duration;
 
 use log::{debug, error, info, warn};
 
-use serde_json::error;
 use statusng::error::StatusError;
 use statusng::export::private::PrivateAPI;
-use statusng::export::public::PublicAPIv1;
+use statusng::export::public::v1::PublicAPIv1;
+use statusng::export::public::v2::PublicAPIv2;
 use statusng::models::service::ServiceStatus;
 use statusng::models::{Config, History};
 
 pub struct App {
-    config: Config,
+    pub(crate) config: Config,
     api: PrivateAPI,
     history: History,
 }
@@ -38,7 +38,6 @@ impl App {
 
     pub fn run(mut self) {
         info!("Processing config...");
-        debug!("Refreshing every {} ms.", self.config.interval);
 
         let timeout = Duration::from_millis(self.config.timeout as u64);
         let slow_threshold = self.config.slow_threshold;
@@ -71,8 +70,13 @@ impl App {
 
         info!("Saving public API data to disk and sending to Vercel...");
         let public_api_v1 = PublicAPIv1::from_private_api(&self.api);
+        let public_api_v2 = PublicAPIv2::from_private_api(&self.api);
+
         if let Err(e) = public_api_v1.sync(&self.config.vercel_token) {
             error!("Failed to save public API v1 data to disk: {}", e);
+        }
+        if let Err(e) = public_api_v2.sync(&self.config.vercel_token) {
+            error!("Failed to save public API v2 data to disk: {}", e);
         }
     }
 }

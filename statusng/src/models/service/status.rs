@@ -2,7 +2,6 @@ use std::fmt::{Display, Formatter};
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
-
 #[derive(Deserialize_repr, Serialize_repr)]
 #[derive(Default, Debug)]
 #[derive(Copy, Clone)]

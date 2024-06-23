@@ -1,25 +1,24 @@
-use std::fs;
 use std::collections::HashMap;
+use std::fs;
 use std::time::SystemTime;
 
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
 use crate::models::{
-    History,
-    service::{Service, ServiceStatus},
     config::OutageConfig,
+    service::{Service, ServiceStatus},
+    History,
 };
 
 use crate::error::StatusError;
+use crate::export::private::breakdown::Breakdown;
+use crate::export::private::service::ClientService;
+use crate::export::vercel::Vercel;
 use crate::models::service::ProcessorResult;
 
-mod service;
 mod breakdown;
-
-use service::ClientService;
-use breakdown::Breakdown;
-use crate::export::vercel::Vercel;
+mod service;
 
 #[derive(Serialize, Debug)]
 pub struct PrivateAPI {
@@ -28,7 +27,7 @@ pub struct PrivateAPI {
     time: DateTime<Utc>,
     breakdown: Breakdown,
     pub services: Vec<ClientService>,
-    notice: Option<OutageConfig>
+    notice: Option<OutageConfig>,
 }
 
 impl Default for PrivateAPI {
@@ -42,7 +41,7 @@ impl Default for PrivateAPI {
             time: now,
             breakdown: Breakdown(HashMap::new()),
             services: vec![],
-            notice: None
+            notice: None,
         }
     }
 }
@@ -56,7 +55,8 @@ impl PrivateAPI {
     }
 
     pub fn add(&mut self, service: &Service, item: &ProcessorResult) {
-        self.services.push(ClientService::new(service, item.status, item.ping));
+        self.services
+            .push(ClientService::new(service, item.status, item.ping));
     }
 
     pub fn seal(&mut self, history: History) {
@@ -66,9 +66,7 @@ impl PrivateAPI {
     }
 
     fn calc_average_ping(&self) -> f32 {
-        let total = self.services.iter()
-            .map(|s| s.ping)
-            .sum::<u32>() as f32;
+        let total = self.services.iter().map(|s| s.ping).sum::<u32>() as f32;
 
         let count = self.services.len() as f32;
 
@@ -76,7 +74,9 @@ impl PrivateAPI {
     }
 
     fn calc_global_status(&self) -> ServiceStatus {
-        let status = self.services.iter()
+        let status = self
+            .services
+            .iter()
             .map(|s| s.status)
             .max()
             .unwrap_or_default();

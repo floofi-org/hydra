@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use serde::Serialize;
 
-use crate::models::History;
 use crate::models::service::ServiceStatus;
+use crate::models::History;
 
 type StatusBreakdown = [f32; 4];
 
@@ -23,7 +23,11 @@ impl Breakdown {
     }
 }
 
-fn accumulate_entry(map: &mut HashMap<String, StatusBreakdown>, date: String, statuses: &[ServiceStatus]) {
+fn accumulate_entry(
+    map: &mut HashMap<String, StatusBreakdown>,
+    date: String,
+    statuses: &[ServiceStatus],
+) {
     let entry = map.entry(date).or_default();
     for status in statuses {
         entry[*status as usize] += 1.0;
@@ -34,7 +38,6 @@ fn calc_percentages(map: &mut HashMap<String, StatusBreakdown>) {
     let total = map.len() as f32;
 
     for (_, entry) in map.iter_mut() {
-        entry.iter_mut()
-            .for_each(|s| *s = *s / total * 100.0);
+        entry.iter_mut().for_each(|s| *s = *s / total * 100.0);
     }
 }

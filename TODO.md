@@ -3,9 +3,9 @@
 ## Backend (`statusng`)
 
 ### Milestone 1 (MVP)
-* Public API versions 1 and 2
+* <del>Public API versions 1 and 2</del>
 * Refreshing according to config
-* Publishing data to Vercel Blob Storage
+* <del>Publishing data to Vercel Blob Storage</del>
 
 ### Milestone 2
 * Remove API version 1

@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use super::{Service, ServiceStatus};
-use super::kind::{
+use crate::models::service::{Service, ServiceStatus};
+use crate::models::service::kind::{
     http::*,
     tcp::*,
 };

@@ -1,14 +1,12 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
-use log::debug;
 
 use serde::{Deserialize, Serialize};
 
-use kind::{HttpService, TcpService};
+use crate::models::service::kind::{HttpService, TcpService};
 
 mod status;
 mod processor;
-
 pub mod kind;
 
 pub use status::*;
@@ -69,7 +67,7 @@ impl Service {
         let result = self.process_service(timeout);
 
         match &result {
-            Err(e) => {
+            Err(_) => {
                 ProcessorResult {
                     ping: 0,
                     status: ServiceStatus::Offline,

@@ -1,8 +1,10 @@
-use log::LevelFilter;
+use std::thread;
+use std::time::Duration;
+use log::{debug, LevelFilter};
 use log::{error, info};
 use simple_logger::SimpleLogger;
 
-use app::App;
+use crate::app::App;
 
 mod app;
 
@@ -15,14 +17,20 @@ fn main() {
 
     info!("statusng version {}.", statusng::VERSION);
 
-    let app = match App::build() {
-        Ok(app) => app,
-        Err(err) => {
-            error!("Failed to load app: {:?}", err);
-            std::process::exit(-1);
-        }
-    };
+    loop {
+        let app = match App::build() {
+            Ok(app) => app,
+            Err(err) => {
+                error!("Failed to load app: {:?}", err);
+                std::process::exit(-1);
+            }
+        };
 
-    info!("Loaded app.");
-    app.run();
+        info!("Loaded app.");
+        let interval = app.config.interval;
+        app.run();
+
+        debug!("Running again in {} ms.", interval);
+        thread::sleep(Duration::from_millis(interval as u64));
+    }
 }

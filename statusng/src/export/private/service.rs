@@ -12,7 +12,7 @@ pub struct ClientService {
     #[serde(alias = "type")]
     category: ServiceCategory,
     #[serde(alias = "hosting")]
-    service_hosting_provider: ServiceHostingProvider
+    service_hosting_provider: ServiceHostingProvider,
 }
 
 impl ClientService {

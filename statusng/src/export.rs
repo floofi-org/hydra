@@ -1,3 +1,3 @@
 pub mod private;
 pub mod public;
-mod vercel;
+pub mod vercel;
