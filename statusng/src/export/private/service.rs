@@ -9,9 +9,9 @@ pub struct ClientService {
     pub label: String,
     pub ping: u32,
     pub status: ServiceStatus,
-    #[serde(alias = "type")]
+    #[serde(rename = "type")]
     category: ServiceCategory,
-    #[serde(alias = "hosting")]
+    #[serde(rename = "hosting")]
     service_hosting_provider: ServiceHostingProvider,
 }
 

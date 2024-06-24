@@ -93,7 +93,7 @@ impl PrivateAPI {
         let vercel = Vercel::new(token);
 
         fs::write("./out-private.json", &data)?;
-        vercel.put(&data, "public/status-beta.json", 360)?;
+        vercel.put(&data, "public/status.json", 360)?;
 
         Ok(())
     }

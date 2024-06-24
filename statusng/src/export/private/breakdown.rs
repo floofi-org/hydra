@@ -14,8 +14,10 @@ impl Breakdown {
     pub fn from_base(history: History) -> Self {
         let mut map: HashMap<String, StatusBreakdown> = HashMap::new();
 
-        for (date, statuses) in history.0.into_values().flatten() {
-            accumulate_entry(&mut map, date, &statuses);
+        for service in history.0.into_values() {
+            for (date, statuses) in service {
+                accumulate_entry(&mut map, date, &statuses);
+            }
         }
 
         calc_percentages(&mut map);
@@ -35,9 +37,8 @@ fn accumulate_entry(
 }
 
 fn calc_percentages(map: &mut HashMap<String, StatusBreakdown>) {
-    let total = map.len() as f32;
-
     for (_, entry) in map.iter_mut() {
+        let total: f32 = entry.iter().sum();
         entry.iter_mut().for_each(|s| *s = *s / total * 100.0);
     }
 }

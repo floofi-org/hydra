@@ -29,7 +29,7 @@ impl<'a> PublicAPIv1<'a> {
             .collect();
 
         Self {
-            _notice: "The status page API version 1 is deprecated and will be removed in a future update. Please use the API version 2. For more details, read [TBA].",
+            _notice: "The status page API version 1 is deprecated and will be removed in a future update. Please use the API version 2. For more details, read <https://journal.equestria.dev/changes/2024-06-24-deprecation-of-the-status-page-api-version-1/>.",
             ping: private_api.ping,
             code: private_api.global,
             image: private_api.global.as_image_string(),
@@ -43,7 +43,7 @@ impl<'a> PublicAPIv1<'a> {
         let vercel = Vercel::new(token);
 
         fs::write("./out-public-v1.json", &data)?;
-        vercel.put(&data, "public/api-beta.json", 360)?;
+        vercel.put(&data, "public/api.json", 360)?;
 
         Ok(())
     }
