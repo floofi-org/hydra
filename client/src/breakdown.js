@@ -1,4 +1,5 @@
 function fillBreakdown() {
+    document.getElementById("eqs-app-global-box-text-uptime").innerText = `${(Object.values(statusData['breakdown']).reduce((a, b) => a + b[0], 0) / Object.values(statusData['breakdown']).length).toFixed(3)}% uptime`;
     let breakdown = Object.values(window.statusData['breakdown']).reverse();
 
     function buildSVG() {
