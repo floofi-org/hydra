@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fs;
 use std::time::SystemTime;
 
@@ -39,7 +39,7 @@ impl Default for PrivateAPI {
             global: ServiceStatus::Online,
             ping: 0.0,
             time: now,
-            breakdown: Breakdown(HashMap::new()),
+            breakdown: Breakdown(BTreeMap::new()),
             services: vec![],
             notice: None,
         }

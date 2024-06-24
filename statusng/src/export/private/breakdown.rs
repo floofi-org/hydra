@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use serde::Serialize;
 
@@ -8,11 +8,11 @@ use crate::models::History;
 type StatusBreakdown = [f32; 4];
 
 #[derive(Serialize, Debug)]
-pub struct Breakdown(pub(crate) HashMap<String, StatusBreakdown>);
+pub struct Breakdown(pub(crate) BTreeMap<String, StatusBreakdown>);
 
 impl Breakdown {
     pub fn from_base(history: History) -> Self {
-        let mut map: HashMap<String, StatusBreakdown> = HashMap::new();
+        let mut map: BTreeMap<String, StatusBreakdown> = BTreeMap::new();
 
         for service in history.0.into_values() {
             for (date, statuses) in service {
@@ -26,7 +26,7 @@ impl Breakdown {
 }
 
 fn accumulate_entry(
-    map: &mut HashMap<String, StatusBreakdown>,
+    map: &mut BTreeMap<String, StatusBreakdown>,
     date: String,
     statuses: &[ServiceStatus],
 ) {
@@ -36,7 +36,7 @@ fn accumulate_entry(
     }
 }
 
-fn calc_percentages(map: &mut HashMap<String, StatusBreakdown>) {
+fn calc_percentages(map: &mut BTreeMap<String, StatusBreakdown>) {
     for (_, entry) in map.iter_mut() {
         let total: f32 = entry.iter().sum();
         entry.iter_mut().for_each(|s| *s = *s / total * 100.0);
