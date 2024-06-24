@@ -3,8 +3,10 @@ name: Build statusng
 on:
   push:
     branches: [ "mane" ]
+    paths: [ "statusng/**" ]
   pull_request:
     branches: [ "mane" ]
+    paths: [ "statusng/**" ]
 
 env:
   CARGO_TERM_COLOR: always
