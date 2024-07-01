@@ -1,11 +1,13 @@
-use std::fs;
 use std::collections::HashMap;
+use std::fs;
+use std::io::{Cursor, Read};
 use std::time::SystemTime;
 
 use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
+
 use crate::error::{HistoryError, StatusError};
-use super::service::{Service, ServiceStatus};
+use crate::models::service::{Service, ServiceStatus};
 
 type ServiceHistory = HashMap<NaiveDate, Vec<ServiceStatus>>;
 
@@ -18,6 +20,35 @@ fn get_current_date() -> NaiveDate {
 fn should_keep_entry(current_date: NaiveDate, entry_key: &NaiveDate) -> bool {
     let difference = current_date - *entry_key;
     difference.num_days() <= 90
+}
+
+pub fn read_field<const N: usize, F, T>(
+    cursor: &mut Cursor<&[u8]>,
+    convert_func: F,
+) -> Result<T, HistoryError>
+where
+    F: Fn([u8; N]) -> Result<T, HistoryError>,
+{
+    let mut buffer = [0u8; N];
+    cursor.read_exact(&mut buffer)?;
+
+    let value = convert_func(buffer)?;
+    Ok(value)
+}
+
+pub fn read_field_dynamic<F, T>(
+    cursor: &mut Cursor<&[u8]>,
+    size: usize,
+    convert_func: F,
+) -> Result<T, HistoryError>
+where
+    F: Fn(Vec<u8>) -> Result<T, HistoryError>,
+{
+    let mut buffer = vec![0u8; size];
+    cursor.read_exact(&mut buffer)?;
+
+    let value = convert_func(buffer)?;
+    Ok(value)
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -47,7 +78,8 @@ impl History {
         let now: DateTime<Utc> = SystemTime::now().into();
         let now = now.date_naive();
 
-        self.0.values_mut()
+        self.0
+            .values_mut()
             .for_each(|service| service.retain(|date, _| should_keep_entry(now, date)));
         self.0.retain(|_, history| history.len() > 0)
     }
@@ -84,40 +116,34 @@ impl History {
 
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, HistoryError> {
         let mut history = HashMap::new();
-        let mut iterator = bytes.iter();
+        let mut cursor = Cursor::new(bytes);
 
-        let services_count = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+        let services_count = read_field(&mut cursor, |buf: [u8; 1]| Ok(buf[0]))?;
         for _ in 0u8..services_count {
-            let id_length = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+            let id_length = read_field(&mut cursor, |buf: [u8; 1]| Ok(buf[0]))?;
             let mut id_bytes = vec![];
 
             for _ in 0u8..id_length {
-                id_bytes.push(*iterator.next().ok_or(HistoryError::EndOfFile)?);
+                id_bytes.push(read_field(&mut cursor, |buf: [u8; 1]| Ok(buf[0]))?);
             }
 
             let id = String::from_utf8(id_bytes)?;
             let entry: &mut ServiceHistory = history.entry(id).or_default();
-            let days = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+            let days = read_field(&mut cursor, |buf: [u8; 1]| Ok(buf[0]))?;
 
             for _ in 0u8..days {
-                let mut day_bytes = [0u8; 4];
-                for i in 0..4 {
-                    day_bytes[i] = *iterator.next().ok_or(HistoryError::EndOfFile)?;
-                }
-                let day = u32::from_le_bytes(day_bytes);
+                let day = read_field(&mut cursor, |buf| Ok(u32::from_le_bytes(buf)))?;
                 let day = day as i64 * 86400;
                 let day = DateTime::from_timestamp(day, 0).ok_or(HistoryError::InvalidDate)?;
                 let day = day.date_naive();
 
                 let entry = entry.entry(day).or_default();
-                let mut entries_bytes = [0u8; 2];
-                for i in 0..2 {
-                    entries_bytes[i] = *iterator.next().ok_or(HistoryError::EndOfFile)?;
-                }
-                let entries = u16::from_le_bytes(entries_bytes);
+                let entries = read_field(&mut cursor, |buf| Ok(u16::from_le_bytes(buf)))?;
 
                 for _ in 0..entries {
-                    entry.push(ServiceStatus::from(*iterator.next().ok_or(HistoryError::EndOfFile)?));
+                    entry.push(read_field(&mut cursor, |buf: [u8; 1]| {
+                        Ok(ServiceStatus::from(buf[0]))
+                    })?);
                 }
             }
         }

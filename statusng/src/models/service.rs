@@ -5,12 +5,12 @@ use serde::{Deserialize, Serialize};
 
 use crate::models::service::kind::{HttpService, TcpService};
 
-mod status;
-mod processor;
 pub mod kind;
+mod processor;
+mod status;
 
-pub use status::*;
 pub use processor::*;
+pub use status::*;
 
 #[derive(Deserialize, Debug)]
 #[serde(tag = "type")]
@@ -18,7 +18,7 @@ pub struct Service {
     pub maintenance: bool,
     pub host: String,
     pub port: u16,
-    pub name: Option<String>,  // By default, use 'host'
+    pub name: Option<String>, // By default, use 'host'
     pub category: ServiceCategory,
     #[serde(alias = "hosting")]
     pub hosting_provider: ServiceHostingProvider,
@@ -45,7 +45,7 @@ pub enum ServiceCategory {
     #[serde(rename = "servers")]
     Servers,
     #[serde(rename = "network")]
-    Network
+    Network,
 }
 
 #[derive(Deserialize, Serialize, Debug, Copy, Clone)]
@@ -59,7 +59,7 @@ pub enum ServiceHostingProvider {
     #[serde(rename = "vercel")]
     Vercel,
     #[serde(rename = "gitbook")]
-    GitBook
+    GitBook,
 }
 
 impl Service {
@@ -68,10 +68,7 @@ impl Service {
         let status = self.make_status(&result, slow_threshold);
         let ping = result.unwrap_or(0);
 
-        ProcessorResult {
-            ping,
-            status,
-        }
+        ProcessorResult { ping, status }
     }
 
     fn process_service(&self, timeout: Duration) -> ServiceResult {
@@ -102,8 +99,10 @@ impl Service {
 
     pub fn get_label(&self) -> String {
         match self.category {
-            ServiceCategory::Network | ServiceCategory::Servers => self.name.clone().unwrap_or_else(|| self.host.clone()),
-            _ => self.host.clone()
+            ServiceCategory::Network | ServiceCategory::Servers => {
+                self.name.clone().unwrap_or_else(|| self.host.clone())
+            }
+            _ => self.host.clone(),
         }
     }
 }

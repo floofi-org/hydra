@@ -1,5 +1,5 @@
-use std::io;
 use std::fmt::{Display, Formatter};
+use std::io;
 use std::string::FromUtf8Error;
 
 pub type StatusResult<T> = Result<T, StatusError>;
@@ -11,13 +11,15 @@ pub enum StatusError {
     UreqError(ureq::Error),
     IoError(io::Error),
     HistoryError(HistoryError),
-    GenericError(String)
+    GenericError(String),
 }
+
 #[derive(Debug)]
 pub enum HistoryError {
     EndOfFile,
     InvalidString(FromUtf8Error),
-    InvalidDate
+    IoError(io::Error),
+    InvalidDate,
 }
 
 impl From<serde_yml::Error> for StatusError {
@@ -64,7 +66,7 @@ impl Display for StatusError {
             Self::IoError(err) => write!(f, "{:?}", err),
             Self::UreqError(err) => write!(f, "{:?}", err),
             Self::HistoryError(err) => write!(f, "{:?}", err),
-            Self::GenericError(message) => write!(f, "{}", message)
+            Self::GenericError(message) => write!(f, "{}", message),
         }
     }
 }
@@ -72,5 +74,11 @@ impl Display for StatusError {
 impl From<FromUtf8Error> for HistoryError {
     fn from(value: FromUtf8Error) -> Self {
         Self::InvalidString(value)
+    }
+}
+
+impl From<io::Error> for HistoryError {
+    fn from(value: io::Error) -> Self {
+        Self::IoError(value)
     }
 }

@@ -11,7 +11,7 @@ pub struct Config {
     #[serde(alias = "vercel")]
     pub vercel_token: String,
     pub outage: OutageConfig,
-    pub services: Vec<Service>
+    pub services: Vec<Service>,
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
@@ -19,5 +19,5 @@ pub struct OutageConfig {
     pub enabled: bool,
     title: String,
     description: String,
-    link: String
+    link: String,
 }

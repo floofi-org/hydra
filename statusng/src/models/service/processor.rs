@@ -1,10 +1,7 @@
 use std::time::Duration;
 
+use crate::models::service::kind::{http::*, tcp::*};
 use crate::models::service::{Service, ServiceStatus};
-use crate::models::service::kind::{
-    http::*,
-    tcp::*,
-};
 
 pub type ServiceResult = Result<u32, ServiceError>;
 
@@ -20,7 +17,7 @@ pub struct ProcessorResult {
 #[derive(Debug)]
 pub enum ServiceError {
     Http(HttpError),
-    Tcp(TcpError)
+    Tcp(TcpError),
 }
 
 impl From<HttpError> for ServiceError {

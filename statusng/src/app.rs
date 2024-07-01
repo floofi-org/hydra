@@ -59,10 +59,20 @@ impl App {
             self.api.add(&service, &result);
 
             match result.status {
-                ServiceStatus::Online => info!("{}: Online (ping: {} ms)", service.get_label(), result.ping),
-                ServiceStatus::Unstable => warn!("{}: Unstable (ping: {} ms)", service.get_label(), result.ping),
+                ServiceStatus::Online => {
+                    info!("{}: Online (ping: {} ms)", service.get_label(), result.ping)
+                }
+                ServiceStatus::Unstable => warn!(
+                    "{}: Unstable (ping: {} ms)",
+                    service.get_label(),
+                    result.ping
+                ),
                 ServiceStatus::Offline => error!("{}: Offline", service.get_label()),
-                ServiceStatus::Maintenance => info!("{}: Maintenance (ping: {} ms)", service.get_label(), result.ping),
+                ServiceStatus::Maintenance => info!(
+                    "{}: Maintenance (ping: {} ms)",
+                    service.get_label(),
+                    result.ping
+                ),
             }
         }
 

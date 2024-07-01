@@ -2,18 +2,16 @@ use std::fmt::{Display, Formatter};
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
-#[derive(Deserialize_repr, Serialize_repr)]
-#[derive(Default, Debug)]
-#[derive(Copy, Clone)]
-#[derive(PartialEq, Eq)]
-#[derive(PartialOrd, Ord)]
+#[derive(
+    Deserialize_repr, Serialize_repr, Default, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord,
+)]
 #[repr(u8)]
 pub enum ServiceStatus {
     #[default]
     Online = 0,
     Unstable = 1,
     Offline = 2,
-    Maintenance = 3
+    Maintenance = 3,
 }
 
 impl Display for ServiceStatus {
@@ -22,7 +20,7 @@ impl Display for ServiceStatus {
             ServiceStatus::Online => write!(f, "online"),
             ServiceStatus::Unstable => write!(f, "unstable/slow"),
             ServiceStatus::Offline => write!(f, "offline"),
-            ServiceStatus::Maintenance => write!(f, "under maintenance")
+            ServiceStatus::Maintenance => write!(f, "under maintenance"),
         }
     }
 }
@@ -33,7 +31,7 @@ impl ServiceStatus {
             Self::Online => "status-ok",
             Self::Unstable => "status-warning",
             Self::Offline => "status-error",
-            Self::Maintenance => "status-error"
+            Self::Maintenance => "status-error",
         }
     }
 
@@ -54,7 +52,7 @@ impl From<u8> for ServiceStatus {
             1 => ServiceStatus::Unstable,
             2 => ServiceStatus::Offline,
             3 => ServiceStatus::Maintenance,
-            _ => ServiceStatus::Offline
+            _ => ServiceStatus::Offline,
         }
     }
 }
