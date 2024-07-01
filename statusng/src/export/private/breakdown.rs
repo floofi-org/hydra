@@ -1,6 +1,7 @@
+use std::collections::BTreeMap;
+
 use chrono::NaiveDate;
 use serde::Serialize;
-use std::collections::BTreeMap;
 
 use crate::models::service::ServiceStatus;
 use crate::models::History;

@@ -2,9 +2,12 @@ use std::fmt::{Display, Formatter};
 
 use serde_repr::{Deserialize_repr, Serialize_repr};
 
-#[derive(
-    Deserialize_repr, Serialize_repr, Default, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord,
-)]
+#[rustfmt::skip]
+#[derive(Deserialize_repr, Serialize_repr)]
+#[derive(Default, Debug)]
+#[derive(Copy, Clone)]
+#[derive(PartialEq, Eq)]
+#[derive(PartialOrd, Ord)]
 #[repr(u8)]
 pub enum ServiceStatus {
     #[default]
