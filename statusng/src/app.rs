@@ -1,4 +1,5 @@
 use std::fs;
+use std::path::Path;
 use std::time::Duration;
 
 use log::{debug, error, info, warn};
@@ -22,9 +23,18 @@ impl App {
         let config: Config = serde_yml::from_str(&config)?;
         debug!("Done loading config.yaml.");
 
-        let history = fs::read_to_string("./history.json")?;
-        let history = serde_json::from_str(&history)?;
-        debug!("Done loading history.json.");
+        if Path::new("./history.json").exists() {
+            info!("Found old history.json file, converting it to binary...");
+            let history = fs::read_to_string("./history.json")?;
+            let history: History = serde_json::from_str(&history)?;
+            fs::write("./history.dat", history.into_bytes())?;
+            //fs::remove_file("./history.json")?;
+        }
+
+        return Err(StatusError::GenericError(String::from("")));
+        let history = fs::read("./history.dat")?;
+        let history = History::from_bytes(&history);
+        debug!("Done loading history.dat.");
 
         let outage = config.outage.enabled.then_some(config.outage.clone());
         let api = PrivateAPI::new(outage);

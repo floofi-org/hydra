@@ -7,9 +7,11 @@ client/*.min.csss
 statusng/config.yaml
 statusng/history.json
 statusng/target
+statusng/out-*
 out-private.json
 out-public.json
 out-public-v2.json
 out-public-v1.json
-
+history.dat
+statusng/history.dat
 /.direnv
