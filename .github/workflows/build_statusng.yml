@@ -1,0 +1,31 @@
+name: Build statusng
+
+on:
+  push:
+    branches: [ "mane" ]
+    paths: [ "statusng/**" ]
+  pull_request:
+    branches: [ "mane" ]
+    paths: [ "statusng/**" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        profile: [ "dev", "release" ]
+
+    defaults:
+      run:
+        working-directory: "statusng"
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build --profile ${{ matrix.profile }} --verbose
+    - name: Check
+      run: cargo clippy --profile ${{ matrix.profile }} -- -D warnings
