@@ -5,7 +5,7 @@
       <paths name="watson">
         <serverdata>
           <mappings>
-            <mapping deploy="/opt/status" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/etc/statusng" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
