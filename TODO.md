@@ -9,7 +9,7 @@
 
 ### Milestone 2
 * Remove API version 1
-* Make history use a binary format
+* <del>Make history use a binary format</del>
 * Make private API use a binary format
 
 ## Frontend (`client`)
