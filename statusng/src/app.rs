@@ -28,7 +28,7 @@ impl App {
             let history = fs::read_to_string("./history.json")?;
             let history: History = serde_json::from_str(&history)?;
             fs::write("./history.dat", history.into_bytes())?;
-            //fs::remove_file("./history.json")?;
+            fs::remove_file("./history.json")?;
         }
 
         let history = fs::read("./history.dat")?;
