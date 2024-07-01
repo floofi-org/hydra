@@ -1,5 +1,6 @@
 use std::io;
 use std::fmt::{Display, Formatter};
+use std::string::FromUtf8Error;
 
 pub type StatusResult<T> = Result<T, StatusError>;
 
@@ -9,7 +10,14 @@ pub enum StatusError {
     JsonParseError(serde_json::Error),
     UreqError(ureq::Error),
     IoError(io::Error),
+    HistoryError(HistoryError),
     GenericError(String)
+}
+#[derive(Debug)]
+pub enum HistoryError {
+    EndOfFile,
+    InvalidString(FromUtf8Error),
+    InvalidDate
 }
 
 impl From<serde_yml::Error> for StatusError {
@@ -36,6 +44,12 @@ impl From<ureq::Error> for StatusError {
     }
 }
 
+impl From<HistoryError> for StatusError {
+    fn from(value: HistoryError) -> Self {
+        Self::HistoryError(value)
+    }
+}
+
 impl From<String> for StatusError {
     fn from(value: String) -> Self {
         Self::GenericError(value)
@@ -49,7 +63,14 @@ impl Display for StatusError {
             Self::JsonParseError(err) => write!(f, "{:?}", err),
             Self::IoError(err) => write!(f, "{:?}", err),
             Self::UreqError(err) => write!(f, "{:?}", err),
-            Self::GenericError(message) => write!(f, "{}", message),
+            Self::HistoryError(err) => write!(f, "{:?}", err),
+            Self::GenericError(message) => write!(f, "{}", message)
         }
+    }
+}
+
+impl From<FromUtf8Error> for HistoryError {
+    fn from(value: FromUtf8Error) -> Self {
+        Self::InvalidString(value)
     }
 }

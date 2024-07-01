@@ -4,8 +4,7 @@ use std::time::SystemTime;
 
 use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
-
-use crate::error::StatusError;
+use crate::error::{HistoryError, StatusError};
 use super::service::{Service, ServiceStatus};
 
 type ServiceHistory = HashMap<NaiveDate, Vec<ServiceStatus>>;
@@ -21,7 +20,7 @@ fn should_keep_entry(current_date: NaiveDate, entry_key: &NaiveDate) -> bool {
     difference.num_days() <= 90
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct History(pub HashMap<String, ServiceHistory>);
 
 impl History {
@@ -53,8 +52,8 @@ impl History {
     }
 
     pub fn sync(&self) -> Result<(), StatusError> {
-        let text = serde_json::to_string(&self)?;
-        fs::write("./history.json", text)?;
+        let bytes = self.clone().into_bytes();
+        fs::write("./history.dat", bytes)?;
         Ok(())
     }
 
@@ -82,7 +81,46 @@ impl History {
         bytes
     }
 
-    pub fn from_bytes(_bytes: &[u8]) -> Self {
-        History(HashMap::new())
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, HistoryError> {
+        let mut history = HashMap::new();
+        let mut iterator = bytes.iter();
+
+        let services_count = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+        for _ in 0u8..services_count {
+            let id_length = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+            let mut id_bytes = vec![];
+
+            for _ in 0u8..id_length {
+                id_bytes.push(*iterator.next().ok_or(HistoryError::EndOfFile)?);
+            }
+
+            let id = String::from_utf8(id_bytes)?;
+            let entry: &mut ServiceHistory = history.entry(id).or_default();
+            let days = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+
+            for _ in 0u8..days {
+                let mut day_bytes = [0u8; 4];
+                for i in 0..4 {
+                    day_bytes[i] = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+                }
+                let day = u32::from_le_bytes(day_bytes);
+                let day = day as i64 * 86400;
+                let day = DateTime::from_timestamp(day, 0).ok_or(HistoryError::InvalidDate)?;
+                let day = day.date_naive();
+
+                let entry = entry.entry(day).or_default();
+                let mut entries_bytes = [0u8; 2];
+                for i in 0..2 {
+                    entries_bytes[i] = *iterator.next().ok_or(HistoryError::EndOfFile)?;
+                }
+                let entries = u16::from_le_bytes(entries_bytes);
+
+                for _ in 0..entries {
+                    entry.push(ServiceStatus::from(*iterator.next().ok_or(HistoryError::EndOfFile)?));
+                }
+            }
+        }
+
+        Ok(History(history))
     }
 }

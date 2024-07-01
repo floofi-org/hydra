@@ -31,9 +31,8 @@ impl App {
             //fs::remove_file("./history.json")?;
         }
 
-        return Err(StatusError::GenericError(String::from("")));
         let history = fs::read("./history.dat")?;
-        let history = History::from_bytes(&history);
+        let history = History::from_bytes(&history)?;
         debug!("Done loading history.dat.");
 
         let outage = config.outage.enabled.then_some(config.outage.clone());

@@ -46,3 +46,15 @@ impl ServiceStatus {
         }
     }
 }
+
+impl From<u8> for ServiceStatus {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => ServiceStatus::Online,
+            1 => ServiceStatus::Unstable,
+            2 => ServiceStatus::Offline,
+            3 => ServiceStatus::Maintenance,
+            _ => ServiceStatus::Offline
+        }
+    }
+}
