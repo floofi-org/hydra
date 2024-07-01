@@ -2,7 +2,7 @@ use std::fs;
 use std::collections::HashMap;
 use std::time::SystemTime;
 
-use chrono::{Datelike, DateTime, NaiveDate, NaiveDateTime, Utc};
+use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use crate::error::StatusError;
@@ -68,7 +68,7 @@ impl History {
             bytes.append(&mut service_bytes);
             bytes.push(history.len() as u8);
 
-            for (date, mut entries) in history {
+            for (date, entries) in history {
                 let date = NaiveDateTime::from(date);
                 let date: DateTime<Utc> = DateTime::from_naive_utc_and_offset(date, Utc);
                 let ts = date.timestamp() / 86400;
