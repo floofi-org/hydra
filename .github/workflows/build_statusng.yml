@@ -23,9 +23,17 @@ jobs:
       run:
         working-directory: "statusng"
 
+    env:
+      BUILD_NAME: ${{ matrix.profile == 'dev' && 'debug' || matrix.profile }}
+
     steps:
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --profile ${{ matrix.profile }} --verbose
+    - name: Upload build
+      uses: actions/upload-artifact@v4
+      with:
+        name: statusng-linux-${{ env.BUILD_NAME }}
+        path: statusng/target/${{ env.BUILD_NAME }}/statusng
     - name: Check
       run: cargo clippy --profile ${{ matrix.profile }} -- -D warnings
