@@ -6,8 +6,7 @@ use log::{debug, error, info, warn};
 
 use statusng::error::StatusError;
 use statusng::export::private::PrivateAPI;
-use statusng::export::public::v1::PublicAPIv1;
-use statusng::export::public::v2::PublicAPIv2;
+use statusng::export::public::PublicAPI;
 use statusng::models::service::ServiceStatus;
 use statusng::models::{Config, History};
 
@@ -88,14 +87,10 @@ impl App {
         }
 
         info!("Saving public API data to disk and sending to Vercel...");
-        let public_api_v1 = PublicAPIv1::from_private_api(&self.api);
-        let public_api_v2 = PublicAPIv2::from_private_api(&self.api);
+        let public_api = PublicAPI::from_private_api(&self.api);
 
-        if let Err(e) = public_api_v1.sync(&self.config.vercel_token) {
-            error!("Failed to save public API v1 data to disk: {}", e);
-        }
-        if let Err(e) = public_api_v2.sync(&self.config.vercel_token) {
-            error!("Failed to save public API v2 data to disk: {}", e);
+        if let Err(e) = public_api.sync(&self.config.vercel_token) {
+            error!("Failed to save public API data to disk: {}", e);
         }
     }
 }

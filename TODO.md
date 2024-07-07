@@ -8,7 +8,7 @@
 * <del>Publishing data to Vercel Blob Storage</del>
 
 ### Milestone 2
-* Remove API version 1
+* <del>Remove API version 1</del>
 * <del>Make history use a binary format</del>
 * Make private API use a binary format
 
