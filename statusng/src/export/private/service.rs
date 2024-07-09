@@ -28,4 +28,28 @@ impl ClientService {
             service_hosting_provider: service.hosting_provider,
         }
     }
+
+    pub fn into_bytes(self) -> Vec<u8> {
+        let mut bytes = vec![];
+
+        let id = &mut self.id.into_bytes();
+        let label = &mut self.label.into_bytes();
+        let ping = &mut self.ping.to_le_bytes().to_vec();
+        let status = self.status as u8;
+        let category = self.category as u8;
+        let hosting_provider = self.service_hosting_provider as u8;
+
+        bytes.push(id.len() as u8);
+        bytes.append(id);
+
+        bytes.push(label.len() as u8);
+        bytes.append(label);
+
+        bytes.append(ping);
+        bytes.push(status);
+        bytes.push(category);
+        bytes.push(hosting_provider);
+
+        bytes
+    }
 }

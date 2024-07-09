@@ -84,23 +84,7 @@ impl PrivateAPI {
 
         bytes.push(self.services.len() as u8);
         for service in self.services {
-            let id = &mut service.id.into_bytes();
-            let label = &mut service.label.into_bytes();
-            let ping = &mut service.ping.to_le_bytes().to_vec();
-            let status = service.status as u8;
-            let category = service.category as u8;
-            let hosting_provider = service.service_hosting_provider as u8;
-
-            bytes.push(id.len() as u8);
-            bytes.append(id);
-
-            bytes.push(label.len() as u8);
-            bytes.append(label);
-
-            bytes.append(ping);
-            bytes.push(status);
-            bytes.push(category);
-            bytes.push(hosting_provider);
+            bytes.append(&mut service.into_bytes());
         }
 
         bytes
