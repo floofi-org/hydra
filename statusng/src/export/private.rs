@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::fs;
 use std::time::SystemTime;
 
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Serialize;
 
 use crate::models::{
@@ -65,6 +65,47 @@ impl PrivateAPI {
         self.breakdown = Breakdown::from_base(history);
     }
 
+    pub fn into_bytes(self) -> Vec<u8> {
+        let mut bytes = vec![self.global as u8];
+        bytes.append(&mut self.ping.to_le_bytes().to_vec());
+        bytes.push(self.breakdown.0.len() as u8);
+
+        for (date, statuses) in self.breakdown.0 {
+            let date = NaiveDateTime::from(date);
+            let date: DateTime<Utc> = DateTime::from_naive_utc_and_offset(date, Utc);
+            let ts = date.timestamp() / 86400;
+
+            bytes.append(&mut (ts as u32).to_le_bytes().to_vec());
+
+            for status in statuses {
+                bytes.append(&mut status.to_le_bytes().to_vec());
+            }
+        }
+
+        bytes.push(self.services.len() as u8);
+        for service in self.services {
+            let id = &mut service.id.into_bytes();
+            let label = &mut service.label.into_bytes();
+            let ping = &mut service.ping.to_le_bytes().to_vec();
+            let status = service.status as u8;
+            let category = service.category as u8;
+            let hosting_provider = service.service_hosting_provider as u8;
+
+            bytes.push(id.len() as u8);
+            bytes.append(id);
+
+            bytes.push(label.len() as u8);
+            bytes.append(label);
+
+            bytes.append(ping);
+            bytes.push(status);
+            bytes.push(category);
+            bytes.push(hosting_provider);
+        }
+
+        bytes
+    }
+
     fn calc_average_ping(&self) -> f32 {
         let total = self.services.iter().map(|s| s.ping).sum::<u32>() as f32;
 
@@ -88,12 +129,12 @@ impl PrivateAPI {
         }
     }
 
-    pub fn sync(&self, token: &str) -> Result<(), StatusError> {
-        let data = serde_json::to_string(&self)?;
+    pub fn sync(self, token: &str) -> Result<(), StatusError> {
+        let data = self.into_bytes();
         let vercel = Vercel::new(token);
 
-        fs::write("./out-private.json", &data)?;
-        vercel.put(&data, "public/status.json", 360)?;
+        fs::write("./output.dat", &data)?;
+        vercel.put(&data, "public/status.dat", 360)?;
 
         Ok(())
     }

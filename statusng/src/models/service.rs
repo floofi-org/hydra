@@ -39,6 +39,7 @@ pub enum ServiceType {
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Copy, Clone)]
+#[repr(u8)]  // This should be fairly safe as long as order never changes.
 pub enum ServiceCategory {
     #[serde(rename = "websites")]
     Websites,
@@ -49,6 +50,7 @@ pub enum ServiceCategory {
 }
 
 #[derive(Deserialize, Serialize, Debug, Copy, Clone)]
+#[repr(u8)]  // This should be fairly safe as long as order never changes.
 pub enum ServiceHostingProvider {
     #[serde(rename = "equestriadev")]
     EquestriaDev,

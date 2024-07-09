@@ -8,6 +8,8 @@ statusng/config.yaml
 statusng/history.json
 statusng/target
 statusng/out-*
+statusng/output.dat
+output.dat
 out-private.json
 out-public.json
 out-public-v2.json

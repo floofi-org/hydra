@@ -5,14 +5,14 @@ use crate::models::Service;
 
 #[derive(Serialize, Debug)]
 pub struct ClientService {
-    id: String,
+    pub id: String,
     pub label: String,
     pub ping: u32,
     pub status: ServiceStatus,
     #[serde(rename = "type")]
-    category: ServiceCategory,
+    pub category: ServiceCategory,
     #[serde(rename = "hosting")]
-    service_hosting_provider: ServiceHostingProvider,
+    pub service_hosting_provider: ServiceHostingProvider,
 }
 
 impl ClientService {

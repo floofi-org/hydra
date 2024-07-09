@@ -80,17 +80,18 @@ impl App {
             error!("Failed to save history to disk: {}", e);
         }
 
-        info!("Saving private API data to disk and sending to Vercel...");
-        self.api.seal(self.history);
-        if let Err(e) = self.api.sync(&self.config.vercel_token) {
-            error!("Failed to save private API data to disk: {}", e);
-        }
-
         info!("Saving public API data to disk and sending to Vercel...");
         let public_api = PublicAPI::from_private_api(&self.api);
 
         if let Err(e) = public_api.sync(&self.config.vercel_token) {
             error!("Failed to save public API data to disk: {}", e);
+        }
+
+        info!("Saving private API data to disk and sending to Vercel...");
+        self.api.seal(self.history);
+
+        if let Err(e) = self.api.sync(&self.config.vercel_token) {
+            error!("Failed to save private API data to disk: {}", e);
         }
     }
 }
