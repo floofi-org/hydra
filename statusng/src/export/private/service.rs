@@ -29,9 +29,7 @@ impl ClientService {
         }
     }
 
-    pub fn into_bytes(self) -> Vec<u8> {
-        let mut bytes = vec![];
-
+    pub fn append_bytes(self, bytes: &mut Vec<u8>) {
         let id = &mut self.id.into_bytes();
         let label = &mut self.label.into_bytes();
         let ping = &mut self.ping.to_le_bytes().to_vec();
@@ -49,7 +47,5 @@ impl ClientService {
         bytes.push(status);
         bytes.push(category);
         bytes.push(hosting_provider);
-
-        bytes
     }
 }
