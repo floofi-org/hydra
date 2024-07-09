@@ -29,7 +29,7 @@ impl ClientService {
         }
     }
 
-    pub fn append_bytes(self, bytes: &mut Vec<u8>) {
+    pub fn serialize(self, bytes: &mut Vec<u8>) {
         let id = &mut self.id.into_bytes();
         let label = &mut self.label.into_bytes();
         let ping = &mut self.ping.to_le_bytes().to_vec();

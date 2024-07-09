@@ -84,7 +84,7 @@ impl PrivateAPI {
 
         bytes.push(self.services.len() as u8);
         for service in self.services {
-            service.append_bytes(&mut bytes);
+            service.serialize(&mut bytes);
         }
 
         bytes
