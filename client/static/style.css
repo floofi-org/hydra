@@ -537,11 +537,11 @@ html, body {
     height: 22px;
 }
 
-#eqs-app-global:hover #eqs-app-global-box-text-uptime, #eqs-app-global:focus #eqs-app-global-box-text-uptime {
+#eqs-app-global:has(#eqs-app-global-box-text.eqs-ellipsis):hover #eqs-app-global-box-text-uptime, #eqs-app-global:has(#eqs-app-global-box-text.eqs-ellipsis):focus #eqs-app-global-box-text-uptime {
     opacity: 1;
 }
 
-#eqs-app-global:hover #eqs-app-global-box-text-main, #eqs-app-global:focus #eqs-app-global-box-text-main {
+#eqs-app-global:has(#eqs-app-global-box-text.eqs-ellipsis):hover #eqs-app-global-box-text-main, #eqs-app-global:has(#eqs-app-global-box-text.eqs-ellipsis):focus #eqs-app-global-box-text-main {
     opacity: 0;
 }
 
@@ -587,4 +587,8 @@ html, body {
 
 #eqs-templates {
     display: none;
+}
+
+#eqs-app-global-box-text-outer:has(#eqs-app-global-box-text:not(.eqs-ellipsis)) #eqs-app-global-box-text-main {
+    position: initial;
 }

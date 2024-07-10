@@ -4,7 +4,6 @@ async function loadBaseApp() {
 
     try {
         window.statusData = await decodeStatusData();
-        return; // TODO: Remove this
     } catch (e) {
         error(e);
         return;
