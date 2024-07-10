@@ -3,7 +3,7 @@ async function loadBaseApp() {
     if (window.statusData) window.oldDate = statusData.time;
 
     try {
-        window.statusData = await (await fetch(URL)).json();
+        window.statusData = await decodeStatusData();
     } catch (e) {
         error(e);
         return;
