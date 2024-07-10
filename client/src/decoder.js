@@ -27,7 +27,11 @@ async function decodeStatusData() {
         console.log("=> " + i);
         let date = new Uint32Array(buffer.slice(pos, pos + 4))[0];
         console.log(date);
-        pos += 4;
+        let statusesLength = binary[pos + 4];
+        console.log(statusesLength);
+
+        pos += 5;
+        break;
     }
 
     console.log(data);
