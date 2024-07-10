@@ -87,6 +87,15 @@ impl PrivateAPI {
             service.serialize(&mut bytes);
         }
 
+        bytes.append(&mut (self.time.timestamp() as u64).to_le_bytes().to_vec());
+
+        if let Some(notice) = self.notice {
+            bytes.push(1);
+            bytes.append(&mut serde_json::to_string(&notice).unwrap_or(String::from("{}")).into_bytes())
+        } else {
+            bytes.push(0);
+        }
+
         bytes
     }
 
