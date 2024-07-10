@@ -118,7 +118,7 @@ impl PrivateAPI {
         let vercel = Vercel::new(token);
 
         fs::write("./output.dat", &data)?;
-        vercel.put(&data, "public/status.dat", 360)?;
+        vercel.put(&data, "public/status.dat", 360, "application/vnd.equestriadev.statusng")?;
 
         Ok(())
     }
