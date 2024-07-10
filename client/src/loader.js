@@ -37,6 +37,7 @@ window.addEventListener('load', async () => {
     });
 
     await loadBaseApp();
+    return; // TODO: Remove this
 
     setInterval(async () => {
         fillUpdateTime();

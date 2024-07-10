@@ -76,6 +76,7 @@ impl PrivateAPI {
             let ts = date.timestamp() / 86400;
 
             bytes.append(&mut (ts as u32).to_le_bytes().to_vec());
+            bytes.push(statuses.len() as u8);
 
             for status in statuses {
                 bytes.append(&mut status.to_le_bytes().to_vec());
