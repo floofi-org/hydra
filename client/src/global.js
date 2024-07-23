@@ -10,7 +10,7 @@ function fillGlobal() {
         if (window.statusData['notice']) {
             document.getElementById("eqs-app-global-box").classList.add("eqs-app-global-box-info");
             document.getElementById("eqs-app-global-box-text").classList.remove("eqs-ellipsis");
-            document.getElementById("eqs-app-global-box-text-main").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 7px;'>" + window.statusData['notice']['description'] + "</p>" + (window.statusData['notice']['link'] ? "<a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a>" : "") + "</div>";
+            document.getElementById("eqs-app-global-box-text-main").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 7px;'>" + window.statusData['notice']['description'] + "</p>" + (window.statusData['notice']['link'] && window.statusData['notice']['link'] !== "null" && window.statusData['notice']['link'] !== null ? "<a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a>" : "") + "</div>";
             document.getElementById("eqs-app-global-box-icon").src = "./static/icons/status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
             document.getElementById("eqs-app-global-box-ping").innerText = "";
         } else {

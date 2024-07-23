@@ -66,6 +66,14 @@
   ],
   "redirects": [
     {
+      "source": "/.well-known/security.txt",
+      "destination": "https://equestria.dev/security.txt"
+    },
+    {
+      "source": "/security.txt",
+      "destination": "https://equestria.dev/security.txt"
+    },
+    {
       "source": "/status.json",
       "destination": "https://d6gd1hq6b89h1s1v.public.blob.vercel-storage.com/public/api.json",
       "permanent": true
