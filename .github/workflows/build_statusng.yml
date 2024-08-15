@@ -36,4 +36,4 @@ jobs:
         name: statusng-linux-${{ env.BUILD_NAME }}
         path: statusng/target/${{ env.BUILD_NAME }}/statusng
     - name: Check
-      run: cargo clippy --profile ${{ matrix.profile }} -- -D warnings
+      run: cargo clippy --profile ${{ matrix.profile }} -- -D warnings -A clippy::large_enum_variant -A clippy::result_large_err

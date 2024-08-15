@@ -37,8 +37,8 @@ impl<'a> PublicAPI<'a> {
         let vercel = Vercel::new(token);
 
         fs::write("./out-public.json", &data)?;
-        vercel.put(&data.as_bytes(), "public/api-v2.json", 360, "application/json")?;
-        vercel.put(&data.as_bytes(), "public/api.json", 360, "application/json")?;
+        vercel.put(data.as_bytes(), "public/api-v2.json", 360, "application/json")?;
+        vercel.put(data.as_bytes(), "public/api.json", 360, "application/json")?;
 
         Ok(())
     }

@@ -85,7 +85,7 @@ impl History {
         self.0
             .values_mut()
             .for_each(|service| service.retain(|date, _| should_keep_entry(now, date)));
-        self.0.retain(|_, history| history.len() > 0)
+        self.0.retain(|_, history| !history.is_empty())
     }
 
     pub fn sync(&self) -> Result<(), StatusError> {
