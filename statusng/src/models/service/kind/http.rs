@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use std::time::{Duration, Instant};
 
@@ -7,7 +7,7 @@ use ureq::{Error, Response};
 
 use crate::models::service::{Service, ServiceProcessor};
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct HttpService {
     pub url: String,
     #[serde(alias = "expect")]

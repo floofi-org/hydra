@@ -6,8 +6,10 @@ pub type StatusResult<T> = Result<T, StatusError>;
 
 #[derive(Debug)]
 pub enum StatusError {
-    YamlParseError(serde_yml::Error),
-    JsonParseError(serde_json::Error),
+    YamlError(serde_yml::Error),
+    JsonError(serde_json::Error),
+    TomlSerializeError(toml::ser::Error),
+    TomlDeserializeError(toml::de::Error),
     UreqError(ureq::Error),
     IoError(io::Error),
     HistoryError(HistoryError),
@@ -24,13 +26,13 @@ pub enum HistoryError {
 
 impl From<serde_yml::Error> for StatusError {
     fn from(value: serde_yml::Error) -> Self {
-        Self::YamlParseError(value)
+        Self::YamlError(value)
     }
 }
 
 impl From<serde_json::Error> for StatusError {
     fn from(value: serde_json::Error) -> Self {
-        Self::JsonParseError(value)
+        Self::JsonError(value)
     }
 }
 
@@ -58,11 +60,25 @@ impl From<String> for StatusError {
     }
 }
 
+impl From<toml::ser::Error> for StatusError {
+    fn from(value: toml::ser::Error) -> Self {
+        Self::TomlSerializeError(value)
+    }
+}
+
+impl From<toml::de::Error> for StatusError {
+    fn from(value: toml::de::Error) -> Self {
+        Self::TomlDeserializeError(value)
+    }
+}
+
 impl Display for StatusError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::YamlParseError(err) => write!(f, "{:?}", err),
-            Self::JsonParseError(err) => write!(f, "{:?}", err),
+            Self::YamlError(err) => write!(f, "{:?}", err),
+            Self::JsonError(err) => write!(f, "{:?}", err),
+            Self::TomlSerializeError(err) => write!(f, "{:?}", err),
+            Self::TomlDeserializeError(err) => write!(f, "{:?}", err),
             Self::IoError(err) => write!(f, "{:?}", err),
             Self::UreqError(err) => write!(f, "{:?}", err),
             Self::HistoryError(err) => write!(f, "{:?}", err),

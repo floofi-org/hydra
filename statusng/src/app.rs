@@ -18,9 +18,17 @@ pub struct App {
 
 impl App {
     pub fn build() -> Result<Self, StatusError> {
-        let config = fs::read_to_string("./config.yaml")?;
-        let config: Config = serde_yml::from_str(&config)?;
-        debug!("Done loading config.yaml.");
+        if Path::new("./config.yaml").exists() {
+            info!("Found old config.yaml file, converting it to TOML...");
+            let config = fs::read_to_string("./config.yaml")?;
+            let config: Config = serde_yml::from_str(&config)?;
+            fs::write("./config.toml", toml::to_string(&config)?)?;
+            fs::remove_file("./config.yaml")?;
+        }
+
+        let config = fs::read_to_string("./config.toml")?;
+        let config: Config = toml::from_str(&config)?;
+        debug!("Done loading config.toml.");
 
         if Path::new("./history.json").exists() {
             info!("Found old history.json file, converting it to binary...");
@@ -83,15 +91,19 @@ impl App {
         info!("Saving public API data to disk and sending to Vercel...");
         let public_api = PublicAPI::from_private_api(&self.api);
 
-        if let Err(e) = public_api.sync(&self.config.vercel_token) {
-            error!("Failed to save public API data to disk: {}", e);
+        if let Some(token) = &self.config.vercel_token {
+            if let Err(e) = public_api.sync(token) {
+                error!("Failed to save public API data to disk: {}", e);
+            }
         }
 
         info!("Saving private API data to disk and sending to Vercel...");
         self.api.seal(self.history);
 
-        if let Err(e) = self.api.sync(&self.config.vercel_token) {
-            error!("Failed to save private API data to disk: {}", e);
+        if let Some(token) = &self.config.vercel_token {
+            if let Err(e) = self.api.sync(token) {
+                error!("Failed to save private API data to disk: {}", e);
+            }
         }
     }
 }

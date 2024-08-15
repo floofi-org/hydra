@@ -55,13 +55,17 @@ where
 pub struct History(pub HashMap<String, ServiceHistory>);
 
 impl History {
-    fn get_id_for_service(&self, service: &Service) -> String {
-        // First check for legacy key format
-        if self.0.contains_key(service.get_legacy_id()) {
-            service.get_legacy_id().to_owned()
-        } else {
-            service.get_unique_id()
+    fn get_id_for_service(&mut self, service: &Service) -> String {
+        // Convert to new ID format if using the old ID format
+        if let Some(legacy_id) = service.get_legacy_id() {
+            if self.0.contains_key(legacy_id) {
+                if let Some(v) = self.0.remove(legacy_id) {
+                    self.0.insert(service.get_unique_id(), v);
+                }
+            }
         }
+
+        service.get_unique_id()
     }
 
     pub fn add_entry(&mut self, service: &Service, code: ServiceStatus) {

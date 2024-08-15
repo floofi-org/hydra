@@ -3,11 +3,11 @@ use std::net::{Shutdown, SocketAddr, TcpStream, ToSocketAddrs};
 use std::time::{Duration, Instant};
 
 use log::{info, warn};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::models::service::{Service, ServiceProcessor};
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct TcpService {}
 
 #[derive(Debug)]

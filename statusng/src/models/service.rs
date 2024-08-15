@@ -1,6 +1,7 @@
 use std::fmt::{Display, Formatter};
+use std::net::IpAddr;
 use std::time::Duration;
-
+use dns_lookup::lookup_addr;
 use serde::{Deserialize, Serialize};
 
 use crate::models::service::kind::{HttpService, TcpService};
@@ -12,24 +13,24 @@ mod status;
 pub use processor::*;
 pub use status::*;
 
-#[derive(Deserialize, Debug)]
-#[serde(tag = "type")]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Service {
     pub maintenance: bool,
     pub host: String,
     pub port: u16,
-    pub name: Option<String>, // By default, use 'host'
     pub category: ServiceCategory,
     #[serde(alias = "hosting")]
     pub hosting_provider: ServiceHostingProvider,
     #[serde(alias = "id")]
-    pub _legacy_id: String,
+    pub _legacy_id: Option<String>,
+    #[serde(alias = "name")]
+    pub network_name: Option<String>,
 
     #[serde(flatten)]
     pub service_type: ServiceType,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 #[serde(untagged)]
 pub enum ServiceType {
     #[serde(rename = "http", alias = "https")]
@@ -91,7 +92,7 @@ impl Service {
         }
     }
 
-    pub fn get_legacy_id(&self) -> &str {
+    pub fn get_legacy_id(&self) -> &Option<String> {
         &self._legacy_id
     }
 
@@ -100,11 +101,20 @@ impl Service {
     }
 
     pub fn get_label(&self) -> String {
-        match self.category {
-            ServiceCategory::Network | ServiceCategory::Servers => {
-                self.name.clone().unwrap_or_else(|| self.host.clone())
-            }
-            _ => self.host.clone(),
+        match &self.category {
+            ServiceCategory::Websites => self.host.clone(),
+            ServiceCategory::Servers => {
+                if let Ok(addr) = self.host.parse::<IpAddr>() {
+                    if let Ok(name) = lookup_addr(&addr) {
+                        name
+                    } else {
+                        self.host.clone()
+                    }
+                } else {
+                    self.host.clone()
+                }
+            },
+            ServiceCategory::Network => self.network_name.clone().unwrap_or(self.host.clone())
         }
     }
 }

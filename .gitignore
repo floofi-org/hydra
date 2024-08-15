@@ -1,4 +1,5 @@
 config.yaml
+config.toml
 history.json
 client/public.json
 client/.vercel

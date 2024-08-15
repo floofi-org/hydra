@@ -2,14 +2,14 @@ use serde::{Deserialize, Serialize};
 
 use crate::models::service::Service;
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Config {
     pub interval: u32,
     #[serde(alias = "slow")]
     pub slow_threshold: u32,
     pub timeout: u32,
     #[serde(alias = "vercel")]
-    pub vercel_token: String,
+    pub vercel_token: Option<String>,
     pub outage: OutageConfig,
     pub services: Vec<Service>,
 }
