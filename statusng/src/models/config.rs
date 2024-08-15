@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::models::service::Service;
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Debug)]
 pub struct Config {
     pub interval: u32,
     #[serde(alias = "slow")]

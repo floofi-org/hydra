@@ -13,7 +13,7 @@ mod status;
 pub use processor::*;
 pub use status::*;
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Debug)]
 pub struct Service {
     pub maintenance: bool,
     pub host: String,
@@ -21,8 +21,6 @@ pub struct Service {
     pub category: ServiceCategory,
     #[serde(alias = "hosting")]
     pub hosting_provider: ServiceHostingProvider,
-    #[serde(alias = "id")]
-    pub _legacy_id: Option<String>,
     #[serde(alias = "name")]
     pub network_name: Option<String>,
 
@@ -30,7 +28,7 @@ pub struct Service {
     pub service_type: ServiceType,
 }
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Debug)]
 #[serde(untagged)]
 pub enum ServiceType {
     #[serde(rename = "http", alias = "https")]
@@ -90,10 +88,6 @@ impl Service {
             Err(_) if self.maintenance => ServiceStatus::Maintenance,
             _ => ServiceStatus::Offline,
         }
-    }
-
-    pub fn get_legacy_id(&self) -> &Option<String> {
-        &self._legacy_id
     }
 
     pub fn get_unique_id(&self) -> String {

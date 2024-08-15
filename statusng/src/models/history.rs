@@ -4,7 +4,6 @@ use std::io::{Cursor, Read};
 use std::time::SystemTime;
 
 use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
-use serde::{Deserialize, Serialize};
 
 use crate::error::{HistoryError, StatusError};
 use crate::models::service::{Service, ServiceStatus};
@@ -51,25 +50,12 @@ where
     Ok(value)
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct History(pub HashMap<String, ServiceHistory>);
 
 impl History {
-    fn get_id_for_service(&mut self, service: &Service) -> String {
-        // Convert to new ID format if using the old ID format
-        if let Some(legacy_id) = service.get_legacy_id() {
-            if self.0.contains_key(legacy_id) {
-                if let Some(v) = self.0.remove(legacy_id) {
-                    self.0.insert(service.get_unique_id(), v);
-                }
-            }
-        }
-
-        service.get_unique_id()
-    }
-
     pub fn add_entry(&mut self, service: &Service, code: ServiceStatus) {
-        let id = self.get_id_for_service(service);
+        let id = service.get_unique_id();
 
         let service = self.0.entry(id).or_default();
         let date = get_current_date();

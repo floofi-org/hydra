@@ -1,5 +1,4 @@
 use std::fs;
-use std::path::Path;
 use std::time::Duration;
 
 use log::{debug, error, info, warn};
@@ -18,25 +17,9 @@ pub struct App {
 
 impl App {
     pub fn build() -> Result<Self, StatusError> {
-        if Path::new("./config.yaml").exists() {
-            info!("Found old config.yaml file, converting it to TOML...");
-            let config = fs::read_to_string("./config.yaml")?;
-            let config: Config = serde_yml::from_str(&config)?;
-            fs::write("./config.toml", toml::to_string(&config)?)?;
-            fs::remove_file("./config.yaml")?;
-        }
-
         let config = fs::read_to_string("./config.toml")?;
         let config: Config = toml::from_str(&config)?;
         debug!("Done loading config.toml.");
-
-        if Path::new("./history.json").exists() {
-            info!("Found old history.json file, converting it to binary...");
-            let history = fs::read_to_string("./history.json")?;
-            let history: History = serde_json::from_str(&history)?;
-            fs::write("./history.dat", history.into_bytes())?;
-            fs::remove_file("./history.json")?;
-        }
 
         let history = fs::read("./history.dat")?;
         let history = History::from_bytes(&history)?;
