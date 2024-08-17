@@ -61,6 +61,8 @@ pub enum ServiceHostingProvider {
     Vercel,
     #[serde(rename = "gitbook")]
     GitBook,
+    #[serde(rename = "azure")]
+    Azure,
 }
 
 impl Service {

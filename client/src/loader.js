@@ -22,9 +22,9 @@ window.addEventListener('load', async () => {
         "./static/icons/status-info.svg", "./static/icons/status-info-dark.svg",
         "./static/icons/status-success.svg", "./static/icons/status-success-dark.svg",
         "./static/icons/status-warning.svg", "./static/icons/status-warning-dark.svg",
-        "./static/hosting/equestriadev.png", "./static/hosting/gitbook.png",
-        "./static/hosting/ovh.png", "./static/hosting/scaleway.png",
-        "./static/hosting/vercel.png"
+        "./static/hosting/self.webp", "./static/hosting/gitbook.webp",
+        "./static/hosting/ovh.webp", "./static/hosting/scaleway.webp",
+        "./static/hosting/vercel.webp", "./static/hosting/azure.webp"
     ]) {
         await preloadImage(i);
     }

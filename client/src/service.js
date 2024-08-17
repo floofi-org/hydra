@@ -12,7 +12,7 @@ function genericServiceFill(name, link) {
                 <span id="eqs-app-service-${service.id}-status-message" class="eqs-ellipsis eqs-app-service-status-message">${service.status <= 1 ? service.ping + " ms" : (service.status === 2 ? 'Offline' : 'Maintenance')}</span>
             </div>
             <div id="eqs-app-service-${service.id}-hosting" class="eqs-app-service-hosting">
-                <img alt="${service['hosting']}" src="./static/hosting/${service['hosting']}.png" id="eqs-app-service-${service.id}-hosting-img" class="eqs-app-service-hosting-img">
+                <img alt="${service['hosting']}" src="./static/hosting/${service['hosting']}.webp" id="eqs-app-service-${service.id}-hosting-img" class="eqs-app-service-hosting-img">
             </div>
         </div>
         `);
@@ -22,5 +22,4 @@ function genericServiceFill(name, link) {
 }
 
 let fillWebsites = () => genericServiceFill("websites", true);
-let fillServers = () => genericServiceFill("servers", true);
 let fillNetwork = () => genericServiceFill("network", true);

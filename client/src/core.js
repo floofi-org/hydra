@@ -26,7 +26,6 @@ async function loadBaseApp() {
         fillBreakdown();
         fillNetwork();
         fillWebsites();
-        fillServers();
         completeLoading();
     } catch (e) {
         error(e);
