@@ -1,5 +1,4 @@
 use std::io;
-use std::net::{AddrParseError, IpAddr, Ipv4Addr, Shutdown, SocketAddr, TcpStream, ToSocketAddrs};
 use std::process::{Command, Stdio};
 use std::time::{Duration, Instant};
 
@@ -54,6 +53,7 @@ impl ServiceProcessor<IcmpError> for IcmpService {
             let ping = start.elapsed().as_millis() as u32;
             Ok(ping)
         } else {
+            warn!("Failed with exit code {}", status.code().unwrap_or(-1));
             Err(IcmpError::Failed(status.code().unwrap_or(-1)))
         }
     }
