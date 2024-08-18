@@ -22,4 +22,4 @@ function genericServiceFill(name, link) {
 }
 
 let fillWebsites = () => genericServiceFill("websites", true);
-let fillNetwork = () => genericServiceFill("network", true);
+let fillNetwork = () => genericServiceFill("network", false);
