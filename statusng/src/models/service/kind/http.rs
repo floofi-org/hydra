@@ -9,6 +9,7 @@ use crate::models::service::{Service, ServiceProcessor};
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct HttpService {
+    pub port: u16,
     pub url: String,
     #[serde(alias = "expect")]
     pub expected_code: u16,
@@ -66,7 +67,7 @@ impl HttpService {
 
 impl ServiceProcessor<HttpError> for HttpService {
     fn process(&self, service: &Service, timeout: Duration) -> Result<u32, HttpError> {
-        let url = self.get_url(&service.host, service.port);
+        let url = self.get_url(&service.host, self.port);
 
         let start = Instant::now();
         let result = Self::make_request(&url, timeout);

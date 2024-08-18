@@ -8,7 +8,9 @@ use serde::{Deserialize, Serialize};
 use crate::models::service::{Service, ServiceProcessor};
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct TcpService {}
+pub struct TcpService {
+    pub port: u16
+}
 
 #[derive(Debug)]
 pub enum TcpError {
@@ -30,7 +32,7 @@ impl TcpService {
 
 impl ServiceProcessor<TcpError> for TcpService {
     fn process(&self, service: &Service, timeout: Duration) -> Result<u32, TcpError> {
-        let socket = self.get_socket(&service.host, service.port)?;
+        let socket = self.get_socket(&service.host, self.port)?;
 
         info!("Connecting to {}", &socket);
 

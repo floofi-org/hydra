@@ -4,7 +4,7 @@ use std::time::Duration;
 use dns_lookup::lookup_addr;
 use serde::{Deserialize, Serialize};
 
-use crate::models::service::kind::{HttpService, TcpService};
+use crate::models::service::kind::{HttpService, TcpService, IcmpService};
 
 pub mod kind;
 mod processor;
@@ -17,7 +17,6 @@ pub use status::*;
 pub struct Service {
     pub maintenance: bool,
     pub host: String,
-    pub port: u16,
     pub category: ServiceCategory,
     #[serde(alias = "hosting")]
     pub hosting_provider: ServiceHostingProvider,
@@ -35,6 +34,8 @@ pub enum ServiceType {
     Http(HttpService),
     #[serde(rename = "tcp")]
     Tcp(TcpService),
+    #[serde(rename = "icmp")]
+    Icmp(IcmpService),
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Copy, Clone)]
@@ -51,8 +52,9 @@ pub enum ServiceCategory {
 #[derive(Deserialize, Serialize, Debug, Copy, Clone)]
 #[repr(u8)]  // This should be fairly safe as long as order never changes.
 pub enum ServiceHostingProvider {
-    #[serde(rename = "equestriadev")]
-    EquestriaDev,
+    #[serde(rename = "self")]
+    #[serde(alias = "equestriadev")]
+    Own,
     #[serde(rename = "scaleway")]
     Scaleway,
     #[serde(rename = "ovh")]
@@ -63,6 +65,16 @@ pub enum ServiceHostingProvider {
     GitBook,
     #[serde(rename = "azure")]
     Azure,
+}
+
+impl Display for ServiceType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ServiceType::Http(_) => write!(f, "http"),
+            ServiceType::Tcp(_) => write!(f, "tcp"),
+            ServiceType::Icmp(_) => write!(f, "icmp"),
+        }
+    }
 }
 
 impl Service {
@@ -78,6 +90,7 @@ impl Service {
         let ping = match &self.service_type {
             ServiceType::Http(service) => service.process(self, timeout)?,
             ServiceType::Tcp(service) => service.process(self, timeout)?,
+            ServiceType::Icmp(service) => service.process(self, timeout)?,
         };
 
         Ok(ping)
@@ -93,7 +106,7 @@ impl Service {
     }
 
     pub fn get_unique_id(&self) -> String {
-        format!("{}:{}", self.host, self.port)
+        format!("{}:{}", self.host, self.service_type)
     }
 
     pub fn get_label(&self) -> String {
@@ -120,6 +133,7 @@ impl Display for Service {
         match self.service_type {
             ServiceType::Http(_) => write!(f, "{} is an http service", self.host),
             ServiceType::Tcp(_) => write!(f, "{} is a tcp service", self.host),
+            ServiceType::Icmp(_) => write!(f, "{} is an icmp service", self.host),
         }
     }
 }

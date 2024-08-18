@@ -2,6 +2,7 @@ use std::time::Duration;
 
 use crate::models::service::kind::{http::*, tcp::*};
 use crate::models::service::{Service, ServiceStatus};
+use crate::models::service::kind::icmp::IcmpError;
 
 pub type ServiceResult = Result<u32, ServiceError>;
 
@@ -18,6 +19,7 @@ pub struct ProcessorResult {
 pub enum ServiceError {
     Http(HttpError),
     Tcp(TcpError),
+    Icmp(IcmpError)
 }
 
 impl From<HttpError> for ServiceError {
@@ -29,5 +31,11 @@ impl From<HttpError> for ServiceError {
 impl From<TcpError> for ServiceError {
     fn from(value: TcpError) -> Self {
         Self::Tcp(value)
+    }
+}
+
+impl From<IcmpError> for ServiceError {
+    fn from(value: IcmpError) -> Self {
+        Self::Icmp(value)
     }
 }
