@@ -99,6 +99,8 @@ async function decodeStatusData() {
         data.services.push(service);
     }
 
+    data.services = data.services.sort((a, b) => a.label.localeCompare(b.label))
+
     let timestamp = cursor.readUint64();
     data.time = new Date(parseInt(timestamp) * 1000).toISOString();
 

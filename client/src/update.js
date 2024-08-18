@@ -10,11 +10,11 @@ function timeAgo(time, html) {
     let period;
 
     if (difference <= 10 && difference >= 0) {
-        return html ? `<span class="eqs-app-nav-desktop">now</span>` : "now";
+        return html ? `<span class="sp-app-nav-desktop">now</span>` : "now";
     } else if (difference > 0) {
-        tense = html ? `<span class="eqs-app-nav-desktop">ago</span>` : "ago";
+        tense = html ? `<span class="sp-app-nav-desktop">ago</span>` : "ago";
     } else {
-        tense = html ? `<span class="eqs-app-nav-desktop">later</span>` : "later";
+        tense = html ? `<span class="sp-app-nav-desktop">later</span>` : "later";
     }
 
     let j;
@@ -28,4 +28,4 @@ function timeAgo(time, html) {
     return `${difference} ${period}${difference > 1 ? "s" : ""} ${tense}`;
 }
 
-let fillUpdateTime = () => document.getElementById("eqs-app-nav-item-update-inner").innerHTML = "<span class='eqs-app-nav-desktop'>Last updated </span>" + timeAgo(window.statusData['time'], true);
+let fillUpdateTime = () => document.getElementById("sp-redesign-nav-update").innerHTML = "<span class='sp-app-nav-desktop'>Last updated </span>" + timeAgo(window.statusData['time'], true);

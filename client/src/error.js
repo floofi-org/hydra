@@ -1,7 +1,8 @@
 function error(e) {
+    clearInterval(window.reloadInterval);
     console.error(e);
 
-    document.getElementById("eqs-app").innerHTML = document.getElementById("eqs-template-error").innerHTML;
-    document.getElementById("eqs-app-error-reload").onclick = () => location.reload();
-    document.getElementById("eqs-loader").style.display = "none";
+    document.getElementById("sp-app").innerHTML = document.getElementById("sp-template-error").innerHTML;
+    document.getElementById("sp-app-error-reload").onclick = () => location.reload();
+    document.getElementById("sp-loader").style.display = "none";
 }

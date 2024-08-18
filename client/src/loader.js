@@ -17,11 +17,11 @@ function preloadImage(src) {
 window.addEventListener('load', async () => {
     for (let i of [
         "./static/logo/logo.svg", "./static/logo/logo-footer-dark.svg",
-        "./static/logo/logo-footer-light.svg", "./static/logo/powered-by-vercel.svg",
-        "./static/icons/status-critical.svg", "./static/icons/status-critical-dark.svg",
-        "./static/icons/status-info.svg", "./static/icons/status-info-dark.svg",
-        "./static/icons/status-success.svg", "./static/icons/status-success-dark.svg",
-        "./static/icons/status-warning.svg", "./static/icons/status-warning-dark.svg",
+        "./static/logo/powered-by-vercel.svg",
+        "./static/icons/status-critical-dark.svg",
+        "./static/icons/status-info-dark.svg",
+        "./static/icons/status-success-dark.svg",
+        "./static/icons/status-warning-dark.svg",
         "./static/hosting/self.webp", "./static/hosting/gitbook.webp",
         "./static/hosting/ovh.webp", "./static/hosting/scaleway.webp",
         "./static/hosting/vercel.webp", "./static/hosting/azure.webp"
@@ -29,16 +29,12 @@ window.addEventListener('load', async () => {
         await preloadImage(i);
     }
 
-    window.hasDarkTheme = document.getElementById("eqs-dark-theme-indicator").checkVisibility();
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        window.hasDarkTheme = document.getElementById("eqs-dark-theme-indicator").checkVisibility();
-        loadBaseApp();
-    });
+    window.hasDarkTheme = true;
 
     await loadBaseApp();
 
-    setInterval(async () => {
+    window.reloadInterval = setInterval(async () => {
+        if (!window.statusData) return;
         fillUpdateTime();
 
         if (new Date().getTime() - new Date(window.statusData['time']).getTime() >= 600000) {
