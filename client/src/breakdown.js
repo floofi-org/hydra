@@ -95,7 +95,7 @@ function fillBreakdown() {
                 document.getElementById("sp-app-breakdown-box-cursor-text").classList.remove("left");
             }
 
-            document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (3 + document.getElementById("sp-app-breakdown-box-inner").clientWidth * ((90 - day) / 90)) + "px";
+            document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (event.clientX - document.getElementById("sp-app-breakdown-box-inner").getBoundingClientRect().left) + "px";
 
             if (day === 0) {
                 document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = "Today";

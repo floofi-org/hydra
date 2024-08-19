@@ -6,13 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Equestria.dev Status</title>
     <link rel="icon" href="static/logo/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="static/css/legacy.css">
+    <link rel="stylesheet" href="https://fella.floo.fi/0.2.3/fella.min.css" integrity="ehWr6Q9bTyFNDP4vI/w/0YPMPXo6PVRHINbf+3nfj+C5KyMzV5PhY/USTV5wivv/" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/style.css">
+    <script>
+        let FF_FOUC_FIX;
+    </script>
 </head>
 <body>
 <div id="sp-dark-theme-indicator"></div>
 <div id="sp-loader">
-    <svg id="sp-loader-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
+    <svg id="sp-loader-svg" class="fella-loader" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
         <g><g transform="rotate(0 50 50)">
             <rect fill="#8f8f8f" height="16" width="5" ry="2.56" rx="2.5" y="22" x="47.5">
                 <animate repeatCount="indefinite" begin="-0.9166666666666666s" dur="1s" keyTimes="0;1" values="1;0" attributeName="opacity"></animate>
@@ -66,12 +69,12 @@
 </div>
 <div id="sp-app">
     <noscript>
-        <div id="sp-app-js">
+        <div id="sp-app-js" class="fella-error">
             <div id="sp-app-js-inner">
-                <svg id="sp-app-js-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-braces"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>
-                <div id="sp-app-js-title">Enable JavaScript</div>
-                <div id="sp-app-js-message">Please enable JavaScript (also known as ECMAScript) and refresh this page.</div>
-                <a href="" id="sp-app-js-reload" class="btn btn-primary btn-flush btn-large" tabindex="1">Try again</a>
+                <svg id="sp-app-js-icon" class="fella-error-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>
+                <div id="sp-app-js-title" class="fella-error-title">Enable JavaScript</div>
+                <div id="sp-app-js-message" class="fella-error-message">Please enable JavaScript (also known as ECMAScript) and refresh this page.</div>
+                <a href="" id="sp-app-js-reload" class="fella-btn fella-btn-primary fella-btn-flush fella-btn-large fella-error-btn" tabindex="1">Try again</a>
             </div>
         </div>
     </noscript>
@@ -79,22 +82,22 @@
 
 <div id="sp-templates" style="display: none;">
     <div id="sp-template-app">
-        <nav id="sp-redesign-nav" class="no-border">
-            <div id="sp-redesign-nav-inner">
-                <div id="sp-redesign-nav-left">
+        <nav id="sp-redesign-nav" class="fella-nav-no-border fella-nav">
+            <div id="sp-redesign-nav-inner" class="fella-nav-inner">
+                <div id="sp-redesign-nav-left" class="fella-nav-left">
                     <a href="https://equestria.dev" target="_blank">
-                        <img id="sp-redesign-nav-icon" alt="Equestria.dev Status" src="static/logo/logo.svg">
+                        <img id="sp-redesign-nav-icon" class="fella-nav-icon" alt="Equestria.dev Status" src="static/logo/logo.svg">
                     </a>
                 </div>
-                <div id="sp-redesign-nav-right">
-                    <span id="sp-redesign-nav-update">Loading...</span>
+                <div id="sp-redesign-nav-right" class="fella-nav-right">
+                    <span id="sp-redesign-nav-update" class="fella-nav-subtitle">Loading...</span>
                 </div>
             </div>
         </nav>
 
-        <main id="sp-app-content" class="sp-container">
+        <main id="sp-app-content" class="fella-container">
             <div id="sp-app-global" class="sp-container-lazy">
-                <div id="sp-app-global-box" class="sp-box">
+                <div id="sp-app-global-box" class="sp-box fella-card fella-card-lg">
                     <div id="sp-redesign-status">
                         <div id="sp-app-global-box-icon-outer">
                             <img alt="" id="sp-app-global-box-icon" src="">
@@ -109,25 +112,25 @@
 
                     <div id="sp-app-global-box-ping"></div>
                 </div>
-                <div id="sp-app-breakdown-box" class="sp-box">
+                <div id="sp-app-breakdown-box" class="sp-box fella-card fella-card-lg">
                     <div id="sp-app-breakdown-box-inner"></div>
                 </div>
             </div>
 
             <div id="sp-app-websites" class="sp-container-lazy">
-                <div id="sp-app-websites-box" class="sp-box">
+                <div id="sp-app-websites-box" class="sp-box fella-card">
                     <div id="sp-app-websites-box-inner"></div>
                 </div>
             </div>
 
             <div id="sp-app-network" class="sp-container-lazy">
-                <div id="sp-app-network-box" class="sp-box">
+                <div id="sp-app-network-box" class="sp-box fella-card">
                     <div id="sp-app-network-box-inner"></div>
                 </div>
             </div>
 
             <div id="sp-app-loader">
-                <svg id="sp-loader-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
+                <svg id="sp-redesign-loader-svg" class="fella-loader fella-loader-center" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
                     <g transform="rotate(0 50 50)">
                         <rect x="47" y="28" rx="3" ry="3.84" width="6" height="12" fill="var(--theme-loader-stroke)">
                             <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.875s"
@@ -179,7 +182,7 @@
                 </svg>
             </div>
 
-            <div id="sp-redesign-copyright" class="sp-container-lazy">
+            <div id="sp-redesign-copyright" class="sp-container-lazy fella-footnotes">
                 <p>
                     The information on this page is provided for information purposes only and Equestria.dev should not
                     be held responsible for any errors, unannounced or extended downtime. Content is automatically
@@ -204,12 +207,12 @@
     </div>
 
     <div id="sp-template-error">
-        <div id="sp-app-error">
+        <div id="sp-app-error" class="fella-error">
             <div id="sp-app-error-inner">
-                <svg id="sp-app-error-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                <div id="sp-app-error-title">Sorry</div>
-                <div id="sp-app-error-message">An error has occurred while loading this page.</div>
-                <a id="sp-app-error-reload" class="btn btn-primary btn-flush btn-large" tabindex="1">Try again</a>
+                <svg id="sp-app-error-icon" class="fella-error-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                <div id="sp-app-error-title" class="fella-error-title">Sorry</div>
+                <div id="sp-app-error-message" class="fella-error-message">An error has occurred while loading this page.</div>
+                <a id="sp-app-error-reload" class="fella-btn fella-btn-primary fella-btn-flush fella-btn-large fella-error-btn" tabindex="1">Try again</a>
             </div>
         </div>
     </div>
