@@ -1,4 +1,4 @@
-# status.equestria.dev TODO
+# Status TODO
 
 ## Backend (`statusng`)
 

@@ -85,7 +85,7 @@ async function decodeStatusData() {
         let ping = cursor.readUint32();
         let status = cursor.readUint8();
         let category = CATEGORIES[cursor.readUint8()] ?? "websites";
-        let hostingProvider = HOSTING_PROVIDERS[cursor.readUint8()] ?? "equestriadev";
+        let hostingProvider = HOSTING_PROVIDERS[cursor.readUint8()] ?? "self";
 
         let service = {
             id,

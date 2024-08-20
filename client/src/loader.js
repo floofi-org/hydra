@@ -16,8 +16,8 @@ function preloadImage(src) {
 
 window.addEventListener('load', async () => {
     for (let i of [
-        "./static/logo/logo.svg", "./static/logo/logo-footer-dark.svg",
-        "./static/logo/powered-by-vercel.svg",
+        "./static/logo/favicon.png", "./static/logo/footer.png",
+        "./static/logo/powered-by-vercel.svg", "./static/logo/logo.png",
         "./static/icons/status-critical-dark.svg",
         "./static/icons/status-info-dark.svg",
         "./static/icons/status-success-dark.svg",

@@ -1,4 +1,4 @@
-const VERSION = "4.0.1";
+const VERSION = "4.0.2";
 const URL = "https://d6gd1hq6b89h1s1v.public.blob.vercel-storage.com/public/status.dat";
 
 const CATEGORIES = [
@@ -17,7 +17,7 @@ const HOSTING_PROVIDERS = [
 ];
 
 const HOSTING_PROVIDER_LABELS = {
-    self: "Equestria.dev",
+    self: "Floofi",
     scaleway: "Scaleway",
     ovh: "",
     vercel: "Vercel",
