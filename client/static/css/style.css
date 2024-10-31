@@ -65,11 +65,13 @@
 }
 
 #sp-app-global:has(#sp-app-global-box-text.sp-ellipsis):hover #sp-app-global-box-text-uptime,
+#sp-app-global:has(#sp-app-global-box-text.sp-ellipsis).mobile-focus #sp-app-global-box-text-uptime,
 #sp-app-global:has(#sp-app-global-box-text.sp-ellipsis):focus #sp-app-global-box-text-uptime {
     opacity: 1;
 }
 
 #sp-app-global:has(#sp-app-global-box-text.sp-ellipsis):hover #sp-app-global-box-text-main,
+#sp-app-global:has(#sp-app-global-box-text.sp-ellipsis).mobile-focus #sp-app-global-box-text-main,
 #sp-app-global:has(#sp-app-global-box-text.sp-ellipsis):focus #sp-app-global-box-text-main {
     opacity: 0;
 }
@@ -108,6 +110,7 @@
 }
 
 #sp-app-breakdown-box {
+    touch-action: none;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
 }

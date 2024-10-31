@@ -65,7 +65,6 @@ function fillBreakdown() {
                 stroke-linejoin="round"
                 stroke-width="3"
                 points="${breakdown.map((i, j) => (j * (width / 90)) + "," + (i[0] - 3) * 1.5).join("\n")}"/>
-            <!--<rect x="0" y="0" width="${width + 5}" height="155" fill="black" mask="url(#Mask4)" />-->
         </svg>
         <div id="sp-app-breakdown-box-cursor">
             <div id="sp-app-breakdown-box-cursor-line"></div>
@@ -76,35 +75,57 @@ function fillBreakdown() {
         </div>
         `;
 
-        document.getElementById("sp-app-breakdown-box-inner").onmouseenter = () => {
-            document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "1";
-        }
+        let inner = document.getElementById("sp-app-breakdown-box-inner");
 
-        document.getElementById("sp-app-breakdown-box-inner").onmouseleave = document.body.ontouchend = () => {
+        inner.onmouseleave = inner.ontouchend = (event) => {
+            if (event.touches) {
+                event.preventDefault();
+                document.getElementById("sp-app-global").classList.remove("mobile-focus");
+            }
+
             document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "0";
             document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = "";
             document.getElementById("sp-app-breakdown-box-cursor-text-uptime").innerText = "";
         }
 
-        document.getElementById("sp-app-breakdown-box-inner").onmousemove = (event) => {
-            let day = 90 - Math.round(((event.clientX - document.getElementById("sp-app-breakdown-box-inner").getBoundingClientRect().left) / document.getElementById("sp-app-breakdown-box-inner").clientWidth) * 90);
+        inner.onmousemove = inner.ontouchstart = inner.ontouchmove = (event) => {
+            if (event.touches) {
+                event.preventDefault();
+                document.getElementById("sp-app-global").classList.add("mobile-focus");
+            }
 
-            if (day < 15) {
+            document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "1";
+
+            let position = event.clientX ?? event.touches[0].clientX;
+            let day = 90 - Math.round((((position - inner.getBoundingClientRect().left) / inner.clientWidth) * 90) - 0.7);
+
+            if (!breakdown[90 - day]) {
+                if (90 - day > 90) {
+                    day = 0;
+                    position = inner.getBoundingClientRect().right;
+                } else {
+                    day = 90;
+                    position = inner.getBoundingClientRect().left;
+                }
+            }
+
+            if (day < 16) {
                 document.getElementById("sp-app-breakdown-box-cursor-text").classList.add("left");
             } else {
                 document.getElementById("sp-app-breakdown-box-cursor-text").classList.remove("left");
             }
 
-            document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (event.clientX - document.getElementById("sp-app-breakdown-box-inner").getBoundingClientRect().left) + "px";
+            document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (position - inner.getBoundingClientRect().left) + "px";
+            let date = document.getElementById("sp-app-breakdown-box-cursor-text-relative");
 
             if (day === 0) {
-                document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = "Today";
+                date.innerText = "Today";
             } else if (day === 1) {
-                document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = "Yesterday";
+                date.innerText = "Yesterday";
             } else if (day < 7) {
-                document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = "Last " + new Date(new Date().getTime() - (86400000 * day)).toLocaleString("en-US", { weekday: "long" });
+                date.innerText = "Last " + new Date(new Date().getTime() - (86400000 * day)).toLocaleString("en-US", { weekday: "long" });
             } else {
-                document.getElementById("sp-app-breakdown-box-cursor-text-relative").innerText = new Date(new Date().getTime() - (86400000 * day)).toLocaleString("en-IE", { weekday: "short", day: "numeric", month: "short" });
+                date.innerText = new Date(new Date().getTime() - (86400000 * day)).toLocaleString("en-IE", { weekday: "short", day: "numeric", month: "short" });
             }
 
             document.getElementById("sp-app-breakdown-box-cursor-text-uptime").innerText = breakdown[90 - day][0].toFixed(2) + "% uptime";
