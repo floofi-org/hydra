@@ -1,6 +1,14 @@
 function fillBreakdown() {
+    let breakdownStartDay = new Date(Object.keys(statusData.breakdown)[0]).getTime() / 86400000;
+    let breakdownEndDay = new Date(Object.keys(statusData.breakdown)[Object.keys(statusData.breakdown).length - 1]).getTime() / 86400000;
+    let breakdown = [];
+
+    for (let i = breakdownStartDay; i <= breakdownEndDay; i++) {
+        let date = new Date(i * 86400000).toISOString().split("T")[0];
+        breakdown.push(statusData.breakdown[date] ?? [100, 0, 0, 0]);
+    }
+
     document.getElementById("sp-app-global-box-text-uptime").innerText = `${(Object.values(statusData['breakdown']).reduce((a, b) => a + b[0], 0) / Object.values(statusData['breakdown']).length).toFixed(3)}% uptime`;
-    let breakdown = Object.values(window.statusData['breakdown']);
 
     function buildSVG() {
         let width = document.getElementById("sp-app-global-box").clientWidth;
