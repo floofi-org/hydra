@@ -63,7 +63,7 @@ async function decodeStatusData() {
         notice: null
     };
 
-    let cursor = new Cursor(await (await fetch(URL)).arrayBuffer());
+    let cursor = new Cursor(await (await fetch(DATA_URL)).arrayBuffer());
 
     data.global = cursor.readUint8();
     data.ping = cursor.readFloat32();
