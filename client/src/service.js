@@ -24,3 +24,4 @@ function genericServiceFill(name, link) {
 
 let fillWebsites = () => genericServiceFill("websites", true);
 let fillNetwork = () => genericServiceFill("network", false);
+let fillServers = () => genericServiceFill("servers", false);

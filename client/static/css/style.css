@@ -119,15 +119,6 @@
     display: none;
 }
 
-#sp-loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inset: 0;
-    position: fixed;
-    z-index: 9;
-}
-
 #sp-app-global-box-icon, .sp-app-service-status-icon, #sp-app-global-box-icon-outer {
     width: 10px;
     height: 10px;

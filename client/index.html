@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Floofi Status Monitor</title>
     <link rel="icon" href="static/logo/favicon.png" type="image/svg+xml">
-    <link rel="stylesheet" href="https://fella.floo.fi/0.3.4/fella.min.css" integrity="sha384-CgGuCRnfADK2xVr1prHidzyuBRNFac8DehAwfqBx2kIXjLZ0Zsq/DTcFysSrRySg" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fella.floo.fi/fella.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/style.css">
     <script defer data-domain="status.floo.fi" src="https://insights.floo.fi/js/script.file-downloads.hash.outbound-links.js"></script>
     <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
@@ -16,8 +16,8 @@
 </head>
 <body>
 <div id="sp-dark-theme-indicator"></div>
-<div id="sp-loader">
-    <svg id="sp-loader-svg" class="fella-loader" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
+<div id="loader" class="fella-loader-container">
+    <svg id="loader-img" class="fella-loader" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="shape-rendering: auto; display: block; background: transparent;">
         <g><g transform="rotate(0 50 50)">
             <rect fill="#8f8f8f" height="16" width="5" ry="2.56" rx="2.5" y="22" x="47.5">
                 <animate repeatCount="indefinite" begin="-0.9166666666666666s" dur="1s" keyTimes="0;1" values="1;0" attributeName="opacity"></animate>
@@ -84,7 +84,7 @@
 
 <div id="sp-templates" style="display: none;">
     <div id="sp-template-app">
-        <nav id="sp-redesign-nav" class="fella-nav-no-border fella-nav">
+        <nav id="navbar" class="fella-nav-no-border fella-nav">
             <div id="sp-redesign-nav-inner" class="fella-nav-inner">
                 <div id="sp-redesign-nav-left" class="fella-nav-left">
                     <a href="https://floo.fi" target="_blank">
@@ -122,6 +122,12 @@
             <div id="sp-app-websites" class="sp-container-lazy">
                 <div id="sp-app-websites-box" class="sp-box fella-card">
                     <div id="sp-app-websites-box-inner"></div>
+                </div>
+            </div>
+
+            <div id="sp-app-servers" class="sp-container-lazy">
+                <div id="sp-app-servers-box" class="sp-box fella-card">
+                    <div id="sp-app-servers-box-inner"></div>
                 </div>
             </div>
 
@@ -220,6 +226,7 @@
     </div>
 </div>
 
+<script src="https://fella.floo.fi/fella.min.js"></script>
 <script src="src/elements.js"></script>
 <script src="src/breakdown.js"></script>
 <script src="src/config.js"></script>
@@ -230,6 +237,5 @@
 <script src="src/update.js"></script>
 <script src="src/decoder.js"></script>
 <script src="src/loader.js"></script>
-<script src="src/scroll.js"></script>
 </body>
 </html>

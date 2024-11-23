@@ -1,4 +1,4 @@
-const VERSION = "4.1.2";
+const VERSION = "4.1.4";
 const DATA_URL = "https://d6gd1hq6b89h1s1v.public.blob.vercel-storage.com/public/status.dat";
 
 const CATEGORIES = [

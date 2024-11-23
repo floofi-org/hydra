@@ -17,7 +17,7 @@ async function loadBaseApp() {
 
         document.getElementById("sp-app-copyright-text-year").innerText = " 2011-" + new Date().getFullYear();
         document.getElementById("sp-redesign-version").innerHTML = VERSION;
-        document.getElementById("sp-loader").style.display = "none";
+        completeLoad();
 
         await fillGlobal();
 
@@ -25,6 +25,7 @@ async function loadBaseApp() {
         fillBreakdown();
         fillNetwork();
         fillWebsites();
+        fillServers();
         completeLoading();
     } catch (e) {
         error(e);

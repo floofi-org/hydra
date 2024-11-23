@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 use std::time::{Duration, Instant};
@@ -34,7 +35,21 @@ impl HttpService {
             crate::VERSION
         );
 
-        ureq::get(url)
+        let _ = rustls::crypto::ring::default_provider().install_default();
+
+        let mut roots = rustls::RootCertStore::empty();
+        for cert in rustls_native_certs::load_native_certs().expect("could not load platform certs") {
+            roots.add(cert).unwrap();
+        }
+
+        let tls_config = rustls::ClientConfig::builder()
+            .with_root_certificates(roots)
+            .with_no_client_auth();
+        let agent = ureq::builder()
+            .tls_config(Arc::new(tls_config))
+            .build();
+
+        agent.get(url)
             .timeout(timeout)
             .set("User-Agent", &user_agent)
             .call()
