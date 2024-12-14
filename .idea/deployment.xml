@@ -1,41 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="watson" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="scaleway" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="watson">
+      <paths name="scaleway">
         <serverdata>
           <mappings>
             <mapping deploy="/etc/statusng" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/statusng" />
             <excludedPath local="true" path="$PROJECT_DIR$/client" />
-            <excludedPath local="true" path="$PROJECT_DIR$/.github" />
-            <excludedPath local="true" path="$PROJECT_DIR$/flake.lock" />
-            <excludedPath local="true" path="$PROJECT_DIR$/flake.nix" />
-            <excludedPath local="true" path="$PROJECT_DIR$/shell.nix" />
-            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
-            <excludedPath local="true" path="$PROJECT_DIR$/TODO.md" />
-            <excludedPath local="true" path="$PROJECT_DIR$/.envrc" />
-            <excludedPath local="true" path="$PROJECT_DIR$/LICENSE" />
-            <excludedPath path="/etc/statusng/history.dat" />
-            <excludedPath path="/etc/statusng/output.dat" />
-            <excludedPath path="/etc/statusng/output.json" />
+            <excludedPath local="true" path="$PROJECT_DIR$/statusng" />
           </excludedPaths>
-        </serverdata>
-      </paths>
-      <paths name="watson-legacy">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/opt/status" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="watson-rescue">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/opt/status" local="$PROJECT_DIR$" web="/" />
-          </mappings>
         </serverdata>
       </paths>
     </serverData>

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="13bb54a9-f530-4d7a-9a2d-880cc2db56ef" name="watson-rescue">
-        <fileTransfer accessType="SFTP" host="de1.equestria.dev" port="22" sshConfigId="37838d70-aaee-422f-a040-ea749cf5d6de" sshConfig="root@de1.equestria.dev:22 agent" authAgent="true">
+      <webServer id="2651b286-6c45-49b4-a2b6-7580f30f97a3" name="scaleway">
+        <fileTransfer accessType="SFTP" host="scaleway" port="22" sshConfigId="1cc5ad31-0e45-4a62-8437-2148c2661d1d" sshConfig="root@scaleway:22 agent" authAgent="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

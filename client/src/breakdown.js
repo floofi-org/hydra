@@ -12,6 +12,7 @@ function fillBreakdown() {
 
     function buildSVG() {
         let width = document.getElementById("sp-app-global-box").clientWidth;
+        breakdown.reverse();
 
         document.getElementById("sp-app-breakdown-box-inner").innerHTML = `
         <svg viewBox="-5 -5 ${width + 5} 155" class="chart" id="sp-app-breakdown-svg">
@@ -83,6 +84,7 @@ function fillBreakdown() {
         </div>
         `;
 
+        breakdown.reverse();
         let inner = document.getElementById("sp-app-breakdown-box-inner");
 
         inner.onmouseleave = inner.ontouchend = (event) => {
@@ -97,17 +99,21 @@ function fillBreakdown() {
         }
 
         inner.onmousemove = inner.ontouchstart = inner.ontouchmove = (event) => {
+            let realBreakdown = [...breakdown];
+
+            while (realBreakdown.length < 90) {
+                realBreakdown.unshift(null);
+            }
+
             if (event.touches) {
                 event.preventDefault();
                 document.getElementById("sp-app-global").classList.add("mobile-focus");
             }
 
-            document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "1";
-
             let position = event.clientX ?? event.touches[0].clientX;
             let day = 90 - Math.round((((position - inner.getBoundingClientRect().left) / inner.clientWidth) * 90) - 0.7);
 
-            if (!breakdown[90 - day]) {
+            if (!realBreakdown[90 - day]) {
                 if (90 - day > 90) {
                     day = 0;
                     position = inner.getBoundingClientRect().right;
@@ -123,7 +129,13 @@ function fillBreakdown() {
                 document.getElementById("sp-app-breakdown-box-cursor-text").classList.remove("left");
             }
 
-            document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (position - inner.getBoundingClientRect().left) + "px";
+            if (realBreakdown[90 - day]) {
+                document.getElementById("sp-app-breakdown-box-cursor").style.marginLeft = (position - inner.getBoundingClientRect().left) + "px";
+                document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "1";
+            } else {
+                document.getElementById("sp-app-breakdown-box-cursor").style.opacity = "0";
+            }
+
             let date = document.getElementById("sp-app-breakdown-box-cursor-text-relative");
 
             if (day === 0) {
@@ -136,7 +148,9 @@ function fillBreakdown() {
                 date.innerText = new Date(new Date().getTime() - (86400000 * day)).toLocaleString("en-IE", { weekday: "short", day: "numeric", month: "short" });
             }
 
-            document.getElementById("sp-app-breakdown-box-cursor-text-uptime").innerText = breakdown[90 - day][0].toFixed(2) + "% uptime";
+            if (realBreakdown[90 - day]) {
+                document.getElementById("sp-app-breakdown-box-cursor-text-uptime").innerText = realBreakdown[90 - day][0].toFixed(2) + "% uptime";
+            }
         }
     }
 

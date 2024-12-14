@@ -299,3 +299,7 @@
 #sp-app-global-box-text-uptime, #sp-app-global-box-ping {
     color: var(--fella-text-secondary);
 }
+
+#sp-app-breakdown-svg {
+    transform: rotateY(180deg);
+}
