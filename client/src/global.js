@@ -10,7 +10,7 @@ function fillGlobal() {
         if (window.statusData['notice']) {
             document.getElementById("sp-app-global").classList.add("sp-app-global-box-info");
             document.getElementById("sp-app-global-box-text").classList.remove("sp-ellipsis");
-            document.getElementById("sp-app-global-box-text-main").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 7px;'>" + window.statusData['notice']['description'] + "</p>" + (window.statusData['notice']['link'] && window.statusData['notice']['link'] !== "null" && window.statusData['notice']['link'] !== null ? "<a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a>" : "") + "</div>";
+            document.getElementById("sp-app-global-box-text-main").innerHTML = "<div><p style='margin-top: 0; margin-bottom: 7px;'><b>" + window.statusData['notice']['title'] + "</b></p><p style='margin-top: 0; margin-bottom: 0;'>" + window.statusData['notice']['description'] + "</p>" + (window.statusData['notice']['link'] && window.statusData['notice']['link'] !== "null" && window.statusData['notice']['link'] !== null ? "<a target='_blank' href='" + window.statusData['notice']['link'] +  "'>Read more.</a>" : "") + "</div>";
             document.getElementById("sp-app-global-box-icon").src = "./static/icons/status-info" + (hasDarkTheme ? "-dark" : "") + ".svg";
             document.getElementById("sp-app-global-box-ping").innerText = "";
         } else {
